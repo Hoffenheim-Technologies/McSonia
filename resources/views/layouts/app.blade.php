@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,66 +19,77 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
 </head>
 <body>
+    <div class="loader">
+        <div class="img w-full absolute top-1/2 transform -translate-y-1/2">
+            <img src="images/logo.png" alt="Logo" class="mx-auto">
+        </div>
+        <div class="bar"></div>
+    </div>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <header class="hidden lg:flex mx-2 mb-3 md:mb-5 items-center h-auto justify-between bg-white">
+            <a class="ml-3" href="{{ url('/') }}">
+                <img src="images/logo.webp" alt="McSonia Logistics" class="h-8">
+            </a>
+            <!-- <button class="hidden navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+            <div class="mt-3">
+                <ul class="flex flex-row text-xs">
+                    <li class="px-4 uppercase text-yellow-400"><a href="/about">About</a></li>
+                    <li class="px-4 uppercase hover:text-yellow-400"><a href="#">Delivery</a></li>
+                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/testimonial">Testimonials</a></li>
+                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/solution">Solutions</a></li>
+                </ul>
+            </div>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+            <nav class="flex flex-row justify-end">
+                <ul class="flex flex-row justify-around text-xs text-yellow-500 mt-3 mr-2">
+                    <!-- Authentication Links -->
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="px-4 py-2">
+                                <a class="uppercase" href="{{ route('login') }}">Log In</a>
+                            </li>
+                        @endif
 
-                    </ul>
+                        @if (Route::has('register'))
+                            <li class="px-4 py-2 border rounded border-yellow-500">
+                                <a class="uppercase" href="{{ route('register') }}">Sign Up</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                            <div class="" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
+                </ul>
+            </nav>
+        </header>
+        <main class="mt-3 md:mt-5 py-5 mx-5">
             @yield('content')
         </main>
+        <footer class="container mx-auto mt-12">
+            <div class="mx-auto w-max">
+                Copyright &copy; {{ date('Y') }}{{' '}}{{ config('app.name') }} Powered by <a class="text-blue-400 hover:text-yellow-500" href="https://www.hoffenheimtechnologies.com">Hoffenheim Technologies</a>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

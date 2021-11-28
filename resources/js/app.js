@@ -1,1 +1,3 @@
-require('./bootstrap');
+$(window).on('load', () => {
+    $('.loader').hide()
+})
