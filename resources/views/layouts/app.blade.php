@@ -56,7 +56,7 @@
                         @endif
 
                         @if (Route::has('register'))
-                            <li class="px-4 py-2 border rounded border-yellow-500">
+                            <li class="cursor-pointer px-4 py-2 border rounded border-yellow-500 hover:bg-yellow-500 hover:text-white">
                                 <a class="uppercase" href="{{ route('register') }}">Sign Up</a>
                             </li>
                         @endif
@@ -86,7 +86,7 @@
             @yield('content')
         </main>
         <footer class="container mx-auto mt-12">
-            <div class="mx-auto w-max">
+            <div class="mx-auto w-full text-center">
                 Copyright &copy; {{ date('Y') }}{{' '}}{{ config('app.name') }} Powered by <a class="text-blue-400 hover:text-yellow-500" href="https://www.hoffenheimtechnologies.com">Hoffenheim Technologies</a>
             </div>
         </footer>
