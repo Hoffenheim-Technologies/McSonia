@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    @font-face {
+        font-family: MontserratRegular;
+        src: url("/fonts/Montserrat-Regular.ttf");
+    }
+    @font-face {
+        font-family: MontserratBold;
+        src: url("/fonts/Montserrat-Bold.ttf");
+    }
+    @font-face {
+        font-family: MontserratExtraBold;
+        src: url("/fonts/Montserrat-ExtraBold.ttf");
+    }
+    @font-face {
+        font-family: MontserratLight;
+        src: url("/fonts/Montserrat-Light.ttf");
+    }
+    @font-face {
+        font-family: MontserratMedium;
+        src: url("/fonts/Montserrat-Medium.ttf");
+    }
+    @font-face {
+        font-family: MontserratSemiBold;
+        src: url("/fonts/Montserrat-SemiBold.ttf");
+    }
+    @font-face {
+        font-family: MontserratThin;
+        src: url("/fonts/Montserrat-Thin.ttf");
+    }
+    @font-face {
+        font-family: MontserratBlack;
+        src: url("/fonts/Montserrat-Black.ttf");
+    }
+    @font-face {
+        font-family: MontserratExtraLight;
+        src: url("/fonts/Montserrat-ExtraLight.ttf");
+    }
+    html, body {
+        font-family: MontserratRegular, sans-serif;
+        scroll-behavior: smooth;
+    }
+    .font-semibold {
+        font-family: MontserratSemiBold, sans-serif;
+    }
+    .font-bold {
+        font-family: MontserratBold, sans-serif;
+    }
+    .font-extrabold {
+        font-family: MontserratExtraBold, sans-serif;
+    }
+    .font-black {
+        font-family: MontserratBlack, sans-serif;
+    }
+}
+
+@keyframes loader-animation {
+    0% {
+        left: -100%;
+    }
+    49% {
+        left: 100%;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: -100%;
+    }
+}
+.loader {
+    @apply z-50 fixed overflow-hidden w-full h-screen bg-white;
+}
+.loader .bar {
+    @apply relative h-1 w-full bg-yellow-400;
+    animation-name: loader-animation;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+.btn-lg {
+    @apply text-white bg-yellow-500 hover:bg-yellow-600 mt-5 py-5 px-7
+}
