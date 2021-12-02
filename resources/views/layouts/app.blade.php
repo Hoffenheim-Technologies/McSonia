@@ -18,6 +18,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    @yield('pageStyles')
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
 </head>
@@ -91,5 +93,7 @@
             </div>
         </footer>
     </div>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
