@@ -33,6 +33,10 @@ Route::get('/app', function () {
     return view('layouts.app');
 });
 
+Route::get('/request', function () {
+    return view('request');
+});
+
 Auth::routes();
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {

@@ -8,12 +8,23 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'home-page': "url('/images/deliveries.svg')",
+        'about-page': "url('/images/about.svg')",
+        'contact-page': "url('/images/contact.svg')",       
+      }
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+    },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
   screens: {
     'xs': '475px',
     ...defaultTheme.screens,
