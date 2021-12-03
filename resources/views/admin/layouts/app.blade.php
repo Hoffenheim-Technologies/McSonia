@@ -32,7 +32,7 @@
         <!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
+        <div class="nav-header bg-orange">
             <div class="brand-logo">
                 <a href="index.html">
                     <b class="logo-abbr"><img src="admins/images/logo.png" alt=""> </b>
