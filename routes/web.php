@@ -17,6 +17,38 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/solution', function () {
+    return view('solution');
+});
+
+Route::get('/testimonial', function () {
+    return view('testimonial');
+});
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/app', function () {
+    return view('layouts.app');
+});
+
+Route::get('/request', function () {
+    return view('request');
+});
+
 Auth::routes();
+
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/admin', function () {
+        return view ('admin.dashboard');
+    });
+});
+
+Route::middleware(['auth', 'isDriver'])->group(function () {
+    Route::get('/driver', function () {
+        return view ('driver.dashboard');
+    });
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
