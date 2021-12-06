@@ -57,4 +57,5 @@
 
 </body>
 @include('admin.includes.scripts')
+@yield('custom-script')
 </html>
