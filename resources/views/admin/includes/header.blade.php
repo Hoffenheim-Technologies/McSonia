@@ -132,7 +132,7 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
+                                            <a href="{{route('profile')}}"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
 
                                         <hr class="my-2">

@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,12 +42,11 @@ Route::get('/request', function () {
 Auth::routes();
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::get('/admin', function () {
-        return view ('admin.dashboard');
-    });
-    Route::get('/dashboard', function () {
-        return view ('admin.dashboard');
-    });
+    Route::get('/admin', [DashboardController::class, 'dashboard'])->name('admin_dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile/{id}', [ProfileController::class, 'store'])->name('profile.store');
+
 });
 
 Route::middleware(['auth', 'isDriver'])->group(function () {
@@ -54,4 +55,4 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
     });
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
