@@ -54,7 +54,7 @@
                             <i class="icon-location-pin menu-icon"></i><span class="nav-text">PickUp/Delivery</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="#">Blank</a></li>
+                            <li><a href="{{route('locations')}}">Locations</a></li>
                         </ul>
                     </li>
 
