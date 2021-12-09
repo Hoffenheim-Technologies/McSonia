@@ -10,10 +10,9 @@ class UserActivityService
     public static function log($email, $activity, $title, $description, array $data = null)
     {
         $user = User::find($email);
-
         $payload = [
             "reference" => self::generateReference(),
-            "email" => $user->id,
+            "email" => $user->email,
             "activity" => $activity,
             "title" => $title,
             "description" => $description,

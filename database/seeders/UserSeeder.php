@@ -16,17 +16,17 @@ class UserSeeder extends Seeder
     {
         //
         User::create([
-            'name' => 'Sola',
-            'email' => 'adv@mail.com',
-            'password' =>bcrypt('Sola'),
+            'name' => 'Sola Admin',
+            'email' => 'admin@mail.com',
+            'password' =>bcrypt('password'),
             'role' => 'admin',
         ]
         );
 
         User::create([
-            'name' => 'Mishael',
-            'email' => 'adva@mail.com',
-            'password' =>bcrypt('Mishy'),
+            'name' => 'Mishael Driver',
+            'email' => 'driver@mail.com',
+            'password' =>bcrypt('password'),
             'role' => 'driver',
         ]
         );
