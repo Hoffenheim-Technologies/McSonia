@@ -43,6 +43,9 @@
         font-family: MontserratRegular, sans-serif;
         scroll-behavior: smooth;
     }
+    .font-medium {
+        font-family: MontserratMedium, sans-serif;
+    }
     .font-semibold {
         font-family: MontserratSemiBold, sans-serif;
     }
