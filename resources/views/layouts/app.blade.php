@@ -24,13 +24,13 @@
     <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
 </head>
 <body>
-    <div class="loader">
-        <div class="img w-full absolute top-1/2 transform -translate-y-1/2">
+    <div class="loader z-50 bg-white">
+        <div class="w-full h-max absolute top-1/2 transform -translate-y-1/2">
             <img src="images/logo.png" alt="Logo" class="mx-auto">
         </div>
         <div class="bar"></div>
     </div>
-    <div id="app">
+    <div id="app" class="hidden">
         <header class="hidden lg:flex mx-2 mb-3 md:mb-5 items-center h-auto justify-between bg-white">
             <a class="ml-3" href="{{ url('/') }}">
                 <img src="images/logo.webp" alt="McSonia Logistics" class="h-8">
@@ -41,7 +41,7 @@
             <div class="mt-3">
                 <ul class="flex flex-row text-xs">
                     <li class="px-4 uppercase text-yellow-400"><a href="/about">About</a></li>
-                    <li class="px-4 uppercase hover:text-yellow-400"><a href="#">Delivery</a></li>
+                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/request">Booking</a></li>
                     <li class="px-4 uppercase hover:text-yellow-400"><a href="/testimonial">Testimonials</a></li>
                     <li class="px-4 uppercase hover:text-yellow-400"><a href="/solution">Solutions</a></li>
                 </ul>
@@ -88,6 +88,13 @@
             @yield('content')
         </main>
         <footer class="container mx-auto mt-12">
+            <div class="w-full bg-yellow-100 text-xl flex justify-around">
+                <span class="flex-grow">Get Connected </span>
+                <div class="flex flex-grow justify-around"> 
+                    <a href="">Facebook</a>
+                    <a href="">Instagram</a>
+                </div>
+            </div>
             <div class="mx-auto w-full text-center">
                 Copyright &copy; {{ date('Y') }}{{' '}}{{ config('app.name') }} Powered by <a class="text-blue-400 hover:text-yellow-500" href="https://www.hoffenheimtechnologies.com">Hoffenheim Technologies</a>
             </div>

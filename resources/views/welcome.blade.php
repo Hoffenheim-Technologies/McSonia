@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto">
+<div class="container mx-5 mb-8">
     <div class="flex flex-col md:grid md:grid-cols-2">
         <div class="ml-auto self-center w-full">
             <h1 class="font-bold text-3xl lg:text-6xl mb-5 w-full md:w-11/12">All Tools for Delivery Services in One Place</h1>
@@ -10,6 +10,13 @@
         </div>
         <div class="mx-auto order-first lg:order-last py-5">
             <img src="images/deliveries.svg" alt="deliveries">
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <div class="text-yellow-500 text-center">
+            <h1 class="font-bold text-3xl">FAQs</h1>
+            <p class="font-medium text-2xl text-black">Frequently Asked Questions</p>
         </div>
     </div>
 </div>
