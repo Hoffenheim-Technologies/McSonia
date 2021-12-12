@@ -58,3 +58,6 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// Laravel 8
+Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
