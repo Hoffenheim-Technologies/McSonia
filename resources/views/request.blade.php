@@ -13,7 +13,7 @@
     }
     ul.list {
         width: 100%;
-        overflow-y: auto !important; 
+        overflow-y: auto !important;
         max-height: 300px;
         scrollbar-color: #000;
         scrollbar-width: thin;
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="border relative rounded bg-yellow-100 mx-5">
-                <div class="h-full"> 
+                <div class="h-full">
                     <div class="flex flex-col h-full justify-evenly">
                         <div class="flex flex-row items-center">
                             <span class="mx-3">Start</span>
@@ -96,7 +96,7 @@
     <div class="content-2" style="display: none;">
         <div class="md:flex flex-row">
             <div class="w-64 rounded mx-5 bg-white">
-                <div class="bg-yellow-100 rounded mb-3 pt-6"> 
+                <div class="bg-yellow-100 rounded mb-3 pt-6">
                     <h3 class="font-semibold mt-4 mb-2 px-3">
                         Summary
                     </h3>
@@ -248,11 +248,11 @@
     <div class="content-3" style="display: none;">
         <div class="md:flex flex-row">
             <div class="bg-yellow-100 mx-5 w-1/3">
-                <div class="bg-yellow-100 rounded mb-3 pt-6"> 
+                <div class="bg-yellow-100 rounded mb-3 pt-6">
                     <h3 class="font-semibold mt-4 mb-2 px-3">
                         Contact and Billing Info
                     </h3>
-                    
+
                     <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">first name</label>
@@ -274,7 +274,7 @@
                 </div>
             </div>
             <div class="bg-yellow-100 mx-5 w-1/3">
-                <div class="bg-yellow-100 rounded mb-3 pt-6"> 
+                <div class="bg-yellow-100 rounded mb-3 pt-6">
                     <h3 class="font-semibold mt-4 mb-2 px-3">
                         Ride Details
                     </h3>
@@ -356,8 +356,8 @@
             <input type="hidden" name="quantity" value="3">
             <input type="hidden" name="currency" value="NGN">
             <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
-            <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
-            
+            {{-- <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">  required --}}
+
             <input type="hidden" name="split_code" value="SPL_EgunGUnBeCareful"> {{-- to support transaction split. more details https://paystack.com/docs/payments/multi-split-payments/#using-transaction-splits-with-payments --}}
             <input type="hidden" name="split" value="{{ json_encode($split ?? '') }}"> {{-- to support dynamic transaction split. More details https://paystack.com/docs/payments/multi-split-payments/#dynamic-splits --}}
             {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
