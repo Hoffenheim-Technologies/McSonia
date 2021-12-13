@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\UserActivityConstants;
 use App\Http\Controllers\Controller;
+use App\Models\Location;
+use App\Services\Activity\User\UserActivityService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LocationController extends Controller
 {
@@ -14,7 +20,9 @@ class LocationController extends Controller
      */
     public function index()
     {
-        return view('admin.locations');
+        $locations = Location::get();
+        //dd($locations);
+        return view('admin.locations', compact('locations'));
     }
 
     /**
@@ -80,6 +88,19 @@ class LocationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $location = Location::find($id);
+        if(!empty($location)){
+            $location->destroy();
+            UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Deleted","User Deleted Location",null);
+            DB::commit();
+            
+            return redirect()->route('locations')->with('message','Data Deleted Successfully');
+        }
+        }catch (Exception $e) {
+            DB::rollback();
+        }
     }
 }
