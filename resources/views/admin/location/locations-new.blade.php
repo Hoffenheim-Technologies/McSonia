@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Delivery Location</label>
-                                        <input type="text" class="form-control" value="{{old('delivery')}}" name="delivery" placeholder="Delivery location">
+                                        <input type="text" class="form-control" value="{{old('destination')}}" name="destination" placeholder="Delivery location">
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -61,6 +61,6 @@
         ***********************************-->
 @endsection
 @section('custom-script')
-    <script src="admins/plugins/validation/jquery.validate.min.js"></script>
-    <script src="admins/plugins/validation/jquery.validate-init.js"></script>
+    <script src="{{ $admin_source }}/plugins/validation/jquery.validate.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/validation/jquery.validate-init.js"></script>
 @endsection

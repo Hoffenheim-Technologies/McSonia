@@ -1,28 +1,33 @@
 <!--**********************************
         Scripts
     ***********************************-->
-    <script src="admins/plugins/common/common.min.js"></script>
-    <script src="admins/js/custom.min.js"></script>
-    <script src="admins/js/settings.js"></script>
-    <script src="admins/js/gleek.js"></script>
-    <script src="admins/js/styleSwitcher.js"></script>
+    <script src="{{ $admin_source }}/plugins/common/common.min.js"></script>
+    <script src="{{ $admin_source }}/js/custom.min.js"></script>
+    <script src="{{ $admin_source }}/js/settings.js"></script>
+    <script src="{{ $admin_source }}/js/gleek.js"></script>
+    <script src="{{ $admin_source }}/js/styleSwitcher.js"></script>
 
     <!-- Chartjs -->
-    <script src="admins/plugins/chart.js/Chart.bundle.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/chart.js/Chart.bundle.min.js"></script>
     <!-- Circle progress -->
-    <script src="admins/plugins/circle-progress/circle-progress.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/circle-progress/circle-progress.min.js"></script>
     <!-- Morrisjs -->
-    <script src="admins/plugins/raphael/raphael.min.js"></script>
-    <script src="admins/plugins/morris/morris.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/raphael/raphael.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/morris/morris.min.js"></script>
     <!-- Pignose Calender -->
-    <script src="admins/plugins/moment/moment.min.js"></script>
-    <script src="admins/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/moment/moment.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
     <!-- ChartistJS -->
-    <script src="admins/plugins/chartist/js/chartist.min.js"></script>
-    <script src="admins/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/chartist/js/chartist.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <!-- Toastr -->
-    <script src="admins/plugins/toastr/js/toastr.min.js"></script>
-    <script src="admins/plugins/toastr/js/toastr.init.js"></script>
+    <script src="{{ $admin_source }}/plugins/toastr/js/toastr.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/toastr/js/toastr.init.js"></script>
+    <!-- Datatables -->
+    <script src="{{ $admin_source }}/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+
     <script>
         @if(Session::has('message'))
         toastr.options =

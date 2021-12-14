@@ -35,10 +35,10 @@
         <div class="nav-header bg-orange">
             <div class="brand-logo">
                 <a href="index.html">
-                    <b class="logo-abbr"><img src="admins/images/logo.png" alt=""> </b>
-                    <span class="logo-compact"><img src="admins/images/logo.png" alt=""></span>
+                    <b class="logo-abbr"><img src="{{ $admin_source }}/images/logo.png" alt=""> </b>
+                    <span class="logo-compact"><img src="{{ $admin_source }}/images/logo.png" alt=""></span>
                     <span class="brand-title">
-                        <img src="admins/images/logo-text-2.png" alt="">
+                        <img src="{{ $admin_source }}/images/logo-text-2.png" alt="">
                     </span>
                 </a>
             </div>

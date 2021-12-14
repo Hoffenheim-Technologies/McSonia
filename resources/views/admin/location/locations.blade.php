@@ -32,23 +32,30 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($locations as $item)
-                                            <tr>
-                                                <td>
-                                                    {{$item->pickup}}
-                                                </td>
-                                                <td>
-                                                    {{$item->delivery}}
-                                                </td>
-                                                <td>
-                                                    {{$item->amount}}
-                                                </td>
-                                                <td>
-                                                    @money($item->amount) 
-                                                </td>
-                                                <td>
-                                                    
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>
+                                                {{$item->pickup}}
+                                            </td>
+                                            <td>
+                                                {{$item->destination}}
+                                            </td>
+                                            <td>
+                                                @money($item->amount) 
+                                            </td>
+                                            <td class="" >
+                                                <span class="{{ $item->status == 1 ? 'label gradient-1' : 'label gradient-2'}} "> {{$item->status == 1 ? 'Active' : 'Inactive'}} </span>
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('locations.destroy' , $item)}}" method="post">@csrf @method('delete')
+                                                    <span>
+                                                        <a class="btn btn-info btn-sm mx-2" href="{{route('locations.edit', $item)}}" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                            <i class="fa fa-pencil color-muted m-r-5"></i> Edit
+                                                        </a>
+                                                        <button type="submit" class="btn btn-danger btn-sm mx-2" onsubmit="checkDelete(this)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
+                                                    </span>
+                                                </form>
+                                            </td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -64,6 +71,6 @@
         ***********************************-->
 @endsection
 @section('custom-script')
-    <script src="admins/plugins/validation/jquery.validate.min.js"></script>
-    <script src="admins/plugins/validation/jquery.validate-init.js"></script>
+    <script src="{{ $admin_source }}/plugins/validation/jquery.validate.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/validation/jquery.validate-init.js"></script>
 @endsection

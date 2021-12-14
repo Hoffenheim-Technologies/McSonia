@@ -54,8 +54,8 @@
                             <i class="icon-location-pin menu-icon"></i><span class="nav-text">PickUp/Delivery</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{{route('locations')}}">Locations</a></li>
-                            <li><a href="{{route('locations-new')}}">Add Location</a></li>
+                            <li><a href="{{route('locations.index')}}">Locations</a></li>
+                            <li><a href="{{route('locations.create')}}">Add Location</a></li>
                         </ul>
                     </li>
 

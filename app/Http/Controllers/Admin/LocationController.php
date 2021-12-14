@@ -43,26 +43,26 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //dd($request);
         $user = Auth::user();
         DB::beginTransaction();
         try {
             $data = [];
             $data['pickup'] = $request->pickup;
-            $data['delivery'] = $request->delivery;
+            $data['destination'] = $request->destination;
             $data['ststus'] = $request->status;
             $data['amount'] = $request->amount;
 
             Location::create($data);
             DB::commit();
             UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Created","User Added Location",null);
-            return redirect()->route('locations-new')->with('message','Data Created Successfully');
+            return redirect()->route('locations.create')->with('message','Data Created Successfully');
 
         }catch(Exception $as){
             DB::rollback();
             //throw new Exception;
-            error_log($as);
-            return redirect()->route('locations-new')->with('error','Data Entry Unsuccessful, Check Values');
+            dd($as);
+            return redirect()->route('locations.create')->with('error','Data Entry Unsuccessful, Check Values');
         }
 
     }
