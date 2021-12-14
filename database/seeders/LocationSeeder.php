@@ -17,24 +17,24 @@ class LocationSeeder extends Seeder
         //
         Location::create([
             'pickup' => 'Ajah',
-            'destinaton' => 'Lakowe',
-            'amount' => range(500, 2000, 100),
+            'destination' => 'Lakowe',
+            'amount' => rand(500, 2000),
             'status' => 1
         ]
         );
 
         Location::create([
-            'name' => 'Ajah',
-            'destinaton' => 'Ibeju',
-            'amount' => range(500, 2000, 100),
+            'pickup' => 'Ajah',
+            'destination' => 'Ibeju',
+            'amount' => rand(500, 2000),
             'status' => 1
         ]
         );
 
         Location::create([
-            'name' => 'Lakowe',
-            'destinaton' => 'Lekki',
-            'amount' => range(500, 2000, 100),
+            'pickup' => 'Lakowe',
+            'destination' => 'Lekki',
+            'amount' => rand(500, 2000),
             'status' => 1
         ]
         );
