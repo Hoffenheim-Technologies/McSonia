@@ -65,7 +65,7 @@
                     @else
                         <li class="">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
+                                {{ Auth::user()->firstname }}
                             </a>
 
                             <div class="" aria-labelledby="navbarDropdown">
@@ -101,6 +101,7 @@
         </footer>
     </div>
     <script src="js/jquery.nice-select.min.js"></script>
+    @yield('extraScripts')
     <script src="js/main.js"></script>
     @yield('custom-script')
 </body>
