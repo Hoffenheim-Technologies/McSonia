@@ -22,7 +22,7 @@ class LocationController extends Controller
     {
         $locations = Location::get();
         //dd($locations);
-        return view('admin.locations', compact('locations'));
+        return view('admin.location.locations', compact('locations'));
     }
 
     /**
@@ -32,7 +32,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.location.locations-new');
     }
 
     /**
@@ -43,7 +43,28 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $data = [];
+            $data['pickup'] = $request->pickup;
+            $data['delivery'] = $request->delivery;
+            $data['ststus'] = $request->status;
+            $data['amount'] = $request->amount;
+
+            Location::create($data);
+            DB::commit();
+            UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Created","User Added Location",null);
+            return redirect()->route('locations-new')->with('message','Data Created Successfully');
+
+        }catch(Exception $as){
+            DB::rollback();
+            //throw new Exception;
+            error_log($as);
+            return redirect()->route('locations-new')->with('error','Data Entry Unsuccessful, Check Values');
+        }
+
     }
 
     /**
