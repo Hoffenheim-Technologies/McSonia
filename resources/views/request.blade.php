@@ -30,10 +30,45 @@
 </style>
 @endsection
 
+@section('extraScripts')
+<script>
+    $('[name=pdate]').change(() => {
+        $('.timing').val($('[name=pdate]').val() + ', ' + $('[name=ptime]').val())
+    })
+    $('[name=ptime]').change(() => {
+        $('.timing').val($('[name=pdate]').val() + ', ' + $('[name=ptime]').val())
+    })
+    $('[name=plocation]').change(() => {
+        $('.journey').val($('[name=plocation]').val() + ' - ' + $('[name=dlocation]').val())
+    })
+    $('[name=dlocation]').change(() => {
+        $('.journey').val($('[name=plocation]').val() + ' - ' + $('[name=dlocation]').val())
+    })
+</script>
+@guest
+<script> 
+
+</script>
+@else
+<script>
+$('.firstname').val('{{ Auth::user()->firstname }}')
+$('.lastname').val('{{ Auth::user()->lastname }}')
+$('.email').val('{{ Auth::user()->email }}')
+$('.phone').val('{{ Auth::user()->phone }}')
+</script>
+@endguest
+@endsection
+
 @section('content')
+@if($message || $reference)
 @isset($message)
 {{ $message }}
 @endisset
+<br>
+@isset($reference)
+Your booking reference is {{ $reference }}
+@endisset
+@else
 <form class="mx-auto container" method="POST" action="/request">
     @csrf @method('PUT')
     <div class="mx-auto w-3/4 mb-12">
@@ -57,23 +92,23 @@
                 <div class="flex flex-row w-full bg-white border-b py-3">
                     <div class="w-1/2 border-r">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Date *</label>
-                        <input name="pdate" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="date" >
+                        <input id="pdate" name="pdate" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="date" >
                     </div>
                     <div class="w-1/2 border-l">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Time *</label>
-                        <input name="ptime" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="time" >
+                        <input id="ptime" name="ptime" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="time" >
                     </div>
                 </div>
                 <div class="w-full bg-white border-y py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
-                        <input name="plocation" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <input id="plocation" name="plocation" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                     </div>
                 </div>
                 <div class="w-full bg-white border-t py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Location *</label>
-                        <input name="dlocation" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <input id="dlocation" name="dlocation" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                     </div>
                 </div>
             </div>
@@ -94,7 +129,7 @@
             </div>
         </div>
         <div class="flex flex-row justify-end">
-            <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-1').hide(); $('.content-2').show()">Enter Contact Details</button>
+            <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg" type="button" onclick="">Enter Contact Details</button>
         </div>
     </div>
     <div class="content-2" style="display: none;">
@@ -110,56 +145,48 @@
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">from - to</label>
-                        <input value="Ajah - Lekki Phase 3" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                        <input id="summary_from_to" value="" class="journey w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">pickup date, time</label>
-                        <input value="28-12-21, 07:00" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                        <input id="summary_pickup_details" value="" class="timing w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+
                     </div>
                     <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">distance</label>
-                            <input value="300km" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input id="summary_distance" value="300km" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">time</label>
-                            <input value="90 minutes" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input id="summary_time" value="90 minutes" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">vehicle</label>
-                        <input value="Truck" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                        <input id="summary_vehicle" value="Truck" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                     </div>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-medium">
                         Selection
                     </h6>
-                    <p>NGN 2000</p>
+                    <p id="summary_selection_price">NGN 2000</p>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-bold">
                         Total
                     </h6>
-                    <p class="font-bold">NGN 2000</p>
+                    <p id="summary_total_price" class="font-bold">NGN 2000</p>
                 </div>
             </div>
             <div class="flex-grow rounded mx-5">
+                @guest
                 <div>
                     <div class="w-full bg-yellow-100 px-3 py-3">Sign In</div>
-                    <div class="flex flex-row w-full bg-white border py-3">
-                        <div class="w-1/2 border-r">
-                            <label for="" class="uppercase text-xs px-2 text-gray-500">Email *</label>
-                            <input name="umail" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" >
-                        </div>
-                        <div class="w-1/2 border-l">
-                            <label for="" class="uppercase text-xs px-2 text-gray-500">Password *</label>
-                            <input class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="password" >
-                        </div>
-                    </div>
                     <div class="flex flex-row justify-end">
                         <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.contact-details').slideDown()">Don't have an Account?</button>
-                        <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-3').show()">Sign In</button>
+                        <a class="btn-lg font-semibold block uppercase border rounded-lg" href="/login">Sign In</a>
                     </div>
                 </div>
                 <div class="mt-6 contact-details" style="display: none;">
@@ -171,28 +198,24 @@
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">last name *</label>
-                            <input name="lname" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            <input class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                         </div>
                     </div>
                     <div class="flex flex-row w-full bg-white border py-3">
                         <div class="w-1/2 border-r">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">Email address*</label>
-                            <input name="email" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" >
+                            <input class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" >
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">phone number *</label>
-                            <input name="phone" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone" >
+                            <input  name="phone" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone" >
                         </div>
                     </div>
                     <div class="w-full bg-white border py-3">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Comments</label>
-                        <textarea name="comments" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" ></textarea>
+                        <textarea id="comments" name="comments" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" ></textarea>
                     </div>
                     <div class="w-full bg-yellow-100 py-3 px-5">
-                        <div class="flex flex-row items-center py-3">
-                            <label for="" class="uppercase text-md px-2 text-gray-500">Create an Account?</label>
-                            <input name="account" class="order-first rounded outline-none border border-yellow-500 text-lg text-yellow-500 focus:ring focus:ring-yellow-500" type="checkbox" name="" id="">
-                        </div>
                         <div class="flex flex-row items-center py-3">
                             <label for="" class="uppercase text-md px-2 text-gray-500">billing address</label>
                             <input name="billing" class="order-first rounded outline-none border border-yellow-500 text-lg text-yellow-500 focus:ring focus:ring-yellow-500" onchange="$('.billing-address').slideToggle();" type="checkbox" name="" id="">
@@ -241,7 +264,85 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <div class="mt-6 contact-details">
+                    <div class="w-full bg-yellow-100 px-3 py-3 uppercase">Contact Details</div>
+                    <div class="flex flex-row w-full bg-white border py-3">
+                        <div class="w-1/2 border-r">
+                            <label for="" class="uppercase text-xs px-2 text-gray-500">first name *</label>
+                            <input disabled value="{{ Auth::user()->firstname }}" name="fname" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        </div>
+                        <div class="w-1/2 border-l">
+                            <label for="" class="uppercase text-xs px-2 text-gray-500">last name *</label>
+                            <input disabled value="{{ Auth::user()->lastname }}" name="lname" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        </div>
+                    </div>
+                    <div class="flex flex-row w-full bg-white border py-3">
+                        <div class="w-1/2 border-r">
+                            <label for="" class="uppercase text-xs px-2 text-gray-500">Email address*</label>
+                            <input disabled value="{{ Auth::user()->email }}" name="email" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" >
+                        </div>
+                        <div class="w-1/2 border-l">
+                            <label for="" class="uppercase text-xs px-2 text-gray-500">phone number *</label>
+                            <input disabled value="{{ Auth::user()->phone }}" name="phone" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone" >
+                        </div>
+                    </div>
+                    <div class="w-full bg-white border py-3">
+                        <label for="" class="uppercase text-xs px-2 text-gray-500">Comments</label>
+                        <textarea name="comments" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" ></textarea>
+                    </div>
+                    <div class="w-full bg-yellow-100 py-3 px-5">
+                        <div class="flex flex-row items-center py-3">
+                            <label for="" class="uppercase text-md px-2 text-gray-500">billing address</label>
+                            <input name="billing" class="order-first rounded outline-none border border-yellow-500 text-lg text-yellow-500 focus:ring focus:ring-yellow-500" onchange="$('.billing-address').slideToggle();" type="checkbox" name="" id="">
+                        </div>
+                    </div>
+                    <div class="billing-address" style="display: none;">
+                        <div class="flex flex-row w-full bg-white border py-3">
+                            <div class="w-1/2 border-r">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">company registered name</label>
+                                <input name="company" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            </div>
+                            <div class="w-1/2 border-l">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">tax number </label>
+                                <input name="tax" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            </div>
+                        </div>
+                        <div class="flex flex-row w-full bg-white border py-3">
+                            <div class="w-1/3 border-r">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">street *</label>
+                                <input name="street" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            </div>
+                            <div class="w-1/3 border-x">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">street number *</label>
+                                <input name="snumber" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            </div>
+                            <div class="w-1/3 border-l">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">city *</label>
+                                <input name="city" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            </div>
+                        </div>
+                        <div class="flex flex-row w-full bg-white border py-3">
+                            <div class="w-1/3 border-r">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">state *</label>
+                                <input name="state" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            </div>
+                            <div class="w-1/3 border-x">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">postal code *</label>
+                                <input name="postal" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            </div>
+                            <div class="w-1/3 border-l">
+                                <label for="" class="uppercase text-xs px-2 text-gray-500">Country *</label>
+                                <select name="country" class="niceselect border-0 w-full" >
+                                    <option value="1">Nigeria</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endguest
             </div>
+            
         </div>
         <div class="flex flex-row justify-between">
             <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">Choose Ride Details</button>
@@ -259,20 +360,20 @@
                     <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">first name</label>
-                            <input value="Sola" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input value="" class="firstname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">lastname</label>
-                            <input value="Olagunju" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input value="" class="lastname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">email address</label>
-                        <input value="ogolagunju@gmail.com" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email"  disabled>
+                        <input value="" class="email w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email"  disabled>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">phone number</label>
-                        <input value="08167403991" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone"  disabled>
+                        <input value="" class="phone w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone"  disabled>
                     </div>
                 </div>
             </div>
@@ -287,11 +388,11 @@
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">from - to</label>
-                        <input value="Ajah - Lekki Phase 3" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                        <input value="" class="journey w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">pickup date, time</label>
-                        <input value="28-12-21, 07:00" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                        <input value="" class="timing w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                     </div>
                     <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
@@ -344,6 +445,7 @@
         </div>
     </div>
 </form>
+@endif
 <!-- <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
     <div class="row" style="margin-bottom:40px;">
         <div class="col-md-8 col-md-offset-2">
@@ -375,4 +477,7 @@
         </div>
     </div>
 </form> -->
+@endsection
+@section('custom-script')
+    <script src="js/request.js"></script>
 @endsection

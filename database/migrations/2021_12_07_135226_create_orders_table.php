@@ -33,7 +33,7 @@ class CreateOrdersTable extends Migration
             $table->string('country')->nullable();
             $table->string('discount')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
-            
+            $table->string('reference');
             $table->timestamps();
         });
 
