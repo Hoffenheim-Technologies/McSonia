@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,10 +37,6 @@ Route::get('/app', function () {
     return view('layouts.app');
 });
 
-Route::get('/request', function () {
-    return view('request');
-});
-
 Auth::routes();
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
@@ -60,6 +57,8 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/request', [OrderController::class, 'index'])->name('order');
+Route::put('/request', [OrderController::class, 'store'])->name('request');
 
 // Laravel 8
 Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
