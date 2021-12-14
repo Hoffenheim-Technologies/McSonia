@@ -66,9 +66,17 @@ class OrderController extends Controller
         if($request->discount){
             $order->discount = $request->discount;
         }
+        function random_strings($length_of_string)
+        {
+            $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+            return substr(str_shuffle($str_result), 0, $length_of_string);
+        }
+        $order->reference = random_strings(8);
+
         $order->save();
 
-        return view('request')->with('message', 'Done');
+        return view('request')->with('message', 'Done')->with('reference', $order->reference);
     }
 
     /**

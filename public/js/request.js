@@ -11,14 +11,6 @@ $('#btn_contact_details').on("click", function(){
     };
     $('.content-1').hide(); 
     $('.content-2').show();
-    //console.log(RideDetails);
-    $('#summary_from_to').val(RideDetails.plocation+" - "+RideDetails.dlocation);
-    $('#summary_pickup_details').val(RideDetails.pdate+": "+RideDetails.ptime);
-    //$('#summary_distance').val();
-    //$('#summary_time').val();
-    //$('#summary_vehicle').val();
-    //$('#summary_selection_price').val();
-    //$('#summary_total_price').val();
 });
 
 
