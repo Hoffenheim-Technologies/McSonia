@@ -60,9 +60,15 @@ $('.phone').val('{{ Auth::user()->phone }}')
 @endsection
 
 @section('content')
+@if($message || $reference)
 @isset($message)
 {{ $message }}
 @endisset
+<br>
+@isset($reference)
+Your booking reference is {{ $reference }}
+@endisset
+@else
 <form class="mx-auto container" method="POST" action="/request">
     @csrf @method('PUT')
     <div class="mx-auto w-3/4 mb-12">
@@ -439,6 +445,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
         </div>
     </div>
 </form>
+@endif
 <!-- <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
     <div class="row" style="margin-bottom:40px;">
         <div class="col-md-8 col-md-offset-2">
