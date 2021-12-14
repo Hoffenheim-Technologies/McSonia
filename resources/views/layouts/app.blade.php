@@ -102,5 +102,6 @@
     </div>
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/main.js"></script>
+    @yield('custom-script')
 </body>
 </html>
