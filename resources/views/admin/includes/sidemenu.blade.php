@@ -55,6 +55,7 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('locations')}}">Locations</a></li>
+                            <li><a href="{{route('locations-new')}}">Add Location</a></li>
                         </ul>
                     </li>
 
