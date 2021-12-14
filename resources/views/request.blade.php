@@ -353,20 +353,20 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">first name</label>
-                            <input value="Sola" class="firstname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input value="" class="firstname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">lastname</label>
-                            <input value="Olagunju" class="lastname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input value="" class="lastname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">email address</label>
-                        <input value="ogolagunju@gmail.com" class="email w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email"  disabled>
+                        <input value="" class="email w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email"  disabled>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">phone number</label>
-                        <input value="08167403991" class="phone w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone"  disabled>
+                        <input value="" class="phone w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone"  disabled>
                     </div>
                 </div>
             </div>
