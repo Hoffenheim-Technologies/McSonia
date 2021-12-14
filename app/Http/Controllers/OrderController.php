@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -15,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('request');
     }
 
     /**
@@ -27,6 +29,7 @@ class OrderController extends Controller
     {
         //
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -34,9 +37,38 @@ class OrderController extends Controller
      * @param  \App\Http\Requests\StoreOrderRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOrderRequest $request)
+    public function store(Request $request)
     {
-        //
+        
+        $order = new Order;
+        $order->pdate = $request->pdate;
+        $order->ptime = $request->ptime;
+        $order->plocation = $request->plocation;
+        $order->dlocation = $request->dlocation;
+        if(Auth::check()){
+            $order->user_id = Auth::id();
+        } else {
+            $order->firstname = $request->fname;
+            $order->lastname = $request->lname;
+            $order->email = $request->email;
+            $order->phone = $request->phone;
+        }
+        if($request->billing == 1){
+            $order->company = $request->company;
+            $order->tax = $request->tax;
+            $order->street = $request->street;
+            $order->snumber = $request->snumber;
+            $order->city = $request->city;
+            $order->state = $request->state;
+            $order->postal = $request->postal;
+            $order->country = $request->country;
+        }
+        if($request->discount){
+            $order->discount = $request->discount;
+        }
+        $order->save();
+
+        return view('request')->with('message', 'Done');
     }
 
     /**
