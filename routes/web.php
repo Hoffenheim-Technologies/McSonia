@@ -44,7 +44,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile/{id}', [ProfileController::class, 'store'])->name('profile.store');
-    Route::get('/locations', [LocationController::class, 'index'])->name('locations');
+
+    //Locations
+    Route::resource('locations', 'LocationController');
 
 });
 
