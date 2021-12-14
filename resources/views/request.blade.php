@@ -47,7 +47,9 @@
 </script>
 @guest
 <script> 
-
+$('[name=firstname]').change(()=>{
+ $('.firstname').val($('[name=firstname]').val())
+})
 </script>
 @else
 <script>
@@ -60,7 +62,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
 @endsection
 
 @section('content')
-@if($message || $reference)
+@isset($message, $reference)
 @isset($message)
 {{ $message }}
 @endisset
@@ -445,7 +447,7 @@ Your booking reference is {{ $reference }}
         </div>
     </div>
 </form>
-@endif
+@endisset
 <!-- <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
     <div class="row" style="margin-bottom:40px;">
         <div class="col-md-8 col-md-offset-2">
