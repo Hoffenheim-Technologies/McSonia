@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\UserActivityConstants;
 use App\Http\Controllers\Controller;
+use App\Models\Location;
+use App\Services\Activity\User\UserActivityService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LocationController extends Controller
 {
@@ -14,7 +20,9 @@ class LocationController extends Controller
      */
     public function index()
     {
-        return view('admin.locations');
+        $locations = Location::get();
+        //dd($locations);
+        return view('admin.location.locations', compact('locations'));
     }
 
     /**
@@ -24,7 +32,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.location.locations-new');
     }
 
     /**
@@ -35,7 +43,28 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $data = [];
+            $data['pickup'] = $request->pickup;
+            $data['delivery'] = $request->delivery;
+            $data['ststus'] = $request->status;
+            $data['amount'] = $request->amount;
+
+            Location::create($data);
+            DB::commit();
+            UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Created","User Added Location",null);
+            return redirect()->route('locations-new')->with('message','Data Created Successfully');
+
+        }catch(Exception $as){
+            DB::rollback();
+            //throw new Exception;
+            error_log($as);
+            return redirect()->route('locations-new')->with('error','Data Entry Unsuccessful, Check Values');
+        }
+
     }
 
     /**
@@ -80,6 +109,19 @@ class LocationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $location = Location::find($id);
+        if(!empty($location)){
+            $location->destroy();
+            UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Deleted","User Deleted Location",null);
+            DB::commit();
+            
+            return redirect()->route('locations')->with('message','Data Deleted Successfully');
+        }
+        }catch (Exception $e) {
+            DB::rollback();
+        }
     }
 }
