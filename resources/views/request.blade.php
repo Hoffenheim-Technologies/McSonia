@@ -46,18 +46,21 @@
     })
 </script>
 @guest
-<script> 
-$('[name=firstname]').change(()=>{
- $('.firstname').val($('[name=firstname]').val())
-})
-</script>
+    <script> 
+    $('[name=firstname]').change(()=>{
+    $('.firstname').val($('[name=firstname]').val())
+    $('.lastname').val($('[name=lastname]').val())
+    $('.email').val($('[name=email]').val())
+    $('.phone').val($('[name=phone]').val())
+    })
+    </script>
 @else
-<script>
-$('.firstname').val('{{ Auth::user()->firstname }}')
-$('.lastname').val('{{ Auth::user()->lastname }}')
-$('.email').val('{{ Auth::user()->email }}')
-$('.phone').val('{{ Auth::user()->phone }}')
-</script>
+    <script>
+    $('.firstname').val('{{ Auth::user()->firstname }}')
+    $('.lastname').val('{{ Auth::user()->lastname }}')
+    $('.email').val('{{ Auth::user()->email }}')
+    $('.phone').val('{{ Auth::user()->phone }}')
+    </script>
 @endguest
 @endsection
 
