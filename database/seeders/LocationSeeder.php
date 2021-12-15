@@ -7,6 +7,7 @@ use App\Models\Location;
 
 class LocationSeeder extends Seeder
 {
+    
     /**
      * Run the database seeds.
      *
@@ -14,29 +15,53 @@ class LocationSeeder extends Seeder
      */
     public function run()
     {
-        //
-        Location::create([
-            'pickup' => 'Ajah',
-            'destination' => 'Lakowe',
-            'amount' => rand(500, 2000),
-            'status' => 1
-        ]
-        );
-
-        Location::create([
-            'pickup' => 'Ajah',
-            'destination' => 'Ibeju',
-            'amount' => rand(500, 2000),
-            'status' => 1
-        ]
-        );
-
-        Location::create([
-            'pickup' => 'Lakowe',
-            'destination' => 'Lekki',
-            'amount' => rand(500, 2000),
-            'status' => 1
-        ]
-        );
+        
+        $locations = [
+            'Agege', 
+            'Ajah', 
+            'Alimosho', 
+            'Amuwo-Odofin', 
+            'Apapa', 
+            'Awoyaya',
+            'Badagry', 
+            'Bariga',
+            'Ebute-Meta',
+            'Epe', 
+            'Eleko',
+            'Festac Town',
+            'Gbagada', 
+            'Ibeju-Lekki', 
+            'Ikeja', 
+            'Ikorodu', 
+            'Ikorodu Road',
+            'Ikoyi',
+            'Ilupeju',
+            'Ipaja',
+            'Isolo',
+            'Lakowe',
+            'Lekki I',
+            'Lekki II', 
+            'Magodo',
+            'Maryland',
+            'Ogudu', 
+            'Ojodu',
+            'Ojota',
+            'Oniru',
+            'Orile',
+            'Oshodi',
+            'Palmgrove',
+            'Sangotedo',
+            'Satellite Town', 
+            'Shomolu', 
+            'Surulere', 
+            'VGC',
+            'Victoria Island',
+            'Yaba'
+        ];
+        foreach ($locations as $location) {
+            Location::create([
+                'location' => $location
+            ]);
+        }
     }
 }

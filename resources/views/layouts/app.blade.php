@@ -43,7 +43,7 @@
                     <li class="px-4 uppercase text-yellow-400"><a href="/about">About</a></li>
                     <li class="px-4 uppercase hover:text-yellow-400"><a href="/request">Booking</a></li>
                     <li class="px-4 uppercase hover:text-yellow-400"><a href="/testimonial">Testimonials</a></li>
-                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/solution">Solutions</a></li>
+                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/solution">Contact-Us</a></li>
                 </ul>
             </div>
 
