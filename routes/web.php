@@ -1,11 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\faq;
+use App\Models\Location;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AjaxController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,8 +22,13 @@ use App\Http\Controllers\OrderController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome')->with('faqs', faq::all())->with('locations', Location::all());
 });
+
+Route::post('/', function (Request $request) {
+    return view('request')->with('input', $request)->with('locations', Location::all());
+});
+
 
 Route::get('/solution', function () {
     return view('solution');
@@ -57,6 +66,7 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/location/{id}', [AjaxController::class, 'location']);
 Route::get('/request', [OrderController::class, 'index'])->name('order');
 Route::put('/request', [OrderController::class, 'store'])->name('request');
 
