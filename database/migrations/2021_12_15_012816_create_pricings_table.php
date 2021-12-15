@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLocationsTable extends Migration
+class CreatePricingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('pricings', function (Blueprint $table) {
             $table->id();
-            $table->string('location')->unique();
+            $table->bigInteger('pickup_id')->unsigned();
+            $table->bigInteger('dropoff_id')->unsigned();
+            $table->float('price');
             $table->timestamps();
+            $table->unique(['pickup_id', 'dropoff_id']);
         });
     }
 
@@ -27,6 +30,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('pricings');
     }
 }

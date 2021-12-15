@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
@@ -17,7 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('request');
+        return view('request')->with('locations', Location::all());
     }
 
     /**
@@ -44,7 +45,9 @@ class OrderController extends Controller
         $order->pdate = $request->pdate;
         $order->ptime = $request->ptime;
         $order->plocation = $request->plocation;
+        $order->paddress = $request->paddress;
         $order->dlocation = $request->dlocation;
+        $order->daddress = $request->daddress;
         if(Auth::check()){
             $order->user_id = Auth::id();
         } else {
