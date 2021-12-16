@@ -102,12 +102,12 @@ $('[name=phone]').change(()=>{
 })
 </script>
 @else
-<script>
-$('.firstname').val('{{ Auth::user()->firstname }}')
-$('.lastname').val('{{ Auth::user()->lastname }}')
-$('.email').val('{{ Auth::user()->email }}')
-$('.phone').val('{{ Auth::user()->phone }}')
-</script>
+    <script>
+    $('.firstname').val('{{ Auth::user()->firstname }}')
+    $('.lastname').val('{{ Auth::user()->lastname }}')
+    $('.email').val('{{ Auth::user()->email }}')
+    $('.phone').val('{{ Auth::user()->phone }}')
+    </script>
 @endguest
 @endsection
 

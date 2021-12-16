@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StorePricingRequest extends FormRequest
 {
@@ -13,6 +14,10 @@ class StorePricingRequest extends FormRequest
      */
     public function authorize()
     {
+        $user = Auth::user();
+        if($user->role == 'admin'){
+            return true;
+        }
         return false;
     }
 
@@ -24,7 +29,8 @@ class StorePricingRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'pickup_id' => 'required',
+            'dropoff_id' => 'required',
         ];
     }
 }
