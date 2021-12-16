@@ -7,7 +7,7 @@
         <div class="content-body">
             <div class="container-fluid mt-3">
                 <h2>
-                    Welcome to your Dashboard, {{$user->name}}
+                    Welcome to your Dashboard, {{ucwords($user->lastname.' '.$user->firstname)}}
                 </h2>
             </div>
             <!-- #/ container -->

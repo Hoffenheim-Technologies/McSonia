@@ -56,6 +56,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
+    //Pricing
+    Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');
 
 });
 

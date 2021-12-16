@@ -23,26 +23,9 @@
                             <form action="{{ route('locations.store')}}" enctype="multipart/form-data" class="form-valide" method="POST">
                                 @csrf @method('POST')
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>Pickup Location</label>
-                                        <input type="text" class="form-control" value="{{old('pickup')}}" name="pickup" placeholder="Pickup Location">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Delivery Location</label>
-                                        <input type="text" class="form-control" value="{{old('destination')}}" name="destination" placeholder="Delivery location">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>Amount</label>
-                                        <input type="number" min="0" placeholder="Amount" class="form-control" name="amount" value="{{old('amount')}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Status</label>
-                                        <select name="status" class="form-control" id="">
-                                            <option selected value="1">Active</option>
-                                            <option value="0">Inactive</option>
-                                        </select>
+                                    <div class="form-group col-md-8">
+                                        <label>Location</label>
+                                        <input type="text" class="form-control" value="{{old('location')}}" name="location" placeholder="Location">
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
