@@ -21,6 +21,7 @@
     @yield('pageStyles')
 
     <link href="css/app.css" rel="stylesheet">
+    <link href="{{ $admin_source }}/plugins/toastr/css/toastr.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
 </head>
 <body>
@@ -101,6 +102,9 @@
         </footer>
     </div>
     <script src="js/jquery.nice-select.min.js"></script>
+    <!-- Toastr -->
+    <script src="{{ $admin_source }}/plugins/toastr/js/toastr.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/toastr/js/toastr.init.js"></script>
     @yield('extraScripts')
     <script src="js/main.js"></script>
     @yield('custom-script')

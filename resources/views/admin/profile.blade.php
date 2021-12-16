@@ -52,17 +52,23 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Name</label>
-                                            <input type="name" class="form-control"  value="{{$user->name}}" name="name" placeholder="Full Name">
+                                            <label>FirstName</label>
+                                            <input type="firstname" class="form-control"  value="{{$user->firstname}}" name="firstname" placeholder="First Name">
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            <label>LastName</label>
+                                            <input type="lastname" class="form-control"  value="{{$user->lastname}}" name="lastname" placeholder="Last Name">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>Email</label>
                                             <input type="email" class="form-control" id="val-email" value="{{$user->email}}" readonly placeholder="Email">
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Address</label>
-                                        <input type="text" class="form-control" id="val-address" name="address" value="{{$user->address}}" placeholder="1234 Main St">
+                                        <div class="form-group col-md-6">
+                                            <label>Address</label>
+                                            <input type="text" class="form-control" id="val-address" name="address" value="{{$user->address}}" placeholder="1234 Main St">
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
