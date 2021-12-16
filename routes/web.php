@@ -56,6 +56,10 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
+    
+    //Orders
+    Route::resource('booking', '\App\Http\Controllers\Admin\OrderController');
+    
     //Pricing
     Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');
 
@@ -69,8 +73,8 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/location/{id}', [AjaxController::class, 'location']);
-Route::get('/request', [OrderController::class, 'index'])->name('order');
-Route::put('/request', [OrderController::class, 'store'])->name('request');
+Route::get('/request', [HomeController::class, 'order'])->name('order');
+Route::put('/request', [HomeController::class, 'storeOrder'])->name('request');
 
 // Laravel 8
 Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
