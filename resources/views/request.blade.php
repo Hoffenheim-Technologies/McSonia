@@ -32,6 +32,44 @@
 
 @section('extraScripts')
 <script>
+    $(window).on('load', () => {
+        getLocation($('#plocation').val())
+    })
+    function getName(id) {
+        var locations = {!! json_encode($locations) !!}
+        for (const location of locations) {
+            if (location.id == id){
+                return location.location
+            }
+        }
+    }
+    function getLocation(id) {
+        $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
+        $('#dlocation').niceSelect('update')
+        console.log(id)
+        $.ajax({
+            type:'GET',
+            url:`/location/${id}`,
+            data: id,
+            success: (response) => {
+                console.log(response)
+                for (const destination of response.destination) {
+                    $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
+                    $('#dlocation').niceSelect('update')
+                }
+                
+            },
+            error: (e) => {
+                console.log(e);
+            }
+        });
+    }
+</script>
+<script>
+    $('button[type=submit]').click(()=>{
+        $('.timing').val($('[name=pdate]').val() + ', ' + $('[name=ptime]').val())
+        $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
+    })
     $('[name=pdate]').change(() => {
         $('.timing').val($('[name=pdate]').val() + ', ' + $('[name=ptime]').val())
     })
@@ -39,13 +77,17 @@
         $('.timing').val($('[name=pdate]').val() + ', ' + $('[name=ptime]').val())
     })
     $('[name=plocation]').change(() => {
-        $('.journey').val($('[name=plocation]').val() + ' - ' + $('[name=dlocation]').val())
+        $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
+        $('.start').text($('[name=plocation]').find(":selected").text())
     })
     $('[name=dlocation]').change(() => {
-        $('.journey').val($('[name=plocation]').val() + ' - ' + $('[name=dlocation]').val())
+        $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
+        $('.end').text($('[name=dlocation]').find(":selected").text())
+        $('.price').text('Price - '+ $('[name=dlocation]').find(":selected").attr('price'))
     })
 </script>
 @guest
+<<<<<<< HEAD
     <script> 
     $('[name=firstname]').change(()=>{
     $('.firstname').val($('[name=firstname]').val())
@@ -54,6 +96,22 @@
     $('.phone').val($('[name=phone]').val())
     })
     </script>
+=======
+<script> 
+$('[name=firstname]').change(()=>{
+    $('.firstname').val($('[name=firstname]').val())
+})
+$('[name=lastname]').change(()=>{
+    $('.lastname').val($('[name=lastname]').val())
+})
+$('[name=email]').change(()=>{
+    $('.email').val($('[name=email]').val())
+})
+$('[name=phone]').change(()=>{
+    $('.phone').val($('[name=phone]').val())
+})
+</script>
+>>>>>>> 4e9b658f423c9032c098e8d4aef4e8c6e2543192
 @else
     <script>
     $('.firstname').val('{{ Auth::user()->firstname }}')
@@ -97,23 +155,43 @@ Your booking reference is {{ $reference }}
                 <div class="flex flex-row w-full bg-white border-b py-3">
                     <div class="w-1/2 border-r">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Date *</label>
-                        <input id="pdate" name="pdate" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="date" >
+                        <input id="pdate" name="pdate" @isset($input->pdate) value="{{$input->pdate}}" @endisset class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="date" >
                     </div>
                     <div class="w-1/2 border-l">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Time *</label>
-                        <input id="ptime" name="ptime" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="time" >
+                        <input id="ptime" name="ptime" @isset($input->ptime) value="{{$input->ptime}}" @endisset class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="time" >
                     </div>
                 </div>
                 <div class="w-full bg-white border-y py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
-                        <input id="plocation" name="plocation" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect border-0 w-full">
+                        <option @isset($input->plocation) @else selected @endisset disabled>Choose a Location</option>
+                            @foreach ($locations as $location)
+                                <option @isset($input->plocation) @if($input->plocation == $location->id) selected @endif @endisset class="capitalize" value="{{$location->id}}">{{$location->location}}</option>
+                            @endforeach
+                        </select>
+                        
+                    </div>
+                </div>
+                <div class="w-full bg-white border-y py-3">
+                    <div class="w-full">
+                        <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Address *</label>
+                        <input id="paddress" name="paddress" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                     </div>
                 </div>
                 <div class="w-full bg-white border-t py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Location *</label>
-                        <input id="dlocation" name="dlocation" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <select name="dlocation" id="dlocation" class="niceselect border-0 w-full">
+                            <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your location</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="w-full bg-white border-t py-3">
+                    <div class="w-full">
+                        <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Address *</label>
+                        <input id="daddress" name="daddress" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                     </div>
                 </div>
             </div>
@@ -121,20 +199,19 @@ Your booking reference is {{ $reference }}
                 <div class="h-full">
                     <div class="flex flex-col h-full justify-evenly">
                         <div class="flex flex-row items-center">
-                            <span class="mx-3">Start</span>
+                            <span class="mx-3 start">Start</span>
                             <span class="flex-grow border-b-4 border-yellow-500"></span>
-                            <span class="mx-3">End</span>
+                            <span class="mx-3 end">End</span>
                         </div>
                         <div class="mx-3 justify-center grid grid-cols-2">
-                            <div>Time - 2 Hours</div>
-                            <div>Distance - 40KM</div>
+                            <div class="price">Price</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="flex flex-row justify-end">
-            <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg" type="button" onclick="">Enter Contact Details</button>
+            <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault();">Enter Contact Details</button>
         </div>
     </div>
     <div class="content-2" style="display: none;">
@@ -157,7 +234,7 @@ Your booking reference is {{ $reference }}
                         <input id="summary_pickup_details" value="" class="timing w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
 
                     </div>
-                    <div class="flex flex-row mx-3 border-b border-b">
+                    <!-- <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">distance</label>
                             <input id="summary_distance" value="300km" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
@@ -166,7 +243,7 @@ Your booking reference is {{ $reference }}
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">time</label>
                             <input id="summary_time" value="90 minutes" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">vehicle</label>
                         <input id="summary_vehicle" value="Truck" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
@@ -176,13 +253,13 @@ Your booking reference is {{ $reference }}
                     <h6 class="font-medium">
                         Selection
                     </h6>
-                    <p id="summary_selection_price">NGN 2000</p>
+                    <p id="summary_selection_price">NGN <span class="price"></span></p>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-bold">
                         Total
                     </h6>
-                    <p id="summary_total_price" class="font-bold">NGN 2000</p>
+                    <p id="summary_total_price" class="font-bold">NGN <span class="price"></span></p>
                 </div>
             </div>
             <div class="flex-grow rounded mx-5">
@@ -349,8 +426,8 @@ Your booking reference is {{ $reference }}
             </div>
             
         </div>
-        <div class="flex flex-row justify-between">
-            <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">Choose Ride Details</button>
+        <div class="flex flex-row justify-between mt-8">
+            <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">Choose Ride Details</button>
             <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-3').show()">Booking Summary</button>
         </div>
     </div>
@@ -399,7 +476,7 @@ Your booking reference is {{ $reference }}
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">pickup date, time</label>
                         <input value="" class="timing w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                     </div>
-                    <div class="flex flex-row mx-3 border-b border-b">
+                    <!-- <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">distance</label>
                             <input value="300km" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
@@ -408,7 +485,7 @@ Your booking reference is {{ $reference }}
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">time</label>
                             <input value="90 minutes" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">vehicle</label>
                         <input value="Truck" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
@@ -434,18 +511,18 @@ Your booking reference is {{ $reference }}
                     <h6 class="font-medium">
                         Selection
                     </h6>
-                    <p>NGN 2000</p>
+                    <p>NGN <span class="price"></span></p>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-bold">
                         Total
                     </h6>
-                    <p class="font-bold">NGN 2000</p>
+                    <p class="font-bold">NGN <span class="price"></span></p>
                 </div>
             </div>
         </div>
         <div class="flex flex-row justify-between">
-            <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-3').hide(); $('.content-2').show()">Back</button>
+            <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-3').hide(); $('.content-2').show()">Back</button>
             <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit">Book Now</button>
         </div>
     </div>
