@@ -55,7 +55,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('/profile/{id}', [ProfileController::class, 'store'])->name('profile.store');
 
     //Locations
-    Route::resource('locations', 'LocationController');
+    Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
+    //Pricing
+    Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');
 
 });
 

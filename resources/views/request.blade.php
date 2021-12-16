@@ -87,6 +87,16 @@
     })
 </script>
 @guest
+<<<<<<< HEAD
+    <script> 
+    $('[name=firstname]').change(()=>{
+    $('.firstname').val($('[name=firstname]').val())
+    $('.lastname').val($('[name=lastname]').val())
+    $('.email').val($('[name=email]').val())
+    $('.phone').val($('[name=phone]').val())
+    })
+    </script>
+=======
 <script> 
 $('[name=firstname]').change(()=>{
     $('.firstname').val($('[name=firstname]').val())
@@ -101,13 +111,14 @@ $('[name=phone]').change(()=>{
     $('.phone').val($('[name=phone]').val())
 })
 </script>
+>>>>>>> 4e9b658f423c9032c098e8d4aef4e8c6e2543192
 @else
-<script>
-$('.firstname').val('{{ Auth::user()->firstname }}')
-$('.lastname').val('{{ Auth::user()->lastname }}')
-$('.email').val('{{ Auth::user()->email }}')
-$('.phone').val('{{ Auth::user()->phone }}')
-</script>
+    <script>
+    $('.firstname').val('{{ Auth::user()->firstname }}')
+    $('.lastname').val('{{ Auth::user()->lastname }}')
+    $('.email').val('{{ Auth::user()->email }}')
+    $('.phone').val('{{ Auth::user()->phone }}')
+    </script>
 @endguest
 @endsection
 

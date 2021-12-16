@@ -35,7 +35,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -53,7 +53,8 @@ class ProfileController extends Controller
             $check = User::find($id);
             if(!empty($check)){
                 $data = [];
-                $check->name = $request->name;
+                $check->firstname = $request->firstname;
+                $check->lastname = $request->lastname;
                 $check->summary = $request->summary;
                 $check->address = $request->address;
                 $check->phone = $request->phone;
