@@ -58,6 +58,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile/{id}', [ProfileController::class, 'store'])->name('profile.store');
 
+    Route::get('/activity_log', [DashboardController::class, 'activity'])->name('activity_log');
+
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
 
