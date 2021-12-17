@@ -16,8 +16,8 @@
                             <i class="icon-user menu-icon"></i><span class="nav-text">Staff</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="">Staff</a></li>
-                            <li><a href="">Add Staff</a></li>
+                            <li><a href="#">Staff</a></li>
+                            <li><a href="#">Add Staff</a></li>
                         </ul>
                     </li>
                     <li class="mega-menu mega-menu-sm">
