@@ -37,7 +37,13 @@ class VehiclesController extends Controller
      */
     public function create()
     {
-        //
+        try{
+            $types = VehicleTypesConstants::VEHICLE_TYPES;
+            $drivers = User::where('role','driver')->get();
+            return view('admin.vehicle.create', compact('drivers','types'));
+        }catch(Exception $e){
+            dd($e);
+        }
     }
 
     /**
