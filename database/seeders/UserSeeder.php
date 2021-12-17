@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
     {
         //
         User::create([
-            'firstname' => 'Sola',
-            'lastname' => 'Admin',
+            'firstname' => 'John',
+            'lastname' => 'Doe',
             'email' => 'admin@mail.com',
-            'password' =>bcrypt('password'),
+            'password' =>bcrypt('Hofftech2020'),
             'role' => 'admin',
         ]
         );

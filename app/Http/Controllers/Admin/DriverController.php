@@ -6,9 +6,11 @@ use App\Constants\UserActivityConstants;
 use App\Helpers\MS;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -44,7 +46,39 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $check = User::where('email',$request->email)->first();
+            if(empty($check)){
+                $data = [];
+                $data['firstname'] = $request->firstname;
+                $data['lastname'] = $request->lastname;
+                $data['summary'] = $request->summary;
+                $data['address'] = $request->address;
+                $data['email'] = $request->email;
+                $data['phone'] = $request->phone;
+                $data['password'] = Hash::make(strtolower($request->lastname));
+                $data['role'] = 'driver';
+                $data['code'] = strtoupper(Str::random(10));
+
+                if ($request->hasFile('photo')) {
+                    $photo = $request->file('photo');
+                    $f = MS::getFileMetaData($photo);
+                    $f['name'] = 'photo.' . $f['ext'];
+                    $f['path'] = $photo->storeAs(MS::getUploadPath($data['role']) . $data['code'], $f['name']);
+                    $data['image'] = asset('storage/app/' . $f['path']);
+                }
+                User::create($data);
+                UserActivityService::log($user->id,UserActivityConstants::PROFILE_ACTIVITY,"Profile Create","User Created Driver Profile",null);
+                DB::commit();
+                return redirect()->route('drivers.create')->with('message','Data Created Successfully');
+            }
+            return redirect()->route('drivers.create')->with('info','Data Already Exists');
+        }catch (Exception $e) {
+            //dd($e);
+            DB::rollback();
+        }
     }
 
     /**
@@ -58,7 +92,8 @@ class DriverController extends Controller
         try {
             $user = User::find($id);
             $orders = [];
-            return view("admin.driver.show", compact('user','orders'));
+            $vehicles = Vehicles::where('user_id',$user->id)->get();
+            return view("admin.driver.show", compact('user','orders','vehicles'));
         } catch (\Throwable $th) {
             return redirect()->route('drivers')->with('info','Data Not Found');
         }

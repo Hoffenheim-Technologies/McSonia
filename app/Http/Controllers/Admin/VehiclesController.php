@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\UserActivityConstants;
 use App\Constants\VehicleTypesConstants;
 use App\Models\Vehicles;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVehiclesRequest;
 use App\Http\Requests\UpdateVehiclesRequest;
 use App\Models\User;
+use App\Services\Activity\User\UserActivityService;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VehiclesController extends Controller
 {
@@ -54,7 +58,31 @@ class VehiclesController extends Controller
      */
     public function store(StoreVehiclesRequest $request)
     {
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $data = [];
+            $data['vehicle_name'] = $request->vehicle_name;
+            $data['user_id'] = $request->user_id;
+            $data['reg_no'] = $request->reg_no;
+            $data['type'] = $request->type;
+            $data['description'] = $request->description;
+            $data['make'] = $request->make;
+            $data['year'] = $request->year;
+            $data['model'] = $request->model;
+            $data['condition'] = $request->condition;
+            $data['status'] = $request->status;
+
+            Vehicles::create($data);
+            DB::commit();
+            UserActivityService::log($user->id,UserActivityConstants::VEHICLE_ACTIVITY,"Vehicle Created","User Added Vehicle",$data);
+            return redirect()->route('vehicles.create')->with('message','Data Created Successfully');
+
+        }catch(Exception $as){
+            DB::rollback();
+            //dd($as);
+            return redirect()->route('vehicles.create')->with('error','Data Entry Unsuccessful, Check Values');
+        }
     }
 
     /**
@@ -91,12 +119,39 @@ class VehiclesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateVehiclesRequest  $request
-     * @param  \App\Models\Vehicles  $vehicles
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVehiclesRequest $request, Vehicles $vehicles)
+    public function update(UpdateVehiclesRequest $request, $id)
     {
-        //
+        $user = Auth::user();
+        $vehicle = Vehicles::find($id);
+        if(!empty($vehicle)){
+            DB::beginTransaction();
+            try {
+                $vehicle->vehicle_name = $request->vehicle_name;
+                $vehicle->user_id = $request->user_id;
+                $vehicle->reg_no = $request->reg_no;
+                $vehicle->type = $request->type;
+                $vehicle->description = $request->description;
+                $vehicle->make = $request->make;
+                $vehicle->year = $request->year;
+                $vehicle->model = $request->model;
+                $vehicle->condition = $request->condition;
+                $vehicle->status = $request->status;
+
+                $vehicle->save();
+                DB::commit();
+                UserActivityService::log($user->id,UserActivityConstants::VEHICLE_ACTIVITY,"Vehicle Updated","User Updated Vehicle", null);
+                return redirect()->route('vehicles.show', $id)->with('message','Data Updated Successfully');
+
+            }catch(Exception $as){
+                DB::rollback();
+                dd($as);
+                return redirect()->route('vehicles.show', $id)->with('error','Data Entry Unsuccessful, Check Values');
+            }
+        }
+
     }
 
     /**

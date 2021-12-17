@@ -27,8 +27,8 @@
                                             <tr>
                                                 <th>SN</th>
                                                 <th>Name</th>
-                                                <th></th>
-                                                <th></th>
+                                                <th>Email</th>
+                                                <th>Date Added</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -42,10 +42,10 @@
                                                     {{ucwords($item->lastname.' '.$item->firstname)}}
                                                 </td>
                                                 <td>
-
+                                                    {{$item->email}}
                                                 </td>
                                                 <td>
-
+                                                    {{$item->created_at}}
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-danger btn-sm mx-2" href="{{route('drivers.show', $item->id)}}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-info"></i> Edit</a>

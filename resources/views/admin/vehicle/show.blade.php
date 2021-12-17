@@ -26,7 +26,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Vehicle Name</label>
-                                        <input type="text" name="vehicle_name" class="form-control" id="">
+                                        <input type="text" value="{{$vehicle->vehicle_name}}" name="vehicle_name" class="form-control" id="">
                                      </div>
                                     <div class="form-group col-md-6">
                                         <label>Driver</label>
@@ -43,7 +43,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Registration Number</label>
-                                        <input type="text" name="reg_no" class="form-control" id="">
+                                        <input type="text" value="{{$vehicle->reg_no}}" name="reg_no" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
@@ -58,40 +58,43 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Description</label>
-                                        <input type="text" name="description" class="form-control" id="">
+                                        <input type="text" value="{{$vehicle->description}}" name="description" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Make</label>
-                                        <input type="text" name="make" class="form-control" id="">
+                                        <input type="text" value="{{$vehicle->make}}" name="make" class="form-control" id="">
 
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Model</label>
-                                        <input type="text" name="model" class="form-control" id="">
+                                        <input type="text" value="{{$vehicle->model}}" name="model" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Year</label>
-                                        <input type="text" name="year" class="form-control" id="">
+                                        <input type="text" name="year" value="{{$vehicle->year}}" class="form-control" id="">
 
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Condition</label>
-                                        <input type="text" name="condition" class="form-control" id="">
+                                        <input type="text" name="condition" value="{{$vehicle->condition}}" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label></label>
-
+                                        <select name="status" class="form-control" id="">
+                                            <option {{ $vehicle->status == 'Active' ? 'Selected' : '' }} value="Active">Active</option>
+                                            <option {{ $vehicle->status == 'Inactive' ? 'Selected' : '' }} value="Inactive">Inactive</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <button type="submit" class="btn btn-primary px-3 ml-4">Submit</button>
+                                    <button type="submit" class="btn btn-primary px-3 ml-4">Update</button>
                                 </div>
                             </form>
                         </div>

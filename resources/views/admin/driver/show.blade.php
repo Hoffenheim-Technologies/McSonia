@@ -20,6 +20,7 @@
                     <div class="col-lg-8 col-xl-9">
                         <div class="card">
                             <div class="card-body">
+                                <h4 class="card-title">Driver {{$user->firstname}}</h4>
                                 <form action="{{ route('drivers.update', $user->id) }}" enctype="multipart/form-data" class="form-valide" method="POST">
                                     @csrf @method('PUT')
                                     <div class="form-group">
@@ -70,6 +71,23 @@
                                         <button type="submit" class="btn btn-primary px-3 ml-4">Update</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xl-3">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Vehicles Managing</h4>
+                                <div class="basic-list-group">
+                                    <ul class="list-group">
+                                        @foreach ($vehicles as $item)
+                                            <li class="list-group-item">
+                                             {{$loop->iteration}}. <a href="{{ route('vehicles.show', $item) }}">{{$item->vehicle_name}} - {{$item->reg_no}}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

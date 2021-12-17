@@ -22,11 +22,11 @@
                         <div class="card-body">
                             <h4 class="card-title">Add Vehicle</h4>
                             <form action="{{ route('vehicles.store')}}" enctype="multipart/form-data" class="form-valide" method="POST">
-                                @csrf @method('PUT')
+                                @csrf @method('POST')
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Vehicle Name</label>
-                                        <input type="text" name="vehicle_name" class="form-control" id="">
+                                        <input type="text"  value="{{old('vehicle_name')}}" name="vehicle_name" class="form-control" id="">
                                      </div>
                                     <div class="form-group col-md-6">
                                         <label>Driver</label>
@@ -43,7 +43,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Registration Number</label>
-                                        <input type="text" name="reg_no" class="form-control" id="">
+                                        <input type="text"  value="{{old('reg_no')}}" name="reg_no" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
@@ -58,36 +58,39 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Description</label>
-                                        <input type="text" name="description" class="form-control" id="">
+                                        <input type="text" value="{{old('description')}}" name="description" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Make</label>
-                                        <input type="text" name="make" class="form-control" id="">
+                                        <input type="text"  value="{{old('make')}}" name="make" class="form-control" id="">
 
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Model</label>
-                                        <input type="text" name="model" class="form-control" id="">
+                                        <input type="text"  value="{{old('model')}}" name="model" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Year</label>
-                                        <input type="text" name="year" class="form-control" id="">
+                                        <input type="text" name="year"  value="{{old('year')}}" class="form-control" id="">
 
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Condition</label>
-                                        <input type="text" name="condition" class="form-control" id="">
+                                        <input type="text" name="condition"  value="{{old('condition')}}" class="form-control" id="">
 
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label></label>
-
+                                        <select name="status" class="form-control" id="">
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">

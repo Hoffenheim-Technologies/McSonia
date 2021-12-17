@@ -44,7 +44,9 @@
                                                 {{$item->vehicle_name}}
                                             </td>
                                             <td>
-                                                {{$item->driver->lastname ?? ''}} {{$item->driver->firstname ?? ''}}
+                                               <a href="{{route('drivers.show', $item->driver->id)}}">
+                                                    {{$item->driver->lastname ?? ''}} {{$item->driver->firstname ?? ''}}
+                                                </a>
                                             </td>
                                             <td>
                                                 {{$item->type}}

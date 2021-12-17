@@ -29,7 +29,7 @@ class PricingController extends Controller
             $item->destination = Location::find($item->dropoff_id);
            }
         }
-        
+
         return view('admin.pricing.index', compact('pricing'));
     }
 
@@ -72,7 +72,6 @@ class PricingController extends Controller
 
         }catch(Exception $as){
             DB::rollback();
-            dd($as);
             return redirect()->route('pricing.create')->with('error','Data Entry Unsuccessful, Check Values');
         }
     }
