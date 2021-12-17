@@ -20,7 +20,7 @@
                     <div class="col-lg-8 col-xl-9">
                         <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">vehicle</h4>
+                            <h4 class="card-title">Vehicle Information</h4>
                             <form action="{{ route('vehicles.update', $vehicle)}}" enctype="multipart/form-data" class="form-valide" method="POST">
                                 @csrf @method('PUT')
                                 <div class="form-row">
@@ -30,7 +30,7 @@
                                      </div>
                                     <div class="form-group col-md-6">
                                         <label>Driver</label>
-                                        <select name="" id="">
+                                        <select class="form-control" name="user_id" id="">
                                             @foreach ($drivers as $item)
                                                 <option {{($item->user_id == $vehicle->driver->id) ? 'selected' : ''}} value="{{$item->id}}">{{ucwords($item->lastname.' '.$item->firstname)}}</option>
                                             @endforeach
@@ -49,7 +49,9 @@
                                     <div class="form-group col-md-6">
                                         <label>Type</label>
                                         <select name="type" class="form-control" id="">
-                                            <option {{($item->user_id == $vehicle->driver->id) ? 'selected' : ''}} value="{{$item->id}}">{{ucwords($item->lastname.' '.$item->firstname)}}</option>
+                                            @foreach ($types as $item)
+                                                <option {{($vehicle->type == $item) ? 'selected' : ''}}>{{$item}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

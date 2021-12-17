@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\VehicleTypesConstants;
 use App\Models\Vehicles;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVehiclesRequest;
@@ -61,8 +62,9 @@ class VehiclesController extends Controller
         try{
             $vehicle = Vehicles::find($id);
             $vehicle->driver = User::find($vehicle->user_id);
+            $types = VehicleTypesConstants::VEHICLE_TYPES;
             $drivers = User::where('role','driver')->get();
-            return view('admin.vehicle.show', compact('vehicle','drivers'));
+            return view('admin.vehicle.show', compact('vehicle','drivers','types'));
         }catch(Exception $e){
             dd($e);
         }
