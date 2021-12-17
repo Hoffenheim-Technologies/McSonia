@@ -5,11 +5,14 @@ use Illuminate\Http\Request;
 use App\Models\faq;
 use App\Models\Location;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AjaxController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,10 +59,25 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
-    
+
     //Orders
-    Route::resource('booking', '\App\Http\Controllers\Admin\OrderController');
-    
+    Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
+
+    //vehicles
+    Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
+
+    //Drivers
+    Route::prefix('drivers')->group(function(){
+        Route::get('/', [DriverController::class, 'index'])->name('drivers');
+        Route::get('/create', [DriverController::class, 'create'])->name('drivers.create');
+        Route::get('/{id}', [DriverController::class, 'show'])->name('drivers.show');
+        Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
+    });
+    // Route::get('/drivers', [DriverController::class, 'index'])->name('drivers');
+    // Route::get('/drivers/create', [DriverController::class, 'create'])->name('drivers.create');
+    // Route::get('/drivers/{id}', [DriverController::class, 'show'])->name('drivers.create');
+    //Route::get('order/{id}', [OrderController::class, 'show'])->name('order.show');
+
     //Pricing
     Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');
 

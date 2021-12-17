@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -32,6 +33,12 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('money', function ($amount) {
             return "<?php echo '₦' . number_format($amount, 2); ?>";
+        });
+
+        Blade::directive('dateformat', function ($timestamp) {
+            //dd($timestamp);
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp)->toDayDateTimeString();
+            return "<?php echo $date ?>";
         });
 
         view()->composer('*',function($view){
