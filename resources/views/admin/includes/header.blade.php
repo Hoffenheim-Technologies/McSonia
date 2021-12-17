@@ -137,6 +137,11 @@
 
                                         <hr class="my-2">
                                         <li>
+                                            <a href="{{route('activity_log')}}"><i class="icon-docs"></i> <span>Activity Log</span></a>
+                                        </li>
+
+                                        <hr class="my-2">
+                                        <li>
                                             <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                                 <i class="icon-key"></i> 
                                                 <span>Logout</span>

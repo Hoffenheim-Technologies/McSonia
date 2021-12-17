@@ -56,6 +56,27 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Activity</h4>
+                                <div id="activity">
+                                    @foreach ($dashboard['activity'] as $item)
+                                    <div class="media border-bottom-1 pt-3 pb-3">
+                                        <img width="35" src="{{$admin_source}}/images/avatar/1.jpg" class="mr-3 rounded-circle">
+                                        <div class="media-body">
+                                            <h5>{{$item->title}}</h5>
+                                            <p class="mb-0">{{$item->description}}</p>
+                                        </div><span class="text-muted ">{{$item->created_at->toFormattedDateString()}}</span>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- #/ container -->
         </div>

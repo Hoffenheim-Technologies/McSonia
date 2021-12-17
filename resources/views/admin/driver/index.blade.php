@@ -45,7 +45,7 @@
                                                     {{$item->email}}
                                                 </td>
                                                 <td>
-                                                    {{$item->created_at}}
+                                                    {{$item->created_at->toDayDateTimeString()}}
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-danger btn-sm mx-2" href="{{route('drivers.show', $item->id)}}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-info"></i> Edit</a>
