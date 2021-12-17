@@ -24,6 +24,7 @@ class CreateVehiclesTable extends Migration
             $table->string('model')->nullable();
             $table->string('year')->nullable();
             $table->string('condition')->nullable();
+            $table->enum('status',['Active','Inactive'])->default('Active');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
