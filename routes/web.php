@@ -5,11 +5,15 @@ use Illuminate\Http\Request;
 use App\Models\faq;
 use App\Models\Location;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\EmailController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,7 +60,22 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
-    //Pricing
+
+    //Orders
+    Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
+
+    //vehicles
+    Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
+
+    //Drivers
+    Route::prefix('drivers')->group(function(){
+        Route::get('/', [DriverController::class, 'index'])->name('drivers');
+        Route::get('/create', [DriverController::class, 'create'])->name('drivers.create');
+        Route::post('/create', [DriverController::class, 'store'])->name('drivers.store');
+        Route::get('/{id}', [DriverController::class, 'show'])->name('drivers.show');
+        Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
+    });
+
     Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');
 
 });
@@ -69,8 +88,10 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/location/{id}', [AjaxController::class, 'location']);
-Route::get('/request', [OrderController::class, 'index'])->name('order');
-Route::put('/request', [OrderController::class, 'store'])->name('request');
+Route::get('/request', [HomeController::class, 'order'])->name('order');
+Route::put('/request', [HomeController::class, 'storeOrder'])->name('request');
 
 // Laravel 8
 Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+
+Route::get('/send-mail', [EmailController::class, 'testMail'])->name('testMail');

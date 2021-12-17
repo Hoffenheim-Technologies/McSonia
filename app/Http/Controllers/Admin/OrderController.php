@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Constants\UserActivityConstants;
 use App\Models\Order;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Services\Activity\User\UserActivityService;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -18,7 +22,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('request')->with('locations', Location::all());
+        $orders = Order::get();
+        //dd($orders);
+        return view('admin.order.index', compact('orders'));
     }
 
     /**
@@ -30,7 +36,7 @@ class OrderController extends Controller
     {
         //
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +46,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $order = new Order;
         $order->pdate = $request->pdate;
         $order->ptime = $request->ptime;
@@ -90,7 +96,11 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        $order = Order::findorfail($order->id)->first();
+        $order->plocation = Location::find($order->plocation);
+        $order->dlocation = Location::find($order->dlocation);
+        // dd($order);
+        return view('admin.order.show', compact('order'));
     }
 
     /**
@@ -124,6 +134,14 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $user = Auth::user();
+        try {
+            $order = Order::findorfail($order->id);
+            $order->delete();
+            UserActivityService::log($user->id,UserActivityConstants::PRICING_ACTIVITY,"Order Deleted","User Deleted Order",null);
+            return redirect()->route('order.index')->with('message','Data Deleted Successfully');
+        }catch (Exception $e) {
+            return redirect()->route('order.index')->with('error','Data Not Found');
+        }
     }
 }
