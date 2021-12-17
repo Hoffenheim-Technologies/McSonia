@@ -13,6 +13,8 @@
                     </ol>
                 </div>
             </div>
+
+            <div class="container-fluid">
             <!-- row -->
             <div class="row">
                 <div class="col-12">
@@ -43,14 +45,15 @@
                                                 {{$item->destination->location}}
                                             </td>
                                             <td>
-                                                @money($item->price) 
+                                                @money($item->price)
                                             </td>
-                                            
+
                                             {{-- <td class="" >
                                                 <span class="{{ $item->status == 1 ? 'label gradient-1' : 'label gradient-2'}} "> {{$item->status == 1 ? 'Active' : 'Inactive'}} </span>
                                             </td>
                                              --}}
                                             <td>
+
                                                 <form action="{{ route('pricing.destroy', $item->id)}}" method="post">@csrf @method('delete')
                                                     <span>
                                                         <button type="submit" class="btn btn-danger btn-sm mx-2" onsubmit="checkDelete(this)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
@@ -65,6 +68,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <!-- #/ container -->
         </div>
