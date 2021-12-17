@@ -92,7 +92,7 @@ class DriverController extends Controller
         try {
             $user = User::find($id);
             $orders = [];
-            $vehicles = Vehicles::where('user_id',$user->id)->get();
+            $vehicles = Vehicles::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
             return view("admin.driver.show", compact('user','orders','vehicles'));
         } catch (\Throwable $th) {
             return redirect()->route('drivers')->with('info','Data Not Found');
