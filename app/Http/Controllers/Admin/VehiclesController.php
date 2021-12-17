@@ -23,7 +23,7 @@ class VehiclesController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicles::all();
+        $vehicles = Vehicles::orderBy('created_at', 'desc')->get();
         foreach($vehicles as $item){
             if(!empty($item->user_id)){
                 $item->driver = User::find($item->user_id);

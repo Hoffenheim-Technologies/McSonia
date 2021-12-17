@@ -20,14 +20,14 @@ class DashboardController extends Controller
         $dashboard['profit'] = 0.00;
         $dashboard['drivers'] = User::where('role','driver')->count();
         $dashboard['vehicles'] = Vehicles::count();
-        $dashboard['activity'] = UserActivityLog::where('activity','!=','PROFILE_ACTIVITY')->paginate(8);
+        $dashboard['activity'] = UserActivityLog::where('activity','!=','PROFILE_ACTIVITY')->orderBy('created_at', 'desc')->paginate(8);
 
         //dd($dashboard);
         return view("admin.dashboard", compact('user','dashboard'));
     }
 
     public function activity(){
-        $activity = UserActivityLog::get();
+        $activity = UserActivityLog::orderBy('created_at', 'desc')->get();
         foreach($activity as $item){
             $item->user = User::where('email',$item->email)->first();
         }
