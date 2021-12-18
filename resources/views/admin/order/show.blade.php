@@ -112,8 +112,49 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Other</h4>
-                                <h5> Assign Driver</h5>
+                                @if ($order->status == 'Pending')
+                                    <h5> Assign Driver</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered zero-configuration">
+                                            <thead>
+                                                <tr>
+                                                    <th>SN</th>
+                                                    <th>Name</th>
+                                                    <th>Vehicle Type</th>
+                                                    <th>Vehicle Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($drivers as $item)
+                                                <tr>
+                                                    <td>
+                                                        {{$loop->iteration}}
+                                                    </td>
+                                                    <td>
+                                                        {{ucwords($item->lastname.' '.$item->firstname)}}
+                                                    </td>
+                                                    <td>
+                                                        {{$item->vehicle->type ?? ''}}
+                                                    </td>
+                                                    <td>
+                                                        {{$item->vehicle->vehicle_name ?? ''}}
+                                                    </td>
+                                                    <td>
+                                                        <form action="{{ route('order.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')
+                                                            <span>
+                                                                <button type="submit" class="btn btn-success btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Assign"><i class="fa fa-check color-success"></i> Assign</button>
+                                                            </span>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @else
 
+                                @endif
                             </div>
                         </div>
                     </div>

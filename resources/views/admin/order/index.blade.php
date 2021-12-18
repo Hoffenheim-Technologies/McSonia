@@ -56,9 +56,9 @@
                                             <td>
                                                 <span class="{{ $item->status == 'Pending' ? 'label gradient-2' : 'label gradient-1'}} "> {{$item->status}} </span>
                                             </td>
-                                            <th>
+                                            <td>
                                                 {{$item->created_at->toDayDateTimeString()}}
-                                            </th>
+                                            </td>
                                             <td>
                                                 <form action="{{ route('order.destroy', $item)}}" method="post">@csrf @method('delete')
                                                     <span>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,6 +66,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //Orders
     Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
+    Route::post('/order/{driver}/{order}', [OrderController::class, 'assign'])->name('order.assign');
 
     //vehicles
     Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
@@ -90,8 +92,8 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/location/{id}', [AjaxController::class, 'location']);
-Route::get('/request', [HomeController::class, 'order'])->name('order');
-Route::put('/request', [HomeController::class, 'storeOrder'])->name('request');
+Route::get('/request', [BookRequestController::class, 'order'])->name('order');
+Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('request');
 
 // Laravel 8
 Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');

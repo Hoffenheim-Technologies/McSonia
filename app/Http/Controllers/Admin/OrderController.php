@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\User;
+use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -57,8 +59,8 @@ class OrderController extends Controller
         if(Auth::check()){
             $order->user_id = Auth::id();
         } else {
-            $order->firstname = $request->fname;
-            $order->lastname = $request->lname;
+            $order->firstname = $request->firstname;
+            $order->lastname = $request->lastname;
             $order->email = $request->email;
             $order->phone = $request->phone;
         }
@@ -97,10 +99,31 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $order = Order::findorfail($order->id)->first();
+        $drivers = User::where('role','driver')->get();
+        if(!empty($drivers)){
+            foreach($drivers as $item){
+                $item->vehicle = Vehicles::where('user_id',$item->id)->first();
+            }
+        }
         $order->plocation = Location::find($order->plocation);
         $order->dlocation = Location::find($order->dlocation);
-        // dd($order);
-        return view('admin.order.show', compact('order'));
+        //dd($drivers);
+        return view('admin.order.show', compact('order','drivers'));
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\Request  $request
+     * @param  int $order
+     * @param  int $user
+     * @return \Illuminate\Http\Response
+     */
+    public function assign(Request $request,  $order,  $user)
+    {
+        dd('okay');
+        //
     }
 
     /**
