@@ -23,6 +23,8 @@
     <!-- Toastr -->
     <script src="{{ $admin_source }}/plugins/toastr/js/toastr.min.js"></script>
     <script src="{{ $admin_source }}/plugins/toastr/js/toastr.init.js"></script>
+    <!-- Sweet Alert-->
+    <script src="{{ $admin_source }}/plugins/sweetalert/js/sweetalert.min.js"></script>
     <!-- Datatables -->
     <script src="{{ $admin_source }}/plugins/tables/js/jquery.dataTables.min.js"></script>
     <script src="{{ $admin_source }}/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
@@ -64,4 +66,5 @@
         }
                 toastr.warning("{{ session('warning') }}");
         @endif
+
       </script>
