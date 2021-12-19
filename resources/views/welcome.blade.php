@@ -125,21 +125,23 @@
         </div>
     </div>
 
-    <div class="text-center my-8 py-4">
+    <div class="text-center my-8 py-4 w-1/3 mx-auto">
         <div class="w-2/3 uppercase text-yellow-500 mx-auto my-8 text-xl font-bold">
             why choose us
         </div>
-        At McSonia Logistics, we pride ourselves in efficient service delivery to our clients
-        while committing to the following cultural values:
+            <p class="text-gray-600 italic mb-5">
+                At McSonia Logistics, we pride ourselves in efficient service delivery 
+                to our clients while committing to the following cultural values:
+            </p>
             <ul>
-                <li>Act with integrity</li>
-                <li>Passion</li>
-                <li>Synergy </li>
-                <li>Innovation</li>
-                <li>Quality and Efficiency</li>
-                <li>Collaboration</li>
-                <li>Decisiveness</li>
-                <li>Aspiration</li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Act with integrity</li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Passion</li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Synergy </li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Innovation</li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Quality and Efficiency</li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Collaboration</li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Decisiveness</li>
+                <li class="text-md hover:text-lg hover:text-yellow-500">Aspiration</li>
             </ul>
     </div>
 
@@ -147,7 +149,7 @@
         <div class="w-2/3 uppercase text-yellow-500 mx-auto my-8 text-xl font-bold">
             Key Features
         </div>
-        <div class="lg:grid grid-cols-4">
+        <div class="lg:grid grid-cols-4 pb-6">
             <div>
                 <i class="fa fa-car text-6xl text-yellow-500"></i>
                 <h3 class="text-xl font-semibold text-center mt-5 mb-3">
@@ -177,14 +179,18 @@
                 <p class="text-md">Experienced staff and professionally trained drivers</p>
             </div>
         </div>
+
+        <div class="w-2/3 mx-auto uppercase font-bold text-white pt-8">
+            <a href="/request" class="btn-lg rounded-lg">Book now</a>
+        </div>
     </div>
 
-    <div class="mt-8">
+    <div class="my-8 py-4 bg-gray-200">
         <div class="text-yellow-500 text-center">
             @if (!empty($faqs))
-            <h1 class="font-bold text-3xl">FAQs</h1>
+            <h1 class="font-bold text-3xl pb-4">FAQs</h1>
             <p class="font-medium text-2xl text-black">Frequently Asked Questions</p>
-            <div class="grid grid-cols-2 pt-6">
+            <div class="grid grid-cols-2 pt-8">
             @foreach($faqs as $faq)    
                 <div class="text-black w-2/3 mx-auto">
                     <div class="question w-full flex flex-row justify-between text-left cursor-pointer">

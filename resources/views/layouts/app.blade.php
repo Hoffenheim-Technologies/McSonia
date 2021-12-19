@@ -90,7 +90,7 @@
             @yield('content')
         </main>
         <footer class="container mx-auto mt-12">
-            <div class="w-full bg-yellow-100 text-xl flex justify-around">
+            <div class="hidden w-full bg-yellow-100 text-xl flex justify-around">
                 <span class="flex-grow">Get Connected </span>
                 <div class="flex flex-grow justify-around"> 
                     <a href="">Facebook</a>
