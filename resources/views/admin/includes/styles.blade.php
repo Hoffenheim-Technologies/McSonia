@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{ $admin_source }}/plugins/chartist/css/chartist.min.css">
 <link rel="stylesheet" href="{{ $admin_source }}/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
 <link href="{{ $admin_source }}/plugins/toastr/css/toastr.min.css" rel="stylesheet">
+<link href="{{ $admin_source }}/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
 <!-- Datatables -->
 <link href="{{ $admin_source }}/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
 <!-- Custom Stylesheet -->

@@ -120,7 +120,7 @@ class PricingController extends Controller
         //dd($id);
         $user = Auth::user();
         try {
-            $pricing = Pricing::findorfail($id);
+            $pricing = Pricing::find($id);
             $pricing->delete();
             UserActivityService::log($user->id,UserActivityConstants::PRICING_ACTIVITY,"Pricing Deleted","User Deleted Pricing",null);
             return redirect()->route('pricing.index')->with('message','Data Deleted Successfully');

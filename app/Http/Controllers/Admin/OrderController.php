@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\OrderStatusConstants;
 use App\Constants\UserActivityConstants;
 use App\Models\Order;
 use App\Models\Location;
@@ -9,11 +10,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\OrderDetails;
 use App\Models\User;
 use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -98,17 +101,26 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $order = Order::findorfail($order->id)->first();
-        $drivers = User::where('role','driver')->get();
-        if(!empty($drivers)){
-            foreach($drivers as $item){
-                $item->vehicle = Vehicles::where('user_id',$item->id)->first();
+        //DB::enableQueryLog();
+        $order = Order::find($order->id);
+        if($order){
+            $order->plocation = Location::find($order->plocation);
+            $order->dlocation = Location::find($order->dlocation);
+
+            $drivers = User::where('role','driver')->get();
+            if($drivers){
+                foreach($drivers as $item){
+                    $item->vehicle = Vehicles::where('user_id',$item->id)->first();
+                }
             }
+            $orderDetail = OrderDetails::where('order_id','=',2)->first();
+            //dd($orderDetail);
+            if($orderDetail){
+                $orderDetail->statusNo = OrderStatusConstants::ORDER_STATUS_NO[$orderDetail->status];
+                $orderDetail->driver = User::where('id',$orderDetail->user_id)->first();
+            }
+            return view('admin.order.show', compact('order','drivers','orderDetail'));
         }
-        $order->plocation = Location::find($order->plocation);
-        $order->dlocation = Location::find($order->dlocation);
-        //dd($drivers);
-        return view('admin.order.show', compact('order','drivers'));
     }
 
 
@@ -116,14 +128,32 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\Request  $request
+     * @param  int $driver
      * @param  int $order
-     * @param  int $user
      * @return \Illuminate\Http\Response
      */
-    public function assign(Request $request,  $order,  $user)
+    public function assign(Request $request,  $driver,  $order)
     {
-        dd('okay');
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $order = Order::find($order);
+            $driver = User::find($driver);
+
+            $data = [];
+            $data['user_id'] = $driver->id;
+            $data['order_id'] = $order->id;
+            $data['status'] = 'Pending';
+            OrderDetails::create($data);
+            DB::commit();
+            UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Driver To Order",null);
+            return redirect()->route('order.show', $order->id)->with('message','Driver Assigned Successfully');
+        }catch(Exception $ae){
+            dd($ae);
+            DB::rollback();
+            return redirect()->route('order.show', $order->id)->with('error','Driver Assign Unsuccessful');
+
+        }
     }
 
     /**
@@ -159,7 +189,7 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         try {
-            $order = Order::findorfail($order->id);
+            $order = Order::find($order->id);
             $order->delete();
             UserActivityService::log($user->id,UserActivityConstants::PRICING_ACTIVITY,"Order Deleted","User Deleted Order",null);
             return redirect()->route('order.index')->with('message','Data Deleted Successfully');

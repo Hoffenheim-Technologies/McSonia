@@ -36,6 +36,7 @@ class CreateOrdersTable extends Migration
             $table->string('discount')->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->string('reference');
+            $table->datetime('deleted_at');
             $table->timestamps();
         });
 
@@ -51,6 +52,7 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('orders');
     }
 }
