@@ -21,7 +21,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="media align-items-center mb-4">
-                                    <img class="mr-3" src="{{$user->image}}" width="80" height="80" alt="">
+                                    <img class="mr-3" src="{{asset($user->image)}}" width="80" height="80" alt="">
                                     <div class="media-body">
                                         <h3 class="mb-0">{{$user->name}}</h3>
                                     </div>

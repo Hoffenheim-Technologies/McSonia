@@ -28,10 +28,9 @@ class PricingController extends Controller
             $item->pickup = Location::find($item->pickup_id);
             $item->destination = Location::find($item->dropoff_id);
            }
-           //dd($pricing);
         }
-        
-        return view('admin.pricing.pricing', compact('pricing'));
+
+        return view('admin.pricing.index', compact('pricing'));
     }
 
     /**
@@ -73,7 +72,6 @@ class PricingController extends Controller
 
         }catch(Exception $as){
             DB::rollback();
-            dd($as);
             return redirect()->route('pricing.create')->with('error','Data Entry Unsuccessful, Check Values');
         }
     }
@@ -122,7 +120,7 @@ class PricingController extends Controller
         //dd($id);
         $user = Auth::user();
         try {
-            $pricing = Pricing::findorfail($id);
+            $pricing = Pricing::find($id);
             $pricing->delete();
             UserActivityService::log($user->id,UserActivityConstants::PRICING_ACTIVITY,"Pricing Deleted","User Deleted Pricing",null);
             return redirect()->route('pricing.index')->with('message','Data Deleted Successfully');

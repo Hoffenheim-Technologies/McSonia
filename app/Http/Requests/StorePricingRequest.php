@@ -31,6 +31,7 @@ class StorePricingRequest extends FormRequest
         return [
             'pickup_id' => 'required',
             'dropoff_id' => 'required',
+            'price' => 'min:0|required|numeric'
         ];
     }
 }

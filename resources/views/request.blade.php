@@ -31,7 +31,11 @@
 @endsection
 
 @section('extraScripts')
+
+@isset($reference)  
+@else
 <script>
+
     $(window).on('load', () => {
         getLocation($('#plocation').val())
     })
@@ -57,7 +61,7 @@
                     $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
                     $('#dlocation').niceSelect('update')
                 }
-                
+
             },
             error: (e) => {
                 console.log(e);
@@ -65,6 +69,7 @@
         });
     }
 </script>
+@endisset
 <script>
     $('button[type=submit]').click(()=>{
         $('.timing').val($('[name=pdate]').val() + ', ' + $('[name=ptime]').val())
@@ -87,7 +92,7 @@
     })
 </script>
 @guest
-<script> 
+<script>
 $('[name=firstname]').change(()=>{
     $('.firstname').val($('[name=firstname]').val())
 })
@@ -160,7 +165,7 @@ Your booking reference is {{ $reference }}
                                 <option @isset($input->plocation) @if($input->plocation == $location->id) selected @endif @endisset class="capitalize" value="{{$location->id}}">{{$location->location}}</option>
                             @endforeach
                         </select>
-                        
+
                     </div>
                 </div>
                 <div class="w-full bg-white border-y py-3">
@@ -279,7 +284,7 @@ Your booking reference is {{ $reference }}
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">phone number *</label>
-                            <input  name="phone" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone" >
+                            <input name="phone" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone" >
                         </div>
                     </div>
                     <div class="w-full bg-white border py-3">
@@ -413,7 +418,7 @@ Your booking reference is {{ $reference }}
                 </div>
                 @endguest
             </div>
-            
+
         </div>
         <div class="flex flex-row justify-between mt-8">
             <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">Choose Ride Details</button>
@@ -431,20 +436,20 @@ Your booking reference is {{ $reference }}
                     <div class="flex flex-row mx-3 border-b border-b">
                         <div class="w-1/2">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">first name</label>
-                            <input value="" class="firstname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input name="firstname" value="" class="firstname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">lastname</label>
-                            <input value="" class="lastname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
+                            <input name="lastname" value="" class="lastname w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
                         </div>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">email address</label>
-                        <input value="" class="email w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email"  disabled>
+                        <input name="email" value="" class="email w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email"  disabled>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">phone number</label>
-                        <input value="" class="phone w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone"  disabled>
+                        <input name="phone" value="" class="phone w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone"  disabled>
                     </div>
                 </div>
             </div>
