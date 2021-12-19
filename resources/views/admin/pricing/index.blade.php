@@ -56,7 +56,7 @@
 
                                                 <form action="{{ route('pricing.destroy', $item->id)}}" method="post">@csrf @method('delete')
                                                     <span>
-                                                        <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" onsubmit="checkDelete(this)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
                                                     </span>
                                                 </form>
                                             </td>
@@ -95,6 +95,6 @@
                             $(form).submit();
                     }
                 )
-        }
+        });
     </script>
 @endsection
