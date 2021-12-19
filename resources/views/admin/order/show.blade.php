@@ -42,13 +42,13 @@
                                                     Reference: {{$order->reference}}
                                                 </p>
                                                 <p>
-                                                    Name: {{ucwords($order->lastname.' '.$order->firstname)}}
+                                                    Name: {{ucfirst($order->user->lastname ?? $order->lastname)}} {{ucfirst($order->user->firstname ?? $order->firstname)}}
                                                 </p>
                                                 <p>
-                                                    Phone: <a href="tel:+{{$order->phone}}">{{$order->phone}}</a>
+                                                    Phone: <a href="tel:+{{$order->user->phone ?? $order->phone}}">{{$order->user->phone ?? $order->phone}}</a>
                                                 </p>
                                                 <p>
-                                                    Email: <a href="mailto:{{$order->email}}">{{$order->email}}</a>
+                                                    Email: <a href="mailto:{{$order->user->email ?? $order->email}}">{{$order->user->email ?? $order->email}}</a>
                                                 </p>
                                                 <p>
                                                     Company: {{$order->company}}

@@ -6,6 +6,7 @@ use App\Models\faq;
 use App\Models\Location;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DriverController;
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\HomeController;
@@ -78,6 +79,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/create', [DriverController::class, 'store'])->name('drivers.store');
         Route::get('/{id}', [DriverController::class, 'show'])->name('drivers.show');
         Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
+    });
+
+    //Clients
+    Route::prefix('clients')->group(function(){
+        Route::get('/', [ClientController::class, 'index'])->name('clients');
+        Route::get('/{id}', [ClientController::class, 'show'])->name('clients.show');
+        Route::put('/{id}', [ClientController::class, 'update'])->name('clients.update');
     });
 
     Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');
