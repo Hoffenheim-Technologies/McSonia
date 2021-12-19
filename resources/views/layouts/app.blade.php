@@ -20,6 +20,7 @@
     <!-- Styles -->
     @yield('pageStyles')
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/app.css" rel="stylesheet">
     <link href="{{ $admin_source }}/plugins/toastr/css/toastr.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
@@ -89,7 +90,7 @@
             @yield('content')
         </main>
         <footer class="container mx-auto mt-12">
-            <div class="w-full bg-yellow-100 text-xl flex justify-around">
+            <div class="hidden w-full bg-yellow-100 text-xl flex justify-around">
                 <span class="flex-grow">Get Connected </span>
                 <div class="flex flex-grow justify-around"> 
                     <a href="">Facebook</a>

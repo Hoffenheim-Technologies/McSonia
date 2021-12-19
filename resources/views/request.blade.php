@@ -205,7 +205,10 @@ Your booking reference is {{ $reference }}
             </div>
         </div>
         <div class="flex flex-row justify-end">
-            <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault();">Enter Contact Details</button>
+            <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault();">
+                Enter Contact Details
+                <i class="fa fa-arrow-right text-white"></i>
+            </button>
         </div>
     </div>
     <div class="content-2" style="display: none;">
@@ -421,8 +424,14 @@ Your booking reference is {{ $reference }}
 
         </div>
         <div class="flex flex-row justify-between mt-8">
-            <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">Choose Ride Details</button>
-            <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-3').show()">Booking Summary</button>
+            <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">
+                <i class="fa fa-arrow-left text-black"></i>
+                Choose Ride Details
+            </button>
+            <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-3').show()">
+                Booking Summary
+                <i class="fa fa-arrow-right text-white"></i>
+            </button>
         </div>
     </div>
     <div class="content-3" style="display: none;">
@@ -516,7 +525,7 @@ Your booking reference is {{ $reference }}
             </div>
         </div>
         <div class="flex flex-row justify-between">
-            <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-3').hide(); $('.content-2').show()">Back</button>
+            <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-3').hide(); $('.content-2').show()"><i class="fa fa-arrow-left text-black"></i>Back</button>
             <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit">Book Now</button>
         </div>
     </div>
