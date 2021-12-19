@@ -18,6 +18,7 @@ module.exports = {
   },
   variants: {
     extend: {
+      fontSize: ['hover'],
       backgroundColor: ['checked'],
       borderColor: ['checked'],
     },

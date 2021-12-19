@@ -9,3 +9,9 @@
 <link href="{{ $admin_source }}/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
 <!-- Custom Stylesheet -->
 <link href="{{ $admin_source }}/css/style.css" rel="stylesheet">
+<style>
+    .menu-active{
+        background-color: #fd7e14;
+        color: #fff !important;
+    }
+</style>

@@ -5,7 +5,7 @@
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
-                    <li>
+                    <li class="menu-active">
                         <a  href="/dashboard" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
@@ -29,6 +29,14 @@
                             <li><a href="{{route('drivers.create')}}">Add Driver</a></li>
                         </ul>
                     </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-user menu-icon"></i><span class="nav-text">Clients</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('clients')}}">Clients</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-label">Messaging</li>
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -43,7 +51,7 @@
                     <li class="nav-label">Orders</li>
                     <li class="mega-menu mega-menu-sm">
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">Orders</span>
+                            <i class="icon-bag menu-icon"></i><span class="nav-text">Orders</span>
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('order.index')}}">Orders</a></li>
@@ -65,7 +73,7 @@
                     <li class="mega-menu mega-menu-sm">
 
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">Pricing</span>
+                            <i class="icon-credit-card menu-icon"></i><span class="nav-text">Pricing</span>
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('pricing.index')}}">Pricing</a></li>
@@ -76,7 +84,7 @@
                     <li class="nav-label">Fleet Management</li>
                     <li class="mega-menu mega-menu-sm">
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">Vehicles</span>
+                            <i class="icon-plane menu-icon"></i><span class="nav-text">Vehicles</span>
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('vehicles.index')}}">Vehicles</a></li>

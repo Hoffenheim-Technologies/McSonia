@@ -42,13 +42,13 @@
                                                     {{ucwords($item->lastname.' '.$item->firstname)}}
                                                 </td>
                                                 <td>
-                                                    {{$item->email}}
+                                                    <a href="mailto:{{$item->email}}">{{$item->email}}</a>
                                                 </td>
                                                 <td>
                                                     {{$item->created_at->toDayDateTimeString()}}
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-danger btn-sm mx-2" href="{{route('drivers.show', $item->id)}}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-info"></i> Edit</a>
+                                                    <a class="btn btn-info btn-sm mx-2" href="{{route('drivers.show', $item->id)}}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil color-info"></i> Edit</a>
 
                                                 </td>
                                             </tr>
