@@ -40,8 +40,8 @@
                 $('.pdate').slideUp()
                 $('.ptime').slideUp()
                 $('.submit').slideUp()
-            }           
-        })        
+            }
+        })
     </script>
     <script>
         function getName(id) {
@@ -59,11 +59,11 @@
                 type:'GET',
                 url:`/location/${id}`,
                 data: id,
-                success: (response) => {                    
+                success: (response) => {
                     for (const destination of response.destination) {
                         $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
                         $('#dlocation').niceSelect('update')
-                    }                    
+                    }
                 },
                 error: (e) => {
                     console.log(e);
@@ -113,13 +113,13 @@
         </div>
         <div class="w-full">
             <h4 class="text-2xl font-semibold">
-                Lorem Ipsum dolor sit amet.
+                Reliable and Safe Logistic Services
             </h4>
             <p class="pt-5">Video content is available on demand. Types of video include recreational video and graphical video and emotional makeup.</p>
         </div>
         <div class="w-full">
             <h4 class="text-2xl font-semibold">
-                Lorem Ipsum dolor sit amet.
+                We Help You Derive Fulfillment
             </h4>
             <p class="pt-5">Video content is available on demand. Types of video include recreational video and graphical video and emotional makeup.</p>
         </div>
@@ -130,7 +130,7 @@
             why choose us
         </div>
             <p class="text-gray-600 italic mb-5">
-                At McSonia Logistics, we pride ourselves in efficient service delivery 
+                At McSonia Logistics, we pride ourselves in efficient service delivery
                 to our clients while committing to the following cultural values:
             </p>
             <ul>
@@ -191,7 +191,7 @@
             <h1 class="font-bold text-3xl pb-4">FAQs</h1>
             <p class="font-medium text-2xl text-black">Frequently Asked Questions</p>
             <div class="grid grid-cols-2 pt-8">
-            @foreach($faqs as $faq)    
+            @foreach($faqs as $faq)
                 <div class="text-black w-2/3 mx-auto">
                     <div class="question w-full flex flex-row justify-between text-left cursor-pointer">
                         {{ $loop->iteration }}. {{ $faq->question }}
@@ -208,7 +208,7 @@
     </div>
 </div>
 <div class="modal fixed top-16 right-5 lg:w-1/4 bg-yellow-500 shadow-lg pb-4" style="display:none">
-    
+
     <form action="/" method="POST">
         @csrf
         <div class="py-2 px-3">
@@ -240,7 +240,7 @@
         <div class="submit w-full px-3" style="display: none;">
             <button class="mt-4 px-3 py-3 bg-white text-black hover:bg-black hover:text-white hover:border-0 hover:ring-0 w-full rounded font-semibold uppercase border" type="submit">Book Now</button>
         </div>
-        
+
     </form>
 </div>
 @endsection
