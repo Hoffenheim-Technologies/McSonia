@@ -265,17 +265,17 @@ Your booking reference is {{ $reference }}
                     <div class="flex flex-row w-full bg-white border py-3">
                         <div class="w-1/2 border-r">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">first name *</label>
-                            <input name="fname" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            <input name="firstname" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">last name *</label>
-                            <input class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                            <input name="lastname" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                         </div>
                     </div>
                     <div class="flex flex-row w-full bg-white border py-3">
                         <div class="w-1/2 border-r">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">Email address*</label>
-                            <input class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" >
+                            <input name="email" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" >
                         </div>
                         <div class="w-1/2 border-l">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">phone number *</label>
