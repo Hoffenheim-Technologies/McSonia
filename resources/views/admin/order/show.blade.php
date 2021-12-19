@@ -84,12 +84,23 @@
                                                     Total: @money($order->total)
                                                 </p>
                                                 <p>
-                                                    Status: {{$order->status}}
+                                                    Status: <span class="badge {{$order->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$order->status}}</span>
                                                 </p>
 
                                             </div>
                                             <div class="tab-pane fade" id="list-three" role="tabpanel">
-                                                Reference: {{$order->reference}}
+                                                @if ($orderDetail)
+                                                    <p>Reference: {{$order->reference}}</p>
+                                                    <p>
+                                                        Driver: {{ucwords($orderDetail->driver->lastname ?? '')}} {{ucwords($orderDetail->driver->firstname ?? '')}}
+                                                    </p>
+                                                    <p>
+                                                            Status: <span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span>
+
+                                                    </p>
+                                                @else
+                                                    <h4>Not Assigned</h4>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -111,9 +122,56 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Other</h4>
-                                <h5> Assign Driver</h5>
-
+                                @if (empty($orderDetail))
+                                    <h5> Assign Driver</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered zero-configuration">
+                                            <thead>
+                                                <tr>
+                                                    <th>SN</th>
+                                                    <th>Name</th>
+                                                    <th>Vehicle Type</th>
+                                                    <th>Vehicle Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($drivers as $item)
+                                                <tr>
+                                                    <td>
+                                                        {{$loop->iteration}}
+                                                    </td>
+                                                    <td>
+                                                        {{ucwords($item->lastname.' '.$item->firstname)}}
+                                                    </td>
+                                                    <td>
+                                                        {{$item->vehicle->type ?? ''}}
+                                                    </td>
+                                                    <td>
+                                                        {{$item->vehicle->vehicle_name ?? ''}}
+                                                    </td>
+                                                    <td>
+                                                        <form action="{{ route('order.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')
+                                                            <span class="">
+                                                                <button type="submit" class="btn btn-success confirm-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Assign"><i class="fa fa-check color-success"></i> Assign</button>
+                                                            </span>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @else
+                                <h4 class="card-title">Order Progress</h4>
+                                    <div class="">
+                                        <h4><span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span></h4>
+                                    </div>
+                                    <div class="progress" style="height: 15px;">
+                                        <div class="progress-bar {{($orderDetail->statusNo <= 0) ? 'bg-inverse' : ($orderDetail->statusNo <= 10) ? 'bg-danger' : ($orderDetail->statusNo <= 50) ? 'bg-info' : 'bg-success' }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -123,4 +181,24 @@
         <!--**********************************
             Content body end
         ***********************************-->
+@endsection
+@section('custom-script')
+    <script>
+        $('.confirm-btn').on('click',function(e){
+
+            e.preventDefault();
+
+            var form = $(this).parents('form:first');
+            swal({title:"Are you sure ?",
+                text:"Do you want to perform this action? !!",
+                type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",
+                confirmButtonText:"Yes !!",cancelButtonText:"No, cancel it !!",
+                closeOnConfirm:1,closeOnCancel:1},
+                function(e){
+                    if(e)
+                        $(form).submit();
+                }
+            )
+        });
+    </script>
 @endsection

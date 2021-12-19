@@ -42,7 +42,7 @@
                                             <td>
                                                 <form action="{{ route('locations.destroy' , $item)}}" method="post">@csrf @method('delete')
                                                     <span>
-                                                        <button type="submit" class="btn btn-danger btn-sm mx-2" onsubmit="checkDelete(this)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
                                                     </span>
                                                 </form>
                                             </td>
@@ -65,4 +65,21 @@
 @section('custom-script')
     <script src="{{ $admin_source }}/plugins/validation/jquery.validate.min.js"></script>
     <script src="{{ $admin_source }}/plugins/validation/jquery.validate-init.js"></script>
+    <script>
+        $('.delete-btn').on('click',function(e){
+            e.preventDefault();
+
+            var form = $(this).parents('form:first');
+            swal({
+                    title:"Are you sure to delete ?",
+                    text:"You will not be able to recover this data !!",
+                    type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",
+                    confirmButtonText:"Yes, delete it !!",closeOnConfirm:1},
+                    function(e){
+                        if(e)
+                            $(form).submit();
+                    }
+                )
+        })
+    </script>
 @endsection

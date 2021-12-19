@@ -110,7 +110,7 @@ class LocationController extends Controller
     {
         $user = Auth::user();
         try {
-            $location = Location::findorfail($id);
+            $location = Location::find($id);
         if(!empty($location)){
             $location->delete();
             UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Deleted","User Deleted Location",null);
