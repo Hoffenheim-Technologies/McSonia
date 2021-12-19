@@ -32,7 +32,7 @@
                                         <label>Driver</label>
                                         <select class="form-control" name="user_id" id="">
                                             @foreach ($drivers as $item)
-                                                <option {{($item->user_id == $vehicle->driver->id) ? 'selected' : ''}} value="{{$item->id}}">{{ucwords($item->lastname.' '.$item->firstname)}}</option>
+                                                <option {{($item->id == $vehicle->driver->id) ? 'selected' : ''}} value="{{$item->id}}">{{ucwords($item->lastname.' '.$item->firstname)}}</option>
                                             @endforeach
                                         </select>
                                     </div>
