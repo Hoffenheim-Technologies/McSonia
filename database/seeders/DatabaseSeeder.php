@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationSeeder::class);
         $this->call(FaqSeeder::class);
         $this->call(PricingSeeder::class);
+        $this->call(VehiclesSeeder::class);
     }
 }
