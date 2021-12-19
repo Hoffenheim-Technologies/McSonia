@@ -20,6 +20,7 @@
     <!-- Styles -->
     @yield('pageStyles')
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="css/app.css" rel="stylesheet">
     <link href="{{ $admin_source }}/plugins/toastr/css/toastr.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
