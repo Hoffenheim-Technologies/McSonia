@@ -5,7 +5,7 @@
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
-                    <li class="menu-active">
+                    <li class="menu-active {{Request::url()}}">
                         <a  href="/dashboard" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
