@@ -38,15 +38,15 @@ Route::post('/', function (Request $request) {
 
 Route::get('/solution', function () {
     return view('solution');
-});
+})->name('contact');
 
 Route::get('/testimonial', function () {
     return view('testimonial');
-});
+})->name('testimonial');
 
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
 
 Route::get('/app', function () {
     return view('layouts.app');

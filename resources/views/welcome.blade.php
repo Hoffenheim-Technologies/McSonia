@@ -30,7 +30,7 @@
         $(window).on('load', () => {
             setTimeout(() => {
                 $('.modal').slideDown()
-            }, 600)
+            }, 3000)
         })
     </script>
     <script>
@@ -40,8 +40,11 @@
                 $('.pdate').slideUp()
                 $('.ptime').slideUp()
                 $('.submit').slideUp()
-            }
-        })
+            }           
+        }) 
+        $('.fa-minus').click((event) => {
+            $('.modal').slideUp()
+        })       
     </script>
     <script>
         function getName(id) {
@@ -107,17 +110,17 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-3 lg:w-full mx-auto my-8 py-4">
-        <div class="w-full text-6xl text-yellow-600 font-extrabold">
+    <div class="md:grid md:grid-cols-2 lg:grid-cols-3 lg:w-full mx-auto my-8 py-4 text-center lg:text-left">
+        <div class="pb-5 lg:pr-5 md:col-span-2 lg:col-span-1 lg:pb-0 w-full text-3xl md:text-4xl lg:text-6xl text-yellow-600 font-extrabold">
             Swift and Timely Deliveries
         </div>
-        <div class="w-full">
+        <div class="w-full lg:px-5">
             <h4 class="text-2xl font-semibold">
                 Reliable and Safe Logistic Services
             </h4>
             <p class="pt-5">Video content is available on demand. Types of video include recreational video and graphical video and emotional makeup.</p>
         </div>
-        <div class="w-full">
+        <div class="w-full lg:px-5">
             <h4 class="text-2xl font-semibold">
                 We Help You Derive Fulfillment
             </h4>
@@ -125,7 +128,7 @@
         </div>
     </div>
 
-    <div class="text-center my-8 py-4 w-1/3 mx-auto">
+    <div class="text-center my-8 py-4 w-7/8 md:w-2/3 mx-auto">
         <div class="w-2/3 uppercase text-yellow-500 mx-auto my-8 text-xl font-bold">
             why choose us
         </div>
@@ -190,11 +193,15 @@
             @if (!empty($faqs))
             <h1 class="font-bold text-3xl pb-4">FAQs</h1>
             <p class="font-medium text-2xl text-black">Frequently Asked Questions</p>
-            <div class="grid grid-cols-2 pt-8">
-            @foreach($faqs as $faq)
-                <div class="text-black w-2/3 mx-auto">
+            <div class="md:grid grid-cols-2 pt-8">
+            @foreach($faqs as $faq)    
+                <div class="text-black w-5/6 md:w-2/3 mx-auto">
                     <div class="question w-full flex flex-row justify-between text-left cursor-pointer">
-                        {{ $loop->iteration }}. {{ $faq->question }}
+                        <span>
+                            <i class="fa fa-bus text-yellow-500"></i> 
+                            {{ $faq->question }}
+                        </span>
+                        
                         <i class="fa fa-chevron-down text-yellow-500"></i>
                     </div>
                     <div class="answer w-full text-left py-4" style="display: none;">
@@ -207,12 +214,12 @@
         </div>
     </div>
 </div>
-<div class="modal fixed top-16 right-5 lg:w-1/4 bg-yellow-500 shadow-lg pb-4" style="display:none">
-
+<div class="modal fixed top-1/2 lg:top-16 right-1/2 lg:right-0 transform -translate-y-1/2 translate-x-1/2 lg:translate-y-0 lg:translate-x-0 right-5 lg:w-1/4 bg-yellow-500 shadow-lg pb-4" style="display:none">
     <form action="/" method="POST">
         @csrf
-        <div class="py-2 px-3">
+        <div class="py-2 px-3 flex justify-between items-center">
             <div class="text-2xl text-white font-bold">Order Now</div>
+            <i class="fa fa-minus text-white hover:text-black"></i>
         </div>
         <div class="plocation px-3 mb-2">
             <label for="" class="uppercase text-xs px-2 text-white">Pickup Location *</label>
@@ -239,8 +246,7 @@
         </div>
         <div class="submit w-full px-3" style="display: none;">
             <button class="mt-4 px-3 py-3 bg-white text-black hover:bg-black hover:text-white hover:border-0 hover:ring-0 w-full rounded font-semibold uppercase border" type="submit">Book Now</button>
-        </div>
-
+        </div>        
     </form>
 </div>
 @endsection

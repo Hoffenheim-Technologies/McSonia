@@ -68,7 +68,7 @@ class BookRequestController extends Controller
 
         $order->save();
 
-        return view('request')->with('message', 'Done')->with('reference', $order->reference);
+        return view('request')->with('message', 'Success')->with('reference', $order->reference);
     }
 
 
