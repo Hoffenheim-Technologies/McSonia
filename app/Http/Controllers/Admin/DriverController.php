@@ -24,7 +24,7 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $drivers = User::where('role','driver')->get();
+        $drivers = User::where('role','driver')->orderBy('created_at', 'desc')->get();
         return view("admin.driver.index", compact('drivers'));
     }
 
