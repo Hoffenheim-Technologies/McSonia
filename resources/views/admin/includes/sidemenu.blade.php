@@ -92,6 +92,13 @@
                         </ul>
                     </li>
 
+                    <li class="nav-label">Mcsonia Accounting</li>
+                    <li >
+                        <a  href="{{route('vendors.index')}}" aria-expanded="false">
+                            <i class="icon-basket menu-icon"></i><span class="nav-text">Vendors</span>
+                        </a>
+                    </li>
+
                     <li >
                         <a  href="{{route('faqs.index')}}" aria-expanded="false">
                             <i class="icon-question menu-icon"></i><span class="nav-text">FAQ's</span>

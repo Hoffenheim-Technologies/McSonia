@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\OrderController;
@@ -65,6 +66,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
+
+    //Locations
+    Route::resource('vendors', '\App\Http\Controllers\Admin\VendorController');
 
     //Orders
     Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
