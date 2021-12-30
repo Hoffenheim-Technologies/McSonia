@@ -32,7 +32,7 @@
 
 @section('extraScripts')
 
-@isset($reference)  
+@isset($reference)
 @else
 <script>
 
@@ -50,7 +50,7 @@
     function getLocation(id) {
         $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
         $('#dlocation').niceSelect('update')
-        console.log(id)
+       // console.log(id)
         $.ajax({
             type:'GET',
             url:`/location/${id}`,

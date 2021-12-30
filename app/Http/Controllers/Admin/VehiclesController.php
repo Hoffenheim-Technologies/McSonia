@@ -157,11 +157,22 @@ class VehiclesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Vehicles  $vehicles
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vehicles $vehicles)
+    public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        try {
+            $vehicle = Vehicles::find($id);
+            if(!empty($vehicle)){
+                $vehicle->delete();
+                UserActivityService::log($user->id,UserActivityConstants::VEHICLE_ACTIVITY,"Vehicle Deleted","User Deleted Vehicle",null);
+                return redirect()->route('vehicles.index')->with('message','Data Deleted Successfully');
+            }
+        }catch (Exception $e) {
+            //dd($e);
+            return redirect()->route('vehicles.index')->with('error','Unable to delete');
+        }
     }
 }

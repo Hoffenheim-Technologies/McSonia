@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Admin\FaqController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -86,6 +87,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/', [ClientController::class, 'index'])->name('clients');
         Route::get('/{id}', [ClientController::class, 'show'])->name('clients.show');
         Route::put('/{id}', [ClientController::class, 'update'])->name('clients.update');
+    });
+
+    //FAQ
+    Route::prefix('faqs')->group(function(){
+        Route::get('/', [FaqController::class, 'index'])->name('faqs.index');
+        Route::get('/{id}', [AjaxController::class, 'getFaq']);
+        Route::post('/', [FaqController::class, 'store'])->name('faqs.store');
+        Route::put('/{id}', [FaqController::class, 'update'])->name('faqs.update');
+        Route::delete('/{id}', [FaqController::class, 'destroy'])->name('faqs.destroy');
     });
 
     Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');
