@@ -5,7 +5,7 @@
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
-                    <li class="menu-active {{Request::url()}}">
+                    <li class="">
                         <a  href="/dashboard" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
@@ -90,6 +90,12 @@
                             <li><a href="{{route('vehicles.index')}}">Vehicles</a></li>
                             <li><a href="{{route('vehicles.create')}}">Add vehicle</a></li>
                         </ul>
+                    </li>
+
+                    <li >
+                        <a  href="{{route('faqs.index')}}" aria-expanded="false">
+                            <i class="icon-question menu-icon"></i><span class="nav-text">FAQ's</span>
+                        </a>
                     </li>
                 </ul>
             </div>

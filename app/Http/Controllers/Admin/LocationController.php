@@ -59,8 +59,6 @@ class LocationController extends Controller
             }
         }catch(Exception $as){
             DB::rollback();
-            //throw new Exception;
-            dd($as);
             return redirect()->route('locations.create')->with('error','Data Entry Unsuccessful, Check Values');
         }
 
@@ -111,11 +109,11 @@ class LocationController extends Controller
         $user = Auth::user();
         try {
             $location = Location::find($id);
-        if(!empty($location)){
-            $location->delete();
-            UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Deleted","User Deleted Location",null);
-            return redirect()->route('locations.index')->with('message','Data Deleted Successfully');
-        }
+            if(!empty($location)){
+                $location->delete();
+                UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Deleted","User Deleted Location",null);
+                return redirect()->route('locations.index')->with('message','Data Deleted Successfully');
+            }
         }catch (Exception $e) {
             dd($e);
         }
