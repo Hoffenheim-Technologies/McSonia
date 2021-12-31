@@ -32,7 +32,7 @@
 
 @section('extraScripts')
 
-@isset($reference)  
+@isset($reference)
 @else
 <script>
 

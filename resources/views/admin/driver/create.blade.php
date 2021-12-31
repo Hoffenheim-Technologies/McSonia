@@ -36,11 +36,11 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>FirstName</label>
-                                            <input type="firstname" class="form-control" value="{{old('firstname')}}" name="firstname" placeholder="First Name">
+                                            <input type="text" class="form-control" value="{{old('firstname')}}" name="firstname" placeholder="First Name">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>LastName</label>
-                                            <input type="lastname" class="form-control" value="{{old('lastname')}}" name="lastname" placeholder="Last Name">
+                                            <input type="text" class="form-control" value="{{old('lastname')}}" name="lastname" placeholder="Last Name">
                                         </div>
                                     </div>
                                     <div class="form-row">
