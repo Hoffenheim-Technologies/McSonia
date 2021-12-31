@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Items;
 use App\Models\Location;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -29,8 +30,10 @@ class BookRequestController extends Controller
     {
 
         $order = new Order();
+        $order->item = $request->item;
         $order->pdate = $request->pdate;
         $order->ptime = $request->ptime;
+        $order->item = $request->item;
         $order->plocation = $request->plocation;
         $order->paddress = $request->paddress;
         $order->dlocation = $request->dlocation;
@@ -74,7 +77,7 @@ class BookRequestController extends Controller
 
 
     public function order(){
-        return view('request')->with('locations', Location::all());
+        return view('request')->with('locations', Location::all())->with('items', Items::all());
     }
 
     /**
