@@ -62,11 +62,11 @@
                 type:'GET',
                 url:`/location/${id}`,
                 data: id,
-                success: (response) => {                    
+                success: (response) => {
                     for (const destination of response.destination) {
                         $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
                         $('#dlocation').niceSelect('update')
-                    }                    
+                    }
                 },
                 error: (e) => {
                     console.log(e);
@@ -116,13 +116,13 @@
         </div>
         <div class="w-full lg:px-5">
             <h4 class="text-2xl font-semibold">
-                Lorem Ipsum dolor sit amet.
+                Reliable and Safe Logistic Services
             </h4>
             <p class="pt-5">Video content is available on demand. Types of video include recreational video and graphical video and emotional makeup.</p>
         </div>
         <div class="w-full lg:px-5">
             <h4 class="text-2xl font-semibold">
-                Lorem Ipsum dolor sit amet.
+                We Help You Derive Fulfillment
             </h4>
             <p class="pt-5">Video content is available on demand. Types of video include recreational video and graphical video and emotional makeup.</p>
         </div>
@@ -133,7 +133,7 @@
             why choose us
         </div>
             <p class="text-gray-600 italic mb-5">
-                At McSonia Logistics, we pride ourselves in efficient service delivery 
+                At McSonia Logistics, we pride ourselves in efficient service delivery
                 to our clients while committing to the following cultural values:
             </p>
             <ul>
@@ -215,7 +215,6 @@
     </div>
 </div>
 <div class="modal fixed top-1/2 lg:top-16 right-1/2 lg:right-0 transform -translate-y-1/2 translate-x-1/2 lg:translate-y-0 lg:translate-x-0 right-5 lg:w-1/4 bg-yellow-500 shadow-lg pb-4" style="display:none">
-    
     <form action="/" method="POST">
         @csrf
         <div class="py-2 px-3 flex justify-between items-center">

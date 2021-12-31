@@ -28,6 +28,13 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('created_at', 'desc')->get();
+        if($orders){
+            foreach($orders as $item){
+                if($item->user_id){
+                    $item->user = User::find($item->user_id);
+                }
+            }
+        }
         //dd($orders);
         return view('admin.order.index', compact('orders'));
     }
@@ -106,6 +113,10 @@ class OrderController extends Controller
         if($order){
             $order->plocation = Location::find($order->plocation);
             $order->dlocation = Location::find($order->dlocation);
+            if($order->user_id){
+                $order->user = User::find($order->user_id);
+            }
+
 
             $drivers = User::where('role','driver')->get();
             if($drivers){
@@ -113,7 +124,9 @@ class OrderController extends Controller
                     $item->vehicle = Vehicles::where('user_id',$item->id)->first();
                 }
             }
-            $orderDetail = OrderDetails::where('order_id','=',2)->first();
+
+
+            $orderDetail = OrderDetails::where('order_id','=',$order->id)->first();
             //dd($orderDetail);
             if($orderDetail){
                 $orderDetail->statusNo = OrderStatusConstants::ORDER_STATUS_NO[$orderDetail->status];
