@@ -33,6 +33,7 @@
         <div class="bar"></div>
     </div>
     <div id="app" class="hidden">
+        <div class="min-h-screen">
         <header class="hidden lg:flex mx-2 mb-3 md:mb-5 items-center h-auto justify-between bg-white">
             <a class="ml-3" href="{{ url('/') }}">
                 <img src="images/logo.webp" alt="McSonia Logistics" class="h-8">
@@ -42,10 +43,10 @@
             </button> -->
             <div class="mt-3">
                 <ul class="flex flex-row text-xs">
-                    <li class="px-4 uppercase text-yellow-400"><a href="/about">About</a></li>
-                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/request">Booking</a></li>
-                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/testimonial">Testimonials</a></li>
-                    <li class="px-4 uppercase hover:text-yellow-400"><a href="/solution">Contact-Us</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'about') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="/about">About</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'order') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="/request">Booking</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'testimonial') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="/testimonial">Testimonials</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'contact') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="/solution">Contact-Us</a></li>
                 </ul>
             </div>
 
@@ -89,6 +90,7 @@
         <main class="mt-3 md:mt-5 py-5 mx-5">
             @yield('content')
         </main>
+        </div>
         <footer class="container mx-auto mt-12">
             <div class="hidden w-full bg-yellow-100 text-xl flex justify-around">
                 <span class="flex-grow">Get Connected </span>

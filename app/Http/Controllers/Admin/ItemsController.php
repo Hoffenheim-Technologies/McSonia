@@ -4,24 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Constants\UserActivityConstants;
 use App\Http\Controllers\Controller;
-use App\Models\Location;
+use App\Models\Items;
+use Illuminate\Http\Request;
 use App\Services\Activity\User\UserActivityService;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class LocationController extends Controller
+class ItemsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('isAdmin');
+    }
+
     public function index()
     {
-        $locations = Location::get();
-        return view('admin.location.index', compact('locations'));
+        $items = Items::all();
+        return view('admin.items.index')->with('items', $items);
     }
 
     /**
@@ -31,7 +36,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return view('admin.location.locations-new');
+        return view('admin.items.item-new');
     }
 
     /**
@@ -42,35 +47,36 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         $user = Auth::user();
         DB::beginTransaction();
         try {
             $data = [];
-            $data['location'] = $request->location;
-            $location = Location::where('location', '=', $data['location'])->first();
-            if ($location === null) {
-                Location::create($data);
+            $data['item'] = $request->item;
+            $data['price'] = $request->price;
+            $item = Items::where('item', '=', $data['item'])->first();
+            if ($item === null) {
+                Items::create($data);
                 DB::commit();
-                UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Created","User Added Location",null);
-                return redirect()->route('locations.create')->with('message','Data Created Successfully');
+                UserActivityService::log($user->id,UserActivityConstants::ITEM_ACTIVITY,"Item Created","User Added Item", null);
+                return redirect()->route('items.create')->with('message','Data Created Successfully');
             }else{
-                return redirect()->route('locations.create')->with('error','Data Already Exists');
+                return redirect()->route('items.create')->with('error','Data Already Exists');
             }
-        }catch(Exception $as){
+        } catch(Exception $as) {
             DB::rollback();
-            return redirect()->route('locations.create')->with('error','Data Entry Unsuccessful, Check Values');
+            //throw new Exception;
+            dd($as);
+            return redirect()->route('items.create')->with('error','Data Entry Unsuccessful, Check Values');
         }
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Items  $items
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Items $items)
     {
         //
     }
@@ -78,10 +84,10 @@ class LocationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Items  $items
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Items $items)
     {
         //
     }
@@ -90,10 +96,10 @@ class LocationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Items  $items
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Items $items)
     {
         //
     }
@@ -101,19 +107,19 @@ class LocationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Items  $items
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $user = Auth::user();
         try {
-            $location = Location::find($id);
-            if(!empty($location)){
-                $location->delete();
-                UserActivityService::log($user->id,UserActivityConstants::LOCATION_ACTIVITY,"Location Deleted","User Deleted Location",null);
-                return redirect()->route('locations.index')->with('message','Data Deleted Successfully');
-            }
+            $item = Items::find($id);
+        if(!empty($item)){
+            $item->delete();
+            UserActivityService::log($user->id,UserActivityConstants::ITEM_ACTIVITY,"Item Deleted","User Deleted Item",null);
+            return redirect()->route('items.index')->with('message','Data Deleted Successfully');
+        }
         }catch (Exception $e) {
             dd($e);
         }

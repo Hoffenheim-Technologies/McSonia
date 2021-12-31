@@ -9,11 +9,13 @@ use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ItemsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Admin\FaqController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -38,15 +40,15 @@ Route::post('/', function (Request $request) {
 
 Route::get('/solution', function () {
     return view('solution');
-});
+})->name('contact');
 
 Route::get('/testimonial', function () {
     return view('testimonial');
-});
+})->name('testimonial');
 
 Route::get('/about', function () {
     return view('about');
-});
+})->name('about');
 
 Route::get('/app', function () {
     return view('layouts.app');
@@ -64,6 +66,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
+    Route::resource('items', '\App\Http\Controllers\Admin\ItemsController');
 
     //Orders
     Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
@@ -86,6 +89,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/', [ClientController::class, 'index'])->name('clients');
         Route::get('/{id}', [ClientController::class, 'show'])->name('clients.show');
         Route::put('/{id}', [ClientController::class, 'update'])->name('clients.update');
+    });
+
+    //FAQ
+    Route::prefix('faqs')->group(function(){
+        Route::get('/', [FaqController::class, 'index'])->name('faqs.index');
+        Route::get('/{id}', [AjaxController::class, 'getFaq']);
+        Route::post('/', [FaqController::class, 'store'])->name('faqs.store');
+        Route::put('/{id}', [FaqController::class, 'update'])->name('faqs.update');
+        Route::delete('/{id}', [FaqController::class, 'destroy'])->name('faqs.destroy');
     });
 
     Route::resource('pricing', '\App\Http\Controllers\Admin\PricingController');

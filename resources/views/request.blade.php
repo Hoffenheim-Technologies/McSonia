@@ -32,7 +32,7 @@
 
 @section('extraScripts')
 
-@isset($reference)  
+@isset($reference)
 @else
 <script>
 
@@ -50,13 +50,12 @@
     function getLocation(id) {
         $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
         $('#dlocation').niceSelect('update')
-        console.log(id)
         $.ajax({
             type:'GET',
             url:`/location/${id}`,
             data: id,
             success: (response) => {
-                console.log(response)
+                //console.log(response)
                 for (const destination of response.destination) {
                     $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
                     $('#dlocation').niceSelect('update')
@@ -88,7 +87,14 @@
     $('[name=dlocation]').change(() => {
         $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
         $('.end').text($('[name=dlocation]').find(":selected").text())
-        $('.price').text('Price - '+ $('[name=dlocation]').find(":selected").attr('price'))
+        var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
+        $('.price').text('Price - '+ price.toString())
+    })
+    $('[name=item]').change(() => {
+        $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
+        $('.end').text($('[name=dlocation]').find(":selected").text())
+        var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
+        $('.price').text('Price - '+ price.toString())
     })
 </script>
 @guest
@@ -118,42 +124,61 @@ $('[name=phone]').change(()=>{
 
 @section('content')
 @isset($message, $reference)
-@isset($message)
-{{ $message }}
-@endisset
-<br>
-@isset($reference)
-Your booking reference is {{ $reference }}
-@endisset
+<div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 w-max">
+    @isset($message)
+        <div class="flex flex-col sm:flex-row justify-center items-center uppercase text-green-800 font-bold text-3xl sm:text-6xl">
+            {{ $message }}
+            <img src="images/confirmation.svg" class="h-28 pl-5 order-first sm:order-last" alt="">
+        </div>
+        @endisset
+        
+        @isset($reference)
+        <div class="py-3 lg:flex justify-center items-center text-center sm:text-2xl">
+           <div>Your booking reference is</div><div class="pl-5 text-yellow-500 text-3xl sm:text-6xl font-extrabold">{{ $reference }}</div>
+        </div>
+        @endisset
+        
+    </div>
+</div>
 @else
-<form class="mx-auto container" method="POST" action="/request">
+<form class="mx-auto" method="POST" action="/request">
     @csrf @method('PUT')
     <div class="mx-auto w-3/4 mb-12">
         <ul class="relative flex flex-row mx-auto w-full justify-center items-center">
             <li class="flex flex-col justify-center"> <span class="bg-yellow-500 px-3 py-1 border rounded-full flex justify-center flex-grow-0" href="#">1</span></li>
-            <span class="absolute left-0 -bottom-8 transform -translate-x-1/3">Ride Details</span>
+            <span class="hidden sm:absolute left-0 -bottom-8 transform -translate-x-1/3">Ride Details</span>
             <span class="mx-3 flex-grow border-b"></span>
             <li class="flex flex-col justify-center"> <span class="bg-yellow-500 px-3 py-1 border rounded-full flex justify-center" href="#">2</span></li>
-            <span class="absolute -bottom-8">Contact Details</span>
+            <span class="hidden sm:absolute -bottom-8">Contact Details</span>
             <span class="mx-3 flex-grow border-b"></span>
             <li class="flex flex-col justify-center"> <span class="bg-yellow-500 px-3 py-1 border rounded-full flex justify-center" href="#">3</span></li>
-            <span class="absolute right-0 -bottom-8 transform translate-x-1/3">Booking Summary</span>
+            <span class="hidden sm:absolute right-0 -bottom-8 transform translate-x-1/3">Booking Summary</span>
         </ul>
     </div>
     <div class="content-1">
         <div class="sm:grid grid-cols-2 mt-12">
-            <div class="border rounded bg-yellow-100 mx-5">
+            <div class="border rounded bg-yellow-100 mx-3">
                 <div class="font-semibold py-3 px-3">
                     Ride Details
                 </div>
-                <div class="flex flex-row w-full bg-white border-b py-3">
-                    <div class="w-1/2 border-r">
+                <div class="sm:flex flex-row w-full bg-white border-b py-3">
+                    <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-r">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Date *</label>
                         <input id="pdate" name="pdate" @isset($input->pdate) value="{{$input->pdate}}" @endisset class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="date" >
                     </div>
-                    <div class="w-1/2 border-l">
+                    <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-x">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Time *</label>
                         <input id="ptime" name="ptime" @isset($input->ptime) value="{{$input->ptime}}" @endisset class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="time" >
+                    </div>
+                    <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-l">
+                        <label for="" class="uppercase text-xs px-2 text-gray-500">Item *</label>
+                        <select class="niceselect border-0 border-b sm:border-0 w-full" name="item" id="">
+                            <option selected disabled>Choose</option>
+                            @foreach ($items as $item)
+                            <option value="{{$item->id}}" price="{{$item->price}}">{{$item->item}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="w-full bg-white border-y py-3">
@@ -171,7 +196,7 @@ Your booking reference is {{ $reference }}
                 <div class="w-full bg-white border-y py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Address *</label>
-                        <input id="paddress" name="paddress" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <input id="paddress" name="paddress" class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                     </div>
                 </div>
                 <div class="w-full bg-white border-t py-3">
@@ -185,8 +210,12 @@ Your booking reference is {{ $reference }}
                 <div class="w-full bg-white border-t py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Address *</label>
-                        <input id="daddress" name="daddress" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <input id="daddress" name="daddress" class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                     </div>
+                </div>
+                <div class="w-full bg-white border py-3">
+                    <label for="" class="uppercase text-xs px-2 text-gray-500">Item Description</label>
+                    <textarea id="comments" name="comments" class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" placeholder="Describe your item"></textarea>
                 </div>
             </div>
             <div class="border relative rounded bg-yellow-100 mx-5">
@@ -289,10 +318,6 @@ Your booking reference is {{ $reference }}
                             <label for="" class="uppercase text-xs px-2 text-gray-500">phone number *</label>
                             <input name="phone" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone" >
                         </div>
-                    </div>
-                    <div class="w-full bg-white border py-3">
-                        <label for="" class="uppercase text-xs px-2 text-gray-500">Comments</label>
-                        <textarea id="comments" name="comments" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" ></textarea>
                     </div>
                     <div class="w-full bg-yellow-100 py-3 px-5">
                         <div class="flex flex-row items-center py-3">
