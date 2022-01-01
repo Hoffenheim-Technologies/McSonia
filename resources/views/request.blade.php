@@ -50,13 +50,12 @@
     function getLocation(id) {
         $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
         $('#dlocation').niceSelect('update')
-       // console.log(id)
         $.ajax({
             type:'GET',
             url:`/location/${id}`,
             data: id,
             success: (response) => {
-                console.log(response)
+                //console.log(response)
                 for (const destination of response.destination) {
                     $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
                     $('#dlocation').niceSelect('update')
@@ -88,7 +87,14 @@
     $('[name=dlocation]').change(() => {
         $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
         $('.end').text($('[name=dlocation]').find(":selected").text())
-        $('.price').text('Price - '+ $('[name=dlocation]').find(":selected").attr('price'))
+        var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
+        $('.price').text('Price - '+ price.toString())
+    })
+    $('[name=item]').change(() => {
+        $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
+        $('.end').text($('[name=dlocation]').find(":selected").text())
+        var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
+        $('.price').text('Price - '+ price.toString())
     })
 </script>
 @guest
@@ -166,12 +172,12 @@ $('[name=phone]').change(()=>{
                         <input id="ptime" name="ptime" @isset($input->ptime) value="{{$input->ptime}}" @endisset class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="time" >
                     </div>
                     <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-l">
-                        <label for="" class="uppercase text-xs px-2 text-gray-500">Item weight</label>
-                        <select class="niceselect border-0 border-b sm:border-0 w-full" name="weight" id="">
-                            <option selected disabled>Choose an option</option>
-                            <option value="1">Less than 3kg</option>
-                            <option value="2">Less than 10kg</option>
-                            <option value="3">Less than 50kg</option>
+                        <label for="" class="uppercase text-xs px-2 text-gray-500">Item *</label>
+                        <select class="niceselect border-0 border-b sm:border-0 w-full" name="item" id="">
+                            <option selected disabled>Choose</option>
+                            @foreach ($items as $item)
+                            <option value="{{$item->id}}" price="{{$item->price}}">{{$item->item}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

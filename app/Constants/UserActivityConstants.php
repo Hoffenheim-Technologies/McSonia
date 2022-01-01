@@ -10,5 +10,6 @@ class UserActivityConstants
     const ORDER_ACTIVITY = "ORDER_ACTIVITY";
     const VEHICLE_ACTIVITY = "VEHICLE_ACTIVITY";
     const VENDOR_ACTIVITY = "VENDOR_ACTIVITY";
+    const ITEM_ACTIVITY = "ITEM_ACTIVITY";
     const FAQ_ACTIVITY = "FAQ_ACTIVITY";
 }
