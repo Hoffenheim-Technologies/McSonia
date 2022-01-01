@@ -32,9 +32,39 @@
         </div>
         <div class="bar"></div>
     </div>
+    <div class="mobile-nav bg-gradient-to-b from-gray-200 to-white w-screen hidden z-50 h-screen fixed">
+        <header class="md:hidden">
+            <nav class="flex items-center justify-between w-full">
+                <div class="pl-3">
+                    <img src="images/logo.png" alt="Logo" class="mx-auto sm:w-44 w-28">
+                </div>
+                <div class="pr-3">
+                    <ul class="flex justify-between items-center">
+                        <!-- <li><a href="{{ route('order') }}" class="font-semibold text-white rounded sm:text-lg py-2 px-3 bg-yellow-500">Book Now</a></li> -->
+                        <li class="relative outline-none">
+                        <div class="menu-icon">
+                            <input class="menu-icon__cheeckbox" type="checkbox"/>
+                            <div>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="mx-5 px-3 xs:px-5 my-24">
+            <ul class="font-extrabold text-yellow-900 text-2xl">
+                <li class="my-6">Home</li>
+                <li class="my-6">Booking</li>
+                <li class="my-6">Testimonials</li>
+                <li class="my-6">Contact</li>
+            </ul>
+        </div>
+    </div>
     <div id="app" class="hidden">
         <div class="min-h-screen">
-        <header class="hidden lg:flex mx-2 mb-3 md:mb-5 items-center h-auto justify-between bg-white">
+        <header class="hidden md:flex mx-2 mb-3 md:mb-5 items-center h-auto justify-between bg-white">
             <a class="ml-3" href="{{ url('/') }}">
                 <img src="images/logo.webp" alt="McSonia Logistics" class="h-8">
             </a>
@@ -87,6 +117,36 @@
                 </ul>
             </nav>
         </header>
+        <header class="md:hidden">
+            <nav class="flex items-center justify-between w-full">
+                <div class="pl-3">
+                    <img src="images/logo.png" alt="Logo" class="mx-auto sm:w-44 w-28">
+                </div>
+                <div class="pr-3">
+                    <ul class="flex justify-between items-center">
+                        <li class="hidden xs:block"><a href="{{ route('order') }}" class="font-semibold text-white rounded sm:text-lg py-2 px-3 bg-yellow-500">Book Now</a></li>
+                        <li class="relative outline-none">
+                        <div class="menu-icon">
+                            <input class="menu-icon__cheeckbox" type="checkbox" />
+                            <div>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <!-- <div class="central mx-auto mt-5">
+                <div class="absolute block top-1/2 left-1/4">
+                    <img src="images/logo.png" alt="Logo" class="mx-auto">
+                </div>
+                <div class="smaller one"></div>
+                <div class="smaller four"></div>
+                <div class="smaller seven"></div>
+            </div> -->
+        </header>
+
         <main class="mt-3 md:mt-5 py-5 mx-5">
             @yield('content')
         </main>
@@ -110,6 +170,12 @@
     <script src="{{ $admin_source }}/plugins/toastr/js/toastr.init.js"></script>
     @yield('extraScripts')
     <script src="js/main.js"></script>
+    <script>
+        $('.menu-icon__cheeckbox').click( () => {
+            $('.mobile-nav').toggleClass('hidden')
+            $('.menu-icon__cheeckbox').toggleClass('checked')
+        })
+    </script>
     @yield('custom-script')
 </body>
 </html>
