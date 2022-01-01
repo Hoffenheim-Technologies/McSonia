@@ -81,6 +81,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //vehicles
     Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
 
+    //vehicles
+    Route::resource('finances', '\App\Http\Controllers\Admin\FinancesController');
+
     //Drivers
     Route::prefix('drivers')->group(function(){
         Route::get('/', [DriverController::class, 'index'])->name('drivers');

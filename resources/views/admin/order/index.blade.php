@@ -54,7 +54,11 @@
                                                 {{$item->user->phone ?? $item->phone}}
                                             </td>
                                             <td>
-                                                <span class="{{ $item->status == 'Pending' ? 'label gradient-2' : 'label gradient-1'}} "> {{$item->status}} </span>
+                                                @if ($item->status == 'Pending')
+                                                    <i class="fa fa-circle-o text-warning  mr-2"></i> {{$item->status}}
+                                                @else
+                                                    <i class="fa fa-circle-o text-success  mr-2"></i>  {{$item->status}}
+                                                @endif
                                             </td>
                                             <td>
                                                 {{$item->created_at->toDayDateTimeString()}}

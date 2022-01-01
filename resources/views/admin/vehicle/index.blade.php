@@ -49,7 +49,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                {{$item->type}}
+                                                {{$item->type}} 
                                             </td>
                                             <td>
                                                 {{$item->reg_no}}
