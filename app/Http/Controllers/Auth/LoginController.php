@@ -33,7 +33,7 @@ class LoginController extends Controller
         } elseif (\Auth::user()->role == 'driver'){
             return 'driver';
         } else {
-            return 'request';
+            return 'home';
         }
     }
     /**
