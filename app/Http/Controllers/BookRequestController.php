@@ -30,7 +30,6 @@ class BookRequestController extends Controller
     {
 
         $order = new Order();
-        $order->item = $request->item;
         $order->pdate = $request->pdate;
         $order->ptime = $request->ptime;
         $order->item = $request->item;

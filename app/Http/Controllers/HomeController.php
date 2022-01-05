@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\faq;
-use App\Models\Location;
-use App\Models\Order;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -27,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home')->with('faqs', faq::all());
+        return view('home');
     }
 
 }
