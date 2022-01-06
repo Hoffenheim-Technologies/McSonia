@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class FinanceService
 {
-    public static function log($account, $beneficiary, $payment_type, $payment_category, $category, $details, $description, $amount, $transaction_date)
+    public static function log($account, $beneficiary, $payment_type, $payment_category, $category, $details, $description, $amount, $transaction_date = null)
     {
         $payload = [
             "reference" => getRandomToken(6),

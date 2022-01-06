@@ -26,7 +26,7 @@
                                         <thead>
                                             <tr>
                                                 <th>SN</th>
-                                                <th>Type</th>
+                                                <th>Beneficiary</th>
                                                 <th>Category</th>
                                                 <th>Account</th>
                                                 <th>Amount</th>
@@ -40,7 +40,7 @@
                                                     {{$loop->iteration}}
                                                 </td>
                                                 <td>
-                                                    {{$item->payment_type}}
+                                                    {{$item->beneficiary}}
                                                 </td>
                                                 <td>
                                                     {{$item->payment_category}}

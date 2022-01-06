@@ -19,6 +19,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FinancesController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -84,8 +85,10 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //vehicles
     Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
 
-    //vehicles
+    //Finances
     Route::resource('finances', '\App\Http\Controllers\Admin\FinancesController');
+    Route::get('/accountsList', [AjaxController::class, 'getAccounts']);
+
 
     //Drivers
     Route::prefix('drivers')->group(function(){
