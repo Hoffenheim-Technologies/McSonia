@@ -6,6 +6,7 @@ use App\Models\Finances;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFinancesRequest;
 use App\Http\Requests\UpdateFinancesRequest;
+use App\Models\AccountCharts;
 
 class FinancesController extends Controller
 {
@@ -27,7 +28,10 @@ class FinancesController extends Controller
      */
     public function create()
     {
-        //
+        $accounts = AccountCharts::all();
+        $income_accounts = AccountCharts::where('type','<>','Exepnses')->get();
+        $expense_accounts = AccountCharts::where('type','<>','Income')->get();
+        return view('admin.finances.create', compact('accounts','income_accounts','expense_accounts'));
     }
 
     /**
