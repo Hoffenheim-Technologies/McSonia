@@ -195,16 +195,16 @@
             <p class="font-medium text-2xl text-black">Frequently Asked Questions</p>
             <div class="md:grid grid-cols-2 pt-8">
             @foreach($faqs as $faq)    
-                <div class="text-black w-5/6 md:w-2/3 mx-auto">
+                <div class="text-black w-5/6 md:w-2/3 mx-auto my-5">
                     <div class="question w-full flex flex-row justify-between text-left cursor-pointer">
                         <span>
-                            <i class="fa fa-bus text-yellow-500"></i> 
+                            <i class="fa fa-bus text-yellow-500 pr-3"></i> 
                             {{ $faq->question }}
                         </span>
                         
                         <i class="fa fa-chevron-down text-yellow-500"></i>
                     </div>
-                    <div class="answer w-full text-left py-4" style="display: none;">
+                    <div class="answer w-full text-left py-2 font-bold text-xl" style="display: none;">
                         {{ $faq->answer }}
                     </div>
                 </div>
