@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\faq;
 use App\Models\Location;
+use App\Models\Items;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ClientController;
@@ -36,7 +37,7 @@ Route::get('/', function () {
 });
 
 Route::post('/', function (Request $request) {
-    return view('request')->with('input', $request)->with('locations', Location::all());
+    return view('request')->with('input', $request)->with('locations', Location::all())->with('items', Items::all());;
 });
 
 
