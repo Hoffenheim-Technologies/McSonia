@@ -29,6 +29,7 @@
     <script src="{{ $admin_source }}/plugins/tables/js/jquery.dataTables.min.js"></script>
     <script src="{{ $admin_source }}/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
     <script src="{{ $admin_source }}/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 
     <script>
         @if(Session::has('message'))
@@ -66,5 +67,13 @@
         }
                 toastr.warning("{{ session('warning') }}");
         @endif
+
+
+        // Daterange picker
+        $('.input-daterange-datepicker').daterangepicker({
+            buttonClasses: ['btn', 'btn-sm'],
+            applyClass: 'btn-danger',
+            cancelClass: 'btn-inverse'
+        });
 
       </script>

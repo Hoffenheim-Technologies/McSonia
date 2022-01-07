@@ -9,14 +9,19 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\AccountChartsController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ItemsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookRequestController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FinancesController;
+use App\Http\Controllers\Admin\ReportsController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -69,12 +74,23 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
     Route::resource('items', '\App\Http\Controllers\Admin\ItemsController');
 
+    //Vendors
+    Route::resource('vendors', '\App\Http\Controllers\Admin\VendorController');
+
+    //Accounts
+    Route::resource('accounts', '\App\Http\Controllers\Admin\AccountChartsController');
+
     //Orders
     Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
     Route::post('/order/{driver}/{order}', [OrderController::class, 'assign'])->name('order.assign');
 
     //vehicles
     Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
+
+    //Finances
+    Route::resource('finances', '\App\Http\Controllers\Admin\FinancesController');
+    Route::get('/accountsList', [AjaxController::class, 'getAccounts']);
+
 
     //Drivers
     Route::prefix('drivers')->group(function(){
@@ -83,6 +99,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/create', [DriverController::class, 'store'])->name('drivers.store');
         Route::get('/{id}', [DriverController::class, 'show'])->name('drivers.show');
         Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
+    });
+
+    //Reports
+    Route::prefix('reports')->group(function(){
+        Route::get('/cash-flow', [ReportsController::class, 'cash_flow'])->name('reports.cash-flow');
+        Route::get('/balance-sheet', [ReportsController::class, 'balance_sheet'])->name('reports.balance-sheet');
+        Route::get('/profit-loss', [ReportsController::class, 'profit_loss'])->name('reports.profit-loss');
+        Route::get('/sales-report', [ReportsController::class, 'sales_report'])->name('reports.sales-report');
+        Route::get('/defaulters', [ReportsController::class, 'defaulters'])->name('reports.defaulters');
     });
 
     //Clients
@@ -117,6 +142,6 @@ Route::get('/request', [BookRequestController::class, 'order'])->name('order');
 Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('request');
 
 // Laravel 8
-Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 
 Route::get('/send-mail', [EmailController::class, 'testMail'])->name('testMail');

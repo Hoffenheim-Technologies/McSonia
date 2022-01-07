@@ -132,13 +132,49 @@ $('[name=phone]').change(()=>{
             <img src="images/confirmation.svg" class="h-28 pl-5 order-first sm:order-last" alt="">
         </div>
         @endisset
-        
+
         @isset($reference)
         <div class="py-3 lg:flex justify-center items-center text-center sm:text-2xl">
            <div>Your booking reference is</div><div class="pl-5 text-yellow-500 text-3xl sm:text-6xl font-extrabold">{{ $reference }}</div>
         </div>
+        <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
+            <div class="row" style="margin-bottom:40px;">
+                <div class="col-md-8 col-md-offset-2">
+                    <p>
+                        <div>
+                            ₦ 2,950
+                        </div>
+                    </p>
+                    <input type="hidden" name="email" value="otemuyiwa@gmail.com"> {{-- required --}}
+                    <input type="hidden" name="orderID" value="345">
+                    <input type="hidden" name="amount" value="800"> {{-- required in kobo --}}
+                    <input type="hidden" name="quantity" value="3">
+                    <input type="hidden" name="currency" value="NGN">
+                    <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
+                    <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
+
+                    <input type="hidden" name="split_code" value="SPL_EgunGUnBeCareful"> {{-- to support transaction split. more details https://paystack.com/docs/payments/multi-split-payments/#using-transaction-splits-with-payments --}}
+                    <input type="hidden" name="split" value="{{ json_encode($split) }}"> {{-- to support dynamic transaction split. More details https://paystack.com/docs/payments/multi-split-payments/#dynamic-splits --}}
+                    {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
+
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}
+
+                    <p>
+                        <button class="btn btn-success btn-lg btn-block" type="submit" value="Pay Now!">
+                            <i class="fa fa-plus-circle fa-lg"></i> Pay Now!
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </form>
+        <div class="text-center lg:flex sm:text-2xl text-center py-2">
+            <a href="{{route('pay')}}" id="btn_payment" class="btn-lg text-success font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault();">
+                Pay Now
+                <i class="fa fa-credit-card text-white"></i>
+            </a>
+        </div>
         @endisset
-        
+
     </div>
 </div>
 @else

@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(FaqSeeder::class);
         $this->call(PricingSeeder::class);
         $this->call(VehiclesSeeder::class);
+        $this->call(AccountChartsTypeSeeder::class);
+        $this->call(AccountChartsCategorySeeder::class);
+        $this->call(AccountChartsSeeder::class);
     }
 }
