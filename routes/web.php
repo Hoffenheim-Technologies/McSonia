@@ -17,9 +17,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookRequestController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FinancesController;
+use App\Http\Controllers\Admin\ReportsController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -99,6 +101,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
     });
 
+    //Reports
+    Route::prefix('reports')->group(function(){
+        Route::get('/cash-flow', [ReportsController::class, 'cash_flow'])->name('reports.cash-flow');
+        Route::get('/balance-sheet', [ReportsController::class, 'balance_sheet'])->name('reports.balance-sheet');
+        Route::get('/profit-loss', [ReportsController::class, 'profit_loss'])->name('reports.profit-loss');
+        Route::get('/sales-report', [ReportsController::class, 'sales_report'])->name('reports.sales-report');
+        Route::get('/defaulters', [ReportsController::class, 'defaulters'])->name('reports.defaulters');
+    });
+
     //Clients
     Route::prefix('clients')->group(function(){
         Route::get('/', [ClientController::class, 'index'])->name('clients');
@@ -131,6 +142,6 @@ Route::get('/request', [BookRequestController::class, 'order'])->name('order');
 Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('request');
 
 // Laravel 8
-Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 
 Route::get('/send-mail', [EmailController::class, 'testMail'])->name('testMail');

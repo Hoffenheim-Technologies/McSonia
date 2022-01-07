@@ -24,7 +24,7 @@ class FinancesController extends Controller
      */
     public function index()
     {
-        $finances = Finances::all();
+        $finances = Finances::orderBy('created_at','desc')->get();
         return view('admin.finances.index', compact('finances'));
     }
 
@@ -63,11 +63,12 @@ class FinancesController extends Controller
 
         }catch (Exception $e) {
             DB::rollback();
+            dd($e);
             return response()->json(array('message'=> 'Data Entry Unsuccessful, Check Values'), 400);
         }
     }
 
-    
+
 
     /**
      * Display the specified resource.

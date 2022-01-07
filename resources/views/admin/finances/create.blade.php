@@ -219,18 +219,24 @@
                         case 'Income':
                             select_element.append(`<option value="">Select</option>`)
                             for (items of income_accounts) {
-                               select_element.append(`<option value="${items.accoount}">${items.type} - ${items.account}</option>`)
+                               select_element.append(`<option cat="${items.category}" value="${items.account}">${items.type} - ${items.account}</option>`)
                             }
                             break;
                         case 'Expense':
-                            select_element.append(`<option value="">Select</option>`)
+                            select_element.append(`<option  value="">Select</option>`)
                             for (items of expense_accounts) {
-                               select_element.append(`<option value="${items.accoount}">${items.type} - ${items.account}</option>`)
+                               select_element.append(`<option cat="${items.category}" value="${items.account}">${items.type} - ${items.account}</option>`)
                             }
                             break;
                         default:
                             break;
                     }
+                });
+
+                $(document).on('change keyup', ".account", function() {
+                    var select_element = $(this);
+                    var select_option = select_element.find(":selected");
+                    select_element.attr('cat', select_option.attr('cat'));
                 });
 
                 setInterval(() => {
@@ -280,10 +286,10 @@
                             "transaction_date" : $(this).find(".date").val()
                             , "payment_type" : null
                             , "payment_category" : $(this).find(".type").val()
-                            , "category" : null
-                            , "account" : $(this).find(".account").val()
+                            , "category" : $(this).find(".account").attr('cat')
+                            , "account" : $(this).find(".asset").val()
                             , "amount" : $(this).find(".amount").val() ?? 0
-                            , "details" : $(this).find(".asset").val()
+                            , "details" : $(this).find(".account").val()
                             , "description" : null
                             , "beneficiary" : $(this).find(".beneficiary").val()
                         }

@@ -116,6 +116,17 @@
                             <li><a href="{{route('finances.create')}}">Add Finance</a></li>
                         </ul>
                     </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-file menu-icon"></i><span class="nav-text">Reports</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('reports.cash-flow')}}">Cash flow</a></li>
+                            <li><a href="{{route('reports.sales-report')}}">Sales Report</a></li>
+                            <li><a href="{{route('reports.profit-loss')}}">Profit Loss Report</a></li>
+                            <li><a href="{{route('reports.balance-sheet')}}">Balance sheet</a></li>
+                        </ul>
+                    </li>
 
                     <li >
                         <a  href="{{route('faqs.index')}}" aria-expanded="false">

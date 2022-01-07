@@ -9,7 +9,7 @@
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Pickup/Delivery Locations</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Items</a></li>
                     </ol>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                                                 {{$item->price}}
                                             </td>
                                             <td>
-                                                <form action="{{ route('locations.destroy' , $item)}}" method="post">@csrf @method('delete')
+                                                <form action="{{ route('items.destroy' , $item)}}" method="post">@csrf @method('delete')
                                                     <span>
                                                         <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
                                                     </span>
