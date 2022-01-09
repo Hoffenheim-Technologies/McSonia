@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\faq;
 use App\Models\Location;
 use App\Models\Items;
+use App\Models\State;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ClientController;
@@ -36,11 +37,11 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome')->with('faqs', faq::all())->with('locations', Location::all());
+    return view('welcome')->with('faqs', faq::all())->with('locations', Location::all())->with('states', State::orderBy('state')->get());
 });
 
 Route::post('/', function (Request $request) {
-    return view('request')->with('input', $request)->with('locations', Location::all())->with('items', Items::all());;
+    return view('request')->with('input', $request)->with('locations', Location::all())->with('items', Items::all())->with('states', State::orderBy('state')->get());
 });
 
 
@@ -73,6 +74,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //Locations
     Route::resource('locations', '\App\Http\Controllers\Admin\LocationController');
     Route::resource('items', '\App\Http\Controllers\Admin\ItemsController');
+    Route::resource('state', '\App\Http\Controllers\Admin\StateController');
 
     //Vendors
     Route::resource('vendors', '\App\Http\Controllers\Admin\VendorController');
@@ -138,6 +140,8 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/location/{id}', [AjaxController::class, 'location']);
+Route::get('/pstate/{id}', [AjaxController::class, 'state']);
+Route::get('/dstate/{id}', [AjaxController::class, 'state']);
 Route::get('/request', [BookRequestController::class, 'order'])->name('order');
 Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('request');
 

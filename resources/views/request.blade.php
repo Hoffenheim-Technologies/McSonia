@@ -39,6 +39,7 @@
     $(window).on('load', () => {
         getLocation($('#plocation').val())
     })
+
     function getName(id) {
         var locations = {!! json_encode($locations) !!}
         for (const location of locations) {
@@ -47,18 +48,20 @@
             }
         }
     }
-    function getLocation(id) {
-        $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
-        $('#dlocation').niceSelect('update')
+
+    function getPickupLocales(id) {
+        $("#plocation").html(`<option selected disabled>Choose a Location</option>`)
+        //console.log(id)
+
         $.ajax({
             type:'GET',
-            url:`/location/${id}`,
+            url:`/pstate/${id}`,
             data: id,
             success: (response) => {
                 //console.log(response)
-                for (const destination of response.destination) {
-                    $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
-                    $('#dlocation').niceSelect('update')
+                for (const destination of response.locations) {
+                    $("#plocation").append(`<option class="capitalize" value="${destination.id}">${destination.location}</option>`)
+                    $('#plocation').niceSelect('update')
                 }
 
             },
@@ -66,6 +69,43 @@
                 console.log(e);
             }
         });
+    }
+    
+    var locales
+    function getLocation(id) {
+        console.log(id)
+        $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
+        $('#dstate').html(`<option selected disabled>Choose a State</option>`)
+        $('#dlocation').niceSelect('update')
+        $('#dstate').niceSelect('update')
+        $.ajax({
+            type:'GET',
+            url:`/location/${id}`,
+            data: id,
+            success: (response) => {
+                locales = response.locales
+                // for (const destination of response.destination) {
+                //     $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
+                //     $('#dlocation').niceSelect('update')
+                // }
+                for (const state of response.states) {
+                    $("#dstate").append(`<option class="capitalize" value="${state.id}">${state.state}</option>`)
+                    $('#dstate').niceSelect('update')
+                }
+
+            },
+            error: (e) => {
+                console.log(e);
+            }
+        });
+    }
+    const setLocations = (id) => {
+        $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
+        for (const destination of locales[id]) {
+            console.log(destination)
+            $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
+            $('#dlocation').niceSelect('update')
+        }
     }
 </script>
 @endisset
@@ -89,12 +129,14 @@
         $('.end').text($('[name=dlocation]').find(":selected").text())
         var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
         $('.price').text('Price - '+ price.toString())
+        $('[name=subtotal]').val(price)
     })
     $('[name=item]').change(() => {
         $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
         $('.end').text($('[name=dlocation]').find(":selected").text())
         var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
         $('.price').text('Price - '+ price.toString())
+        $('[name=subtotal]').val(price)
     })
 </script>
 @guest
@@ -212,37 +254,51 @@ $('[name=phone]').change(()=>{
                         <select class="niceselect border-0 border-b sm:border-0 w-full" name="item" id="">
                             <option selected disabled>Choose</option>
                             @foreach ($items as $item)
-                            <option value="{{$item->id}}" price="{{$item->price}}">{{$item->item}}</option>
+                                <option value="{{$item->id}}" price="{{$item->price}}">{{$item->item}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="w-full bg-white border-y py-3">
-                    <div class="w-full">
-                        <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
-                        <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect border-0 w-full">
-                        <option @isset($input->plocation) @else selected @endisset disabled>Choose a Location</option>
-                            @foreach ($locations as $location)
-                                <option @isset($input->plocation) @if($input->plocation == $location->id) selected @endif @endisset class="capitalize" value="{{$location->id}}">{{$location->location}}</option>
-                            @endforeach
-                        </select>
-
+                    <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
+                    <div class="sm:flex flex-row">
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">    
+                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect border-0 w-full">
+                                <option @isset($input->plocation) @else selected @endisset disabled>Choose a State</option>
+                                @foreach ($states as $state)
+                                    <option @isset($input->plocation) @if($input->plocation == $location->id) selected @endif @endisset class="capitalize" value="{{$state->id}}">{{$state->state}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">    
+                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect border-0 w-full">
+                                <option @isset($input->plocation) @else selected @endisset disabled>Choose a Location</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="w-full bg-white border-y py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Address *</label>
-                        <input id="paddress" name="paddress" class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <input id="paddress" name="paddress" class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" />
                     </div>
                 </div>
+                <div class="locales hidden" id="locales"></div>
                 <div class="w-full bg-white border-t py-3">
-                    <div class="w-full">
-                        <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Location *</label>
-                        <select name="dlocation" id="dlocation" class="niceselect border-0 w-full">
-                            <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your location</option>
-                        </select>
+                    <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Location *</label>
+                    <div class="sm:flex flex-row">
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">    
+                            <select name="dstate" id="dstate" class="niceselect border-0 w-full"onchange="setLocations($(this).val())">
+                                <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your State</option>
+                            </select>
+                        </div>    
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">    
+                                <select name="dlocation" id="dlocation" class="niceselect border-0 w-full">
+                                    <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your location</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
                 <div class="w-full bg-white border-t py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Address *</label>
@@ -263,7 +319,7 @@ $('[name=phone]').change(()=>{
                             <span class="mx-3 end">End</span>
                         </div>
                         <div class="mx-3 justify-center grid grid-cols-2">
-                            <div class="price">Price</div>
+                            <input disabled name="subtotal" class="price">
                         </div>
                     </div>
                 </div>
@@ -278,7 +334,7 @@ $('[name=phone]').change(()=>{
     </div>
     <div class="content-2" style="display: none;">
         <div class="md:flex flex-row">
-            <div class="w-64 rounded mx-5 bg-white">
+            <div class="lg:w-64 rounded mx-5 bg-white">
                 <div class="bg-yellow-100 rounded mb-3 pt-6">
                     <h3 class="font-semibold mt-4 mb-2 px-3">
                         Summary
@@ -497,7 +553,7 @@ $('[name=phone]').change(()=>{
     </div>
     <div class="content-3" style="display: none;">
         <div class="md:flex flex-row">
-            <div class="bg-yellow-100 mx-5 w-1/3">
+            <div class="bg-yellow-100 mx-5 lg:w-1/3">
                 <div class="bg-yellow-100 rounded mb-3 pt-6">
                     <h3 class="font-semibold mt-4 mb-2 px-3">
                         Contact and Billing Info
@@ -523,7 +579,7 @@ $('[name=phone]').change(()=>{
                     </div>
                 </div>
             </div>
-            <div class="bg-yellow-100 mx-5 w-1/3">
+            <div class="bg-yellow-100 mx-5 lg:w-1/3">
                 <div class="bg-yellow-100 rounded mb-3 pt-6">
                     <h3 class="font-semibold mt-4 mb-2 px-3">
                         Ride Details
@@ -556,7 +612,7 @@ $('[name=phone]').change(()=>{
                     </div>
                 </div>
             </div>
-            <div class="bg-white mx-5 w-1/3">
+            <div class="bg-white mx-5 lg:w-1/3">
                 <div class="bg-yellow-100 rounded">
                     <h3 class="font-semibold pt-4 mb-2 px-3">
                         Vehicle Info

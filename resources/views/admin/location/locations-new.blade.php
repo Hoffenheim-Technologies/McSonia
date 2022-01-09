@@ -23,6 +23,16 @@
                             <form action="{{ route('locations.store')}}" enctype="multipart/form-data" class="form-valide" method="POST">
                                 @csrf @method('POST')
                                 <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="state">State</label>
+                                        <select name="state" id="state" class="form-control">
+                                        @foreach ($states as $item)
+                                            <option value="{{$item->id}}">{{$item->state}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+
+                                    
                                     <div class="form-group col-md-8">
                                         <label>Location</label>
                                         <input type="text" class="form-control" value="{{old('location')}}" name="location" placeholder="Location">

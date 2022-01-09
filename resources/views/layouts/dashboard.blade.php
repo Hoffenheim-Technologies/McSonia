@@ -1,3 +1,5 @@
+
+  
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -64,7 +66,7 @@
                             </a>
                         </li>
                         <li class="rounded-lg w-full py-2 sm:py-3">
-                            <a href="#" class="lg:px-3 justify-center lg:justify-start flex items-center"> 
+                            <a href="{{ route('order') }}" class="lg:px-3 justify-center lg:justify-start flex items-center"> 
                                 <span class="material-icons-outlined text-md">
                                     departure_board
                                 </span>
@@ -101,14 +103,18 @@
                 <div class="w-full absolute bottom-1 transform -translate-y-1/2 show-big">
                     <ul class="px-3">
                         <li class="rounded-lg w-full py-2 sm:py-3">
-                            <a href="#" class="lg:px-3 justify-center lg:justify-start flex items-center"> 
-                                <span class="material-icons text-md transform rotate-90">
-                                    settings
+                            <a href="{{ route('logout') }}" class="lg:px-3 justify-center lg:justify-start flex items-center"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> 
+                                <span class="material-icons text-red-500 text-md transform rotate-90">
+                                    logout
                                 </span>
                                 <span class="flex-shrink w-2 hidden lg:block"></span>
                                 <span class="hidden lg:block">
-                                    Settings
+                                    Logout
                                 </span>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                    @csrf
+                                </form>
                             </a>
                         </li>
                     </ul>

@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AccountChartsTypeSeeder::class);
         $this->call(AccountChartsCategorySeeder::class);
         $this->call(AccountChartsSeeder::class);
+        $this->call(StateSeeder::class);
     }
 }
