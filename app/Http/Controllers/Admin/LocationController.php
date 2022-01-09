@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\UserActivityConstants;
 use App\Http\Controllers\Controller;
 use App\Models\Location;
+use App\Models\State;
 use App\Services\Activity\User\UserActivityService;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,8 +21,9 @@ class LocationController extends Controller
      */
     public function index()
     {
+        $states = State::all();
         $locations = Location::get();
-        return view('admin.location.index', compact('locations'));
+        return view('admin.location.index', compact('locations'))->with('states', $states);
     }
 
     /**
@@ -31,7 +33,8 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return view('admin.location.locations-new');
+        $states = State::all();
+        return view('admin.location.locations-new')->with('states', $states);
     }
 
     /**
@@ -47,6 +50,7 @@ class LocationController extends Controller
         DB::beginTransaction();
         try {
             $data = [];
+            $data['state_id'] = $request->state;
             $data['location'] = $request->location;
             $location = Location::where('location', '=', $data['location'])->first();
             if ($location === null) {

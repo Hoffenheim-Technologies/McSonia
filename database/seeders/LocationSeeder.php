@@ -60,7 +60,8 @@ class LocationSeeder extends Seeder
         ];
         foreach ($locations as $location) {
             Location::create([
-                'location' => $location
+                'location' => $location,
+                'state_id' => 1
             ]);
         }
     }

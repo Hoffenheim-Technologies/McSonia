@@ -78,6 +78,6 @@
         ***********************************-->
 @endsection
 @section('custom-script')
-    <script src="admins/plugins/validation/jquery.validate.min.js"></script>
-    <script src="admins/plugins/validation/jquery.validate-init.js"></script>
+    <script src="{{ $admin_source }}/plugins/validation/jquery.validate.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/validation/jquery.validate-init.js"></script>
 @endsection

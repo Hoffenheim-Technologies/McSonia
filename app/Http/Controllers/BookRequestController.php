@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Items;
 use App\Models\Location;
 use App\Models\Order;
+use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,6 +60,8 @@ class BookRequestController extends Controller
             $order->discount = $request->discount;
         }
 
+        $order->subtotal = $request->subtotal;
+
         function random_strings($length_of_string)
         {
             $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -76,7 +79,7 @@ class BookRequestController extends Controller
 
 
     public function order(){
-        return view('request')->with('locations', Location::all())->with('items', Items::all());
+        return view('request')->with('locations', Location::all())->with('items', Items::all())->with('states', State::orderBy('state')->get());
     }
 
     /**

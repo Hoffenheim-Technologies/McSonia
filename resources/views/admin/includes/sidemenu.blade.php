@@ -72,6 +72,15 @@
                     <li class="nav-label">Locations</li>
                     <li class="mega-menu mega-menu-sm">
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">States</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('state.index')}}">States</a></li>
+                            <li><a href="{{route('state.create')}}">Add State</a></li>
+                        </ul>
+                    </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon-location-pin menu-icon"></i><span class="nav-text">Locations</span>
                         </a>
                         <ul aria-expanded="false">
@@ -98,6 +107,33 @@
                         <ul aria-expanded="false">
                             <li><a href="{{route('vehicles.index')}}">Vehicles</a></li>
                             <li><a href="{{route('vehicles.create')}}">Add vehicle</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-label">Mcsonia Accounting</li>
+                    <li >
+                        <a  href="{{route('accounts.index')}}" aria-expanded="false">
+                            <i class="icon-chart menu-icon"></i><span class="nav-text">Chart of Accounts</span>
+                        </a>
+                    </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-credit-card menu-icon"></i><span class="nav-text">Finances</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('finances.index')}}">Finances</a></li>
+                            <li><a href="{{route('finances.create')}}">Add Finance</a></li>
+                        </ul>
+                    </li>
+                    <li class="mega-menu mega-menu-sm">
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="icon-file menu-icon"></i><span class="nav-text">Reports</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('reports.cash-flow')}}">Cash flow</a></li>
+                            <li><a href="{{route('reports.sales-report')}}">Sales Report</a></li>
+                            <li><a href="{{route('reports.profit-loss')}}">Profit Loss Report</a></li>
+                            <li><a href="{{route('reports.balance-sheet')}}">Balance sheet</a></li>
                         </ul>
                     </li>
 
