@@ -16,10 +16,10 @@ class CreateAccountChartsTable extends Migration
         Schema::create('account_charts', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->string('category');
+            $table->bigInteger('category_id')->unsigned();
             $table->string('account');
             $table->foreign('type')->references('type')->on('account_charts_categories')->onDelete('cascade');
-            $table->foreign('category')->references('category')->on('account_charts_categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('account_charts_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
