@@ -11,4 +11,5 @@ class UserActivityConstants
     const VEHICLE_ACTIVITY = "VEHICLE_ACTIVITY";
     const ITEM_ACTIVITY = "ITEM_ACTIVITY";
     const FAQ_ACTIVITY = "FAQ_ACTIVITY";
+    const STATE_ACTIVITY = "STATE_ACTIVITY";
 }

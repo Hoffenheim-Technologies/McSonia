@@ -59,8 +59,8 @@
                                         @endif
                                     @else
                                         <li class="px-5 w-full bg-gray-100 text-yellow-500 py-2">
-                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                {{ Auth::user()->firstname }}
+                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ route('home') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                {{ Auth::user()->firstname }} Dashboard
                                             </a>
                                         </li>
                                         <li class="px-5 py-2">
@@ -139,8 +139,8 @@
                         @endif
                     @else
                         <li class="">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->firstname }}
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ route('home') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->firstname }} Dashboard
                             </a>
 
                             <div class="" aria-labelledby="navbarDropdown">

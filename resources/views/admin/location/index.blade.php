@@ -14,6 +14,15 @@
                 </div>
             </div>
 
+            <?php
+                $state_obj = new stdClass();
+                foreach ($states as $state) {
+                    $id = $state->id;
+                    $state_name = $state->state;
+                    $state_obj->$id = $state_name;
+                }
+            ?>
+
             <div class="container-fluid">
             <!-- row -->
             <div class="row">
@@ -26,6 +35,7 @@
                                     <thead>
                                         <tr>
                                             <th>SN</th>
+                                            <th>State</th>
                                             <th>Location</th>
                                             <th>Action</th>
                                         </tr>
@@ -35,6 +45,12 @@
                                         <tr>
                                             <td>
                                                 {{$loop->iteration}}
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    $id = $item->state_id; 
+                                                ?>
+                                                {{$state_obj->$id}}
                                             </td>
                                             <td>
                                                 {{$item->location}}
