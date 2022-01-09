@@ -13,8 +13,6 @@ class CreateAccountChartsTable extends Migration
      */
     public function up()
     {
-        // `category_id` int(11) NOT NULL,
-        // `account` longtext NOT NULL,
         Schema::create('account_charts', function (Blueprint $table) {
             $table->id();
             $table->string('type');
