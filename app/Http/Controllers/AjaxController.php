@@ -44,6 +44,16 @@ class AjaxController extends Controller
         }
     }
 
+    public function state($id) {
+        try {
+            $locations = Location::where('state_id', $id)->get();
+        return response()->json(array('locations'=> $locations), 200);
+        } catch (\Throwable $th) {
+            return response()->json(array('error' => $th), 300);
+        }
+        
+    }
+
     public function getFaq($id){
         try {
             $faq = faq::where('id', $id)->get();
