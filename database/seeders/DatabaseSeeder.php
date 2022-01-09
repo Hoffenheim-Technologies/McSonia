@@ -15,14 +15,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(UserSeeder::class);
-        $this->call(LocationSeeder::class);
-        $this->call(FaqSeeder::class);
-        $this->call(PricingSeeder::class);
-        $this->call(VehiclesSeeder::class);
-        $this->call(AccountChartsTypeSeeder::class);
-        $this->call(AccountChartsCategorySeeder::class);
-        $this->call(AccountChartsSeeder::class);
-        $this->call(StateSeeder::class);
+        // $this->call(UserSeeder::class);
+        // $this->call(LocationSeeder::class);
+        // $this->call(FaqSeeder::class);
+        // $this->call(PricingSeeder::class);
+        // $this->call(VehiclesSeeder::class);
+        // $this->call(AccountChartsTypeSeeder::class);
+        // $this->call(AccountChartsCategorySeeder::class);
+        // $this->call(AccountChartsSeeder::class);
+        // $this->call(StateSeeder::class);
+        // $this->call(ItemSeeder::class);
     }
 }
