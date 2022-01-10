@@ -54,7 +54,7 @@
                                                     <form action="{{ route('faqs.destroy' , $item)}}" method="post">
                                                         @csrf @method('delete')
                                                         <span>
-                                                            <a class="btn btn-info btn-sm mx-2" onclick="getFaq({{$item->id}})" ><i class="fa fa-pencil color-info"></i> Edit</a>
+                                                            <a class="btn btn-info btn-sm text-light mx-2" onclick="getFaq({{$item->id}})" ><i class="fa fa-pencil color-info"></i> Edit</a>
                                                             <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
                                                         </span>
                                                     </form>
