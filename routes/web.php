@@ -23,6 +23,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FinancesController;
 use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\VehiclesController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -88,6 +89,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     //vehicles
     Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
+    Route::post('vehicles/{id}', [VehiclesController::class, 'storeMemo'])->name('vehicles.storeMemo');
 
     //Finances
     Route::resource('finances', '\App\Http\Controllers\Admin\FinancesController');
@@ -99,6 +101,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/', [DriverController::class, 'index'])->name('drivers');
         Route::get('/create', [DriverController::class, 'create'])->name('drivers.create');
         Route::post('/create', [DriverController::class, 'store'])->name('drivers.store');
+        Route::post('/{id}', [DriverController::class, 'storeMemo'])->name('drivers.storeMemo');
         Route::get('/{id}', [DriverController::class, 'show'])->name('drivers.show');
         Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
     });

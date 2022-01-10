@@ -94,7 +94,40 @@
                 </div>
             </div>
 
+            <div class="container-fluid">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ucwords($user->firstname)}} Memo</h4>
+                                <form class="" action="{{route('drivers.storeMemo',$user)}}" method="post">
+                                    @csrf @method('POST')
+                                    <div class="form-row">
+                                        <div class="form-group col-7">
+                                            <textarea name="memo" placeholder="Memo" class="form-control" cols="20" rows="3" id=""> </textarea>
+                                        </div>
+                                        <div class="form-group align-items-center col-4">
+                                            <button type="submit" class="btn btn-primary px-3 ml-4">Submit</button>
+                                        </div>
 
+                                    </div>
+                                </form>
+                                <div id="activity">
+                                    @foreach ($memos as $item)
+                                        <div class="media border-bottom-1 pt-3 pb-3">
+                                            <div class="media-body">
+                                                <p class="mb-0">{{$item->memo}}</p>
+                                            </div><span class="text-muted ">{{$item->created_at->toDayDateTimeString()}}</span>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="container-fluid">
                 <!-- row -->
@@ -161,7 +194,8 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
+
         </div>
         <!--**********************************
             Content body end

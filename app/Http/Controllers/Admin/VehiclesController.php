@@ -9,8 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVehiclesRequest;
 use App\Http\Requests\UpdateVehiclesRequest;
 use App\Models\User;
+use App\Models\VehicleMemo;
 use App\Services\Activity\User\UserActivityService;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -72,6 +74,8 @@ class VehiclesController extends Controller
             $data['model'] = $request->model;
             $data['condition'] = $request->condition;
             $data['status'] = $request->status;
+            $data['category'] = $request->category;
+            $data['amount'] = $request->amount;
 
             Vehicles::create($data);
             DB::commit();
@@ -98,9 +102,40 @@ class VehiclesController extends Controller
             $vehicle->driver = User::find($vehicle->user_id);
             $types = VehicleTypesConstants::VEHICLE_TYPES;
             $drivers = User::where('role','driver')->get();
-            return view('admin.vehicle.show', compact('vehicle','drivers','types'));
+            $memos = VehicleMemo::where('vehicle_id',$id)->get();
+            return view('admin.vehicle.show', compact('vehicle','drivers','types','memos'));
         }catch(Exception $e){
-            dd($e);
+            //dd($e);
+        }
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMemo($id, Request $request)
+    {
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $check = Vehicles::find($id);
+            if($check){
+                $data = [];
+                $data['memo'] = $request->memo;
+                $data['vehicle_id'] = $id;
+                VehicleMemo::create($data);
+                UserActivityService::log($user->id,UserActivityConstants::MEMO_ACTIVITY,"Memo Create","User Added Memo For Vehicle ".$id,null);
+                DB::commit();
+                return redirect()->route('vehicles.show',$id)->with('message','Memo Added Successfully');
+            }
+            return redirect()->route('vehicles.show',$id)->with('error','Data Not Found');
+        }catch (Exception $e) {
+            //dd($e);
+            DB::rollback();
+            return redirect()->route('vehicles.show',$id)->with('error','Data Entry Unsuccessful, Check Values');
         }
     }
 
@@ -139,6 +174,8 @@ class VehiclesController extends Controller
                 $vehicle->model = $request->model;
                 $vehicle->condition = $request->condition;
                 $vehicle->status = $request->status;
+                $vehicle->category = $request->category;
+                $vehicle->amount = $request->amount;
 
                 $vehicle->save();
                 DB::commit();

@@ -86,11 +86,24 @@
 
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label></label>
+                                        <label>Status</label>
                                         <select name="status" class="form-control" id="">
                                             <option {{ $vehicle->status == 'Active' ? 'Selected' : '' }} value="Active">Active</option>
                                             <option {{ $vehicle->status == 'Inactive' ? 'Selected' : '' }} value="Inactive">Inactive</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Category</label>
+                                        <select name="category" class="form-control category" id="">
+                                            <option  {{ $vehicle->category == 'Internal' ? 'Selected' : '' }} value="Internal">Internal</option>
+                                            <option {{ $vehicle->category == 'External' ? 'Selected' : '' }} value="External">External</option>
+                                        </select>
+                                    </div>
+                                    <div id="amount" class="form-group  {{ $vehicle->category == 'Internal' ? 'd-none' : '' }} col-md-6">
+                                        <label>Amount</label>
+                                        <input type="number" min="0" name="amount"  value="{{$vehicle->amount}}" class="form-control" id="">
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
@@ -98,6 +111,42 @@
                                 </div>
                             </form>
                         </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container-fluid">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title"> Memo</h4>
+                                <form class="" action="{{route('vehicles.storeMemo',$vehicle)}}" method="post">
+                                    @csrf @method('POST')
+                                    <div class="form-row">
+                                        <div class="form-group col-7">
+                                            <textarea name="memo" placeholder="Memo" class="form-control" cols="20" rows="3" id=""> </textarea>
+                                        </div>
+                                        <div class="form-group align-items-center col-4">
+                                            <button type="submit" class="btn btn-primary px-3 ml-4">Submit</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                                <div id="activity">
+                                    @foreach ($memos as $item)
+                                        <div class="media border-bottom-1 pt-3 pb-3">
+                                            <div class="media-body">
+                                                <p class="mb-0">{{$item->memo}}</p>
+                                            </div><span class="text-muted ">{{$item->created_at->toDayDateTimeString()}}</span>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,4 +160,20 @@
 @section('custom-script')
     <script src="{{ $admin_source }}/plugins/validation/jquery.validate.min.js"></script>
     <script src="{{ $admin_source }}/plugins/validation/jquery.validate-init.js"></script>
+    <script>
+        $(document).on('change keyup', ".category", function() {
+            var toggle = $(this).val()
+            switch (toggle) {
+                case 'Internal':
+                    $('#amount').addClass('d-none');
+                    break;
+                case 'External':
+                    $('#amount').removeClass('d-none');
+                    break;
+                default:
+                    $('#amount').addClass('d-none');
+                    break;
+            }
+        });
+    </script>
 @endsection

@@ -86,11 +86,24 @@
 
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label></label>
+                                        <label>Status</label>
                                         <select name="status" class="form-control" id="">
                                             <option value="Active">Active</option>
                                             <option value="Inactive">Inactive</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Category</label>
+                                        <select name="category" class="form-control category" id="">
+                                            <option selected value="Internal">Internal</option>
+                                            <option value="External">External</option>
+                                        </select>
+                                    </div>
+                                    <div id="amount" class="form-group col-md-6">
+                                        <label>Amount</label>
+                                        <input type="text" name="amount"  value="{{old('amount')}}" class="form-control" id="">
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
@@ -111,4 +124,10 @@
 @section('custom-script')
     <script src="{{ $admin_source }}/plugins/validation/jquery.validate.min.js"></script>
     <script src="{{ $admin_source }}/plugins/validation/jquery.validate-init.js"></script>
+    <script>
+        $('#amount').css('display','none');
+        $(document).on('change keyup', ".category", function() {
+            $('#amount').slideToggle();
+        });
+    </script>
 @endsection

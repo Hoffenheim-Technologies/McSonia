@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\UserActivityConstants;
 use App\Helpers\MS;
 use App\Http\Controllers\Controller;
+use App\Models\OrderDetails;
 use App\Models\User;
+use App\Models\UserMemo;
 use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
 use Exception;
@@ -91,11 +93,43 @@ class DriverController extends Controller
     {
         try {
             $user = User::find($id);
-            $orders = [];
+            $orders = OrderDetails::where('user_id',$id)->get();
+            $memos = UserMemo::where('user_id',$id)->get();
             $vehicles = Vehicles::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
-            return view("admin.driver.show", compact('user','orders','vehicles'));
+            return view("admin.driver.show", compact('user','orders','vehicles','memos'));
         } catch (\Throwable $th) {
+            dd($th);
             return redirect()->route('drivers')->with('info','Data Not Found');
+        }
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMemo($id, Request $request)
+    {
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $check = User::find($id);
+            if($check){
+                $data = [];
+                $data['memo'] = $request->memo;
+                $data['user_id'] = $id;
+                UserMemo::create($data);
+                UserActivityService::log($user->id,UserActivityConstants::MEMO_ACTIVITY,"Memo Create","User Added Memo For User ".$id,null);
+                DB::commit();
+                return redirect()->route('drivers.show',$id)->with('message','Memo Added Successfully');
+            }
+            return redirect()->route('drivers.show',$id)->with('error','Data Not Found');
+        }catch (Exception $e) {
+            dd($e);
+            DB::rollback();
+            return redirect()->route('drivers.show',$id)->with('error','Data Entry Unsuccessful, Check Values');
         }
     }
 
