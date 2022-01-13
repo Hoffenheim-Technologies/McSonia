@@ -1,11 +1,11 @@
         <!--**********************************
             Header start
         ***********************************-->
-        <div class="header">
+        <div class="header bg-dark ">
             <div class="header-content clearfix">
 
                 <div class="nav-control">
-                    <div class="hamburger">
+                    <div class="hamburger text-light">
                         <span class="toggle-icon"><i class="icon-menu"></i></span>
                     </div>
                 </div>
@@ -132,12 +132,12 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="{{route('profile')}}"><i class="icon-user"></i> <span>Profile</span></a>
+                                            <a href="driver/profile"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
 
                                         <hr class="my-2">
                                         <li>
-                                            <a href="{{route('activity_log')}}"><i class="icon-docs"></i> <span>Activity Log</span></a>
+                                            <a href="driver/activity_log"><i class="icon-docs"></i> <span>Activity Log</span></a>
                                         </li>
 
                                         <hr class="my-2">

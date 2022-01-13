@@ -6,7 +6,7 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
                     <li class="">
-                        <a  href="/dashboard" aria-expanded="false">
+                        <a  href="{{route('admin_dashboard')}}" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                     </li>

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\AccountChartsController;
+use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ItemsController;
 use App\Http\Controllers\HomeController;
@@ -135,13 +136,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 });
 
 Route::middleware(['auth', 'isDriver'])->group(function () {
+    Route::get('/driver', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('driver_dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('driver_dashboard');
+    Route::get('driver/profile', [App\Http\Controllers\Driver\ProfileController::class, 'index'])->name('driver_profile');
+    Route::put('driver/profile/{id}', [App\Http\Controllers\Driver\ProfileController::class, 'store'])->name('driver_profile.store');
 
-    Route::get('/driver', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/dashboard', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile', [App\Http\Controllers\Driver\ProfileController::class, 'index'])->name('profile');
-    Route::put('/profile/{id}', [App\Http\Controllers\Driver\ProfileController::class, 'store'])->name('profile.store');
-
-    Route::get('/activity_log', [App\Http\Controllers\Driver\DashboardController::class, 'activity'])->name('activity_log');
+    Route::get('driver/activity_log', [App\Http\Controllers\Driver\DashboardController::class, 'activity'])->name('driver_activity_log');
+    Route::resource('order', '\App\Http\Controllers\Driver\OrderController');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
