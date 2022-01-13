@@ -10,6 +10,8 @@ use stdClass;
 
 class ReportsController extends Controller
 {
+    
+
     public function cash_flow(){
         $total_data = new stdClass();
 
@@ -222,10 +224,11 @@ class ReportsController extends Controller
 
         return view('admin.reports.profit-loss', compact('total_data','income_data','goods_data','expense_data'));
     }
-    public function sales_report(){
 
+    public function sales_report(){
         return view('admin.reports.sales-report');
     }
+
     public function defaulters(){
 
         return view('admin.reports.defaulters');

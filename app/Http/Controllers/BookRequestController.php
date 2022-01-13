@@ -61,6 +61,7 @@ class BookRequestController extends Controller
         }
 
         $order->subtotal = $request->subtotal;
+        $order->total = $request->total;
 
         function random_strings($length_of_string)
         {

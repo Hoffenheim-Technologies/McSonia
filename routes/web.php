@@ -7,7 +7,6 @@ use App\Models\Location;
 use App\Models\Items;
 use App\Models\State;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\VendorController;
@@ -136,9 +135,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 });
 
 Route::middleware(['auth', 'isDriver'])->group(function () {
-    Route::get('/driver', function () {
-        return view ('driver.dashboard');
-    });
+
+    Route::get('/driver', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [App\Http\Controllers\Driver\ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile/{id}', [App\Http\Controllers\Driver\ProfileController::class, 'store'])->name('profile.store');
+
+    Route::get('/activity_log', [App\Http\Controllers\Driver\DashboardController::class, 'activity'])->name('activity_log');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

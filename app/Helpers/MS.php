@@ -28,4 +28,12 @@ class MS{
         return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
     }
 
+    public static function isAdmin(){
+        return (Auth::user()->role == 'admin') ? true : false;
+    }
+
+    public static function isDriver(){
+        return (Auth::user()->role == 'driver') ? true : false;
+    }
+
 }

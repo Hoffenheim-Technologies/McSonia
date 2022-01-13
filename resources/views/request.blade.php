@@ -66,14 +66,14 @@
 
             },
             error: (e) => {
-                console.log(e);
+                //console.log(e);
             }
         });
     }
     
     var locales
     function getLocation(id) {
-        console.log(id)
+        //console.log(id)
         $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
         $('#dstate').html(`<option selected disabled>Choose a State</option>`)
         $('#dlocation').niceSelect('update')
@@ -102,7 +102,7 @@
     const setLocations = (id) => {
         $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
         for (const destination of locales[id]) {
-            console.log(destination)
+            //console.log(destination)
             $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
             $('#dlocation').niceSelect('update')
         }
@@ -130,13 +130,16 @@
         var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
         $('.price').text('Price - '+ price.toString())
         $('[name=subtotal]').val(price)
+        $('[name=total]').val(price)
     })
     $('[name=item]').change(() => {
         $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
         $('.end').text($('[name=dlocation]').find(":selected").text())
         var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
         $('.price').text('Price - '+ price.toString())
+        console.log(price)
         $('[name=subtotal]').val(price)
+        $('[name=total]').val(price)
     })
 </script>
 @guest
@@ -319,7 +322,8 @@ $('[name=phone]').change(()=>{
                             <span class="mx-3 end">End</span>
                         </div>
                         <div class="mx-3 justify-center grid grid-cols-2">
-                            <input disabled name="subtotal" class="price">
+                            <input disabled name="subtotal" class="">
+                            <input disabled name="total" class="">
                         </div>
                     </div>
                 </div>
