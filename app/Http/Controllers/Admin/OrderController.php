@@ -156,7 +156,7 @@ class OrderController extends Controller
             $data = [];
             $data['user_id'] = $driver->id;
             $data['order_id'] = $order->id;
-            $data['status'] = 'Pending';
+            $data['status'] = 'Awaiting Pickup By Driver';
             OrderDetails::create($data);
             DB::commit();
             UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Driver To Order",null);

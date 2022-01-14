@@ -108,9 +108,43 @@
                                         <h4><span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span></h4>
                                     </div>
                                     <div class="progress" style="height: 15px;">
-                                        <div class="progress-bar {{($orderDetail->statusNo <= 0) ? 'bg-inverse' : ($orderDetail->statusNo <= 10) ? 'bg-danger' : ($orderDetail->statusNo <= 50) ? 'bg-info' : 'bg-success' }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
+                                        <div class="progress-bar {{($orderDetail->statusNo <= 0) ? 'bg-inverse' : ($orderDetail->statusNo <= 10) ? 'bg-danger' : ($orderDetail->statusNo <= 50) ? 'bg-info' : 'bg-success' }}" style="width: {{($orderDetail->statusNo > 0) ? $orderDetail->statusNo: '0'}}%;" role="progressbar"><span class="{{($orderDetail->statusNo <= 0) ? 'text-dark' : '' }} ">{{($orderDetail->statusNo > 0) ? $orderDetail->statusNo: '0' }}% Complete</span>
                                         </div>
                                     </div>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">Update Status</h4>
+                                <form action="{{route('order.update', $orderDetail)}}" method="POST">
+                                    @csrf @method('PUT')
+                                    @if ($orderDetail->status == 'Awaiting Pickup By Driver' || $orderDetail->status == 'Pending')
+                                    <div class="general-button">
+                                        <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 btn-primary">
+                                    </div>
+                                    @endif
+                                    @if ($orderDetail->status == 'On Route To Deliver')
+                                    <div class="general-button">
+                                        <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-warning">
+                                        <input type="submit" name="status" value="Delivered" class="btn mb-1 btn-info">
+                                    </div>
+                                    @endif
+                                    @if ($orderDetail->status == 'Delivered')
+                                    <div class="general-button">
+                                        <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-secondary">
+                                        <input type="submit" name="status" value="Cancel" class="btn mb-1 btn-danger">
+                                        <input type="submit" name="status" value="Completed" class="btn mb-1 btn-success">
+                                    </div>
+                                    @endif
+                                    @if ($orderDetail->status == 'Completed')
+                                    <div class="general-submit">
+                                        <h4 class="text-center">Order Completed!! </h4>
+                                    </div>
+                                    @endif
+                                    @if ($orderDetail->status == 'Back To Sender')
+                                    <div class="general-button">
+                                        <h4 class="text-center">Package Returned To Sender !! </h4>
+                                    </div>
+                                    @endif
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -131,7 +165,7 @@
             swal({title:"Are you sure ?",
                 text:"Do you want to perform this action? !!",
                 type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",
-                confirmButtonText:"Yes !!",cancelButtonText:"No, cancel it !!",
+                confirmButtonText:"Yes update status!!",cancelButtonText:"No, cancel it !!",
                 closeOnConfirm:1,closeOnCancel:1},
                 function(e){
                     if(e)

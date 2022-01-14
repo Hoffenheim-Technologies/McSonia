@@ -14,6 +14,7 @@ use App\Models\OrderDetails;
 use App\Models\User;
 use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -92,12 +93,38 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateOrderRequest  $request
-     * @param  \App\Models\Order  $order
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        $orderDetail = OrderDetails::find($id);
+        //dd($orderDetail);
+        try {
+            if($orderDetail){
+                $orderDetail->status = $request->status;
+                if($request->status == 'On Route To Deliver'){
+                    $orderDetail->pickup_ts = Carbon::now();
+                }
+                if($request->status == 'Canceled'){
+                    $orderDetail->canceled_ts = Carbon::now();
+                }
+                if($request->status == 'Completed'){
+                    $orderDetail->completed_ts = Carbon::now();
+                }
+                $orderDetail->save();
+                DB::commit();
+                UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Updated","User Updated Order Status",null);
+                return redirect()->route('order.show', $orderDetail->order_id)->with('message','Order Updated Successfully');
+            }else{
+                return redirect()->route('order.show', $orderDetail->order_id)->with('error','Unable to Update');
+            }
+        } catch (Exception $th) {
+            DB::rollBack();
+            dd($th);
+        }
     }
 
     /**
