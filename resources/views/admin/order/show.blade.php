@@ -151,7 +151,7 @@
                                                         {{$item->vehicle->vehicle_name ?? ''}}
                                                     </td>
                                                     <td>
-                                                        <form action="{{ route('order.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')
+                                                        <form action="{{ route('orders.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')
                                                             <span class="">
                                                                 <button type="submit" class="btn btn-success confirm-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Assign"><i class="fa fa-check color-success"></i> Assign</button>
                                                             </span>

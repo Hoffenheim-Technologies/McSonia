@@ -160,11 +160,11 @@ class OrderController extends Controller
             OrderDetails::create($data);
             DB::commit();
             UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Driver To Order",null);
-            return redirect()->route('order.show', $order->id)->with('message','Driver Assigned Successfully');
+            return redirect()->route('orders.show', $order->id)->with('message','Driver Assigned Successfully');
         }catch(Exception $ae){
             dd($ae);
             DB::rollback();
-            return redirect()->route('order.show', $order->id)->with('error','Driver Assign Unsuccessful');
+            return redirect()->route('orders.show', $order->id)->with('error','Driver Assign Unsuccessful');
 
         }
     }
@@ -200,14 +200,15 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        //dd($order);
         $user = Auth::user();
         try {
             $order = Order::find($order->id);
             $order->delete();
             UserActivityService::log($user->id,UserActivityConstants::PRICING_ACTIVITY,"Order Deleted","User Deleted Order",null);
-            return redirect()->route('order.index')->with('message','Data Deleted Successfully');
+            return redirect()->route('orders.index')->with('message','Data Deleted Successfully');
         }catch (Exception $e) {
-            return redirect()->route('order.index')->with('error','Data Not Found');
+            return redirect()->route('orders.index')->with('error','Data Not Found');
         }
     }
 }

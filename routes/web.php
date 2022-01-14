@@ -84,8 +84,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('accounts', '\App\Http\Controllers\Admin\AccountChartsController');
 
     //Orders
-    Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
-    Route::post('/order/{driver}/{order}', [OrderController::class, 'assign'])->name('order.assign');
+    Route::prefix('orders')->group(function(){
+        Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/create', [DriveOrderControllerrController::class, 'create'])->name('orders.create');
+        Route::post('/create', [OrderController::class, 'store'])->name('orders.store');
+        Route::post('/{driver}/{order}', [OrderController::class, 'assign'])->name('orders.assign');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
+        Route::put('/{id}', [OrderController::class, 'update'])->name('orders.update');
+        Route::delete('/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    });
 
     //vehicles
     Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');

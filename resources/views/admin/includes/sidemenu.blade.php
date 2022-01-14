@@ -10,7 +10,7 @@
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
                         </a>
                     </li>
-                    
+
                     @if (MS::isAdmin())
                     <li class="nav-label">Users</li>
                     <li class="mega-menu mega-menu-sm">
@@ -39,14 +39,14 @@
                             <li><a href="{{route('clients')}}">Clients</a></li>
                         </ul>
                     </li>
-                    
+
                     <li class="nav-label">Orders</li>
                     <li class="mega-menu mega-menu-sm">
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="icon-bag menu-icon"></i><span class="nav-text">Orders</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{{route('order.index')}}">Orders</a></li>
+                            <li><a href="{{route('orders.index')}}">Orders</a></li>
                         </ul>
 
                     </li>
@@ -134,7 +134,7 @@
                         </a>
                     </li>
                     @endif
-                    
+
                     <li class="nav-label">Messaging</li>
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">

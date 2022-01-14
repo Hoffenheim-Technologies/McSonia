@@ -42,16 +42,16 @@
                                                 {{$loop->iteration}}
                                             </td>
                                             <td>
-                                                {{$item->reference}}
+                                                {{$item->order->reference}}
                                             </td>
                                             <td>
-                                                {{ucfirst($item->user->lastname ?? $item->lastname)}} {{ucfirst($item->user->firstname ?? $item->firstname)}}
+                                                {{ucfirst($item->order->user->lastname ?? $item->order->lastname)}} {{ucfirst($item->order->user->firstname ?? $item->order->firstname)}}
                                             </td>
                                             <td>
-                                                {{$item->user->email ?? $item->email}}
+                                                {{$item->order->user->email ?? $item->order->email}}
                                             </td>
                                             <td>
-                                                {{$item->user->phone ?? $item->phone}}
+                                                {{$item->order->user->phone ?? $item->order->phone}}
                                             </td>
                                             <td>
                                                 @if ($item->status == 'Pending')
@@ -64,12 +64,7 @@
                                                 {{$item->created_at->toDayDateTimeString()}}
                                             </td>
                                             <td>
-                                                <form action="{{ route('order.destroy', $item)}}" method="post">@csrf @method('delete')
-                                                    <span>
-                                                        <a class="btn btn-info btn-sm mx-2" href="{{ route('order.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
-                                                        <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
-                                                    </span>
-                                                </form>
+                                                <a class="btn btn-info btn-sm mx-2" href="{{ route('order.show', $item->order) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
                                             </td>
                                         </tr>
                                         @endforeach

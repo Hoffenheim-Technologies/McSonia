@@ -31,10 +31,11 @@ class OrderController extends Controller
                                 ->orderBy('created_at', 'desc')->get();
         if($orders){
             foreach($orders as $item){
-                $item->user = User::find($item->user_id);
                 $item->order = Order::find($item->order_id);
+                $item->order->user = User::find($item->order->user_id) ?? null;
             }
         }
+        //dd($orders);
         return view('driver.order.index', compact('orders'));
     }
 
@@ -66,7 +67,7 @@ class OrderController extends Controller
             }
 
             $orderDetail = OrderDetails::where('order_id','=',$order->id)->first();
-            
+
             if($orderDetail){
                 $orderDetail->statusNo = OrderStatusConstants::ORDER_STATUS_NO[$orderDetail->status];
                 $orderDetail->driver = User::where('id',$orderDetail->user_id)->first();
@@ -107,6 +108,6 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        
+
     }
 }
