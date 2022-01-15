@@ -30,7 +30,7 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
-                                            <th>Status</th>
+                                            <th>Payment Status</th>
                                             <th>Date Added</th>
                                             <th>Action</th>
                                         </tr>

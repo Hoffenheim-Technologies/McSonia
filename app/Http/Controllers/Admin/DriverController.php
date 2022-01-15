@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\UserActivityConstants;
 use App\Helpers\MS;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\User;
 use App\Models\UserMemo;
@@ -94,6 +95,11 @@ class DriverController extends Controller
         try {
             $user = User::find($id);
             $orders = OrderDetails::where('user_id',$id)->get();
+            if($orders){
+                foreach($orders as $item){
+                    $item->order = Order::find($item->order_id);
+                }
+            }
             $memos = UserMemo::where('user_id',$id)->get();
             $vehicles = Vehicles::where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
             return view("admin.driver.show", compact('user','orders','vehicles','memos'));

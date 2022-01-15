@@ -157,30 +157,31 @@
                                                     {{$loop->iteration}}
                                                 </td>
                                                 <td>
-                                                    {{$item->reference}}
+                                                    {{$item->order->reference}}
                                                 </td>
                                                 <td>
-                                                    {{ucwords($item->lastname.' '.$item->firstname)}}
+                                                    {{ucwords($item->order->lastname.' '.$item->order->firstname)}}
                                                 </td>
                                                 <td>
-                                                    {{$item->email}}
+                                                    {{$item->order->email}}
                                                 </td>
                                                 <td>
-                                                    {{$item->phone}}
+                                                    {{$item->order->phone}}
                                                 </td>
                                                 <td>
-                                                    {{-- <td class="" >
-                                                        <span class="{{ $item->status == 1 ? 'label gradient-1' : 'label gradient-2'}} "> {{$item->status == 1 ? 'Active' : 'Inactive'}} </span>
-                                                    </td>
-                                                     --}}
+                                                    @if ($item->status != 'Delivered' && $item->status != 'Completed')
+                                                        <i class="fa fa-circle-o text-warning  mr-2"></i> {{$item->status}}
+                                                    @else
+                                                        <i class="fa fa-circle-o text-success  mr-2"></i>  {{$item->status}}
+                                                    @endif
                                                 </td>
                                                 <th>
                                                     {{$item->created_at}}
                                                 </th>
                                                 <td>
-                                                    <form action="{{ route('order.destroy', $item)}}" method="post">@csrf @method('delete')
+                                                    <form action="{{ route('orders.destroy', $item->order)}}" method="post">@csrf @method('delete')
                                                         <span>
-                                                            <a class="btn btn-info btn-sm mx-2" href="{{ route('order.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
+                                                            <a class="btn btn-info btn-sm mx-2" href="{{ route('orders.show', $item->order) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
                                                             <button type="submit" class="btn btn-danger btn-sm mx-2" onsubmit="checkDelete(this)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
                                                         </span>
                                                     </form>

@@ -14,6 +14,7 @@ use App\Models\OrderDetails;
 use App\Models\User;
 use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -184,12 +185,37 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateOrderRequest  $request
-     * @param  \App\Models\Order  $order
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        $orderDetail = OrderDetails::find($id);
+        try {
+            if($orderDetail){
+                $orderDetail->status = $request->status;
+                if($request->status == 'On Route To Deliver'){
+                    $orderDetail->pickup_ts = Carbon::now();
+                }
+                if($request->status == 'Canceled'){
+                    $orderDetail->canceled_ts = Carbon::now();
+                }
+                if($request->status == 'Completed'){
+                    $orderDetail->completed_ts = Carbon::now();
+                }
+                $orderDetail->save();
+                DB::commit();
+                UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Updated","User Updated Order Status",null);
+                return redirect()->route('orders.show', $orderDetail->order_id)->with('message','Order Updated Successfully');
+            }else{
+                return redirect()->route('orders.show', $orderDetail->order_id)->with('error','Unable to Update');
+            }
+        } catch (Exception $th) {
+            DB::rollBack();
+            dd($th);
+        }
     }
 
     /**
@@ -204,6 +230,10 @@ class OrderController extends Controller
         $user = Auth::user();
         try {
             $order = Order::find($order->id);
+            $orderDetail = OrderDetails::where('order_id',$order->id)->first();
+            if($orderDetail){
+                $orderDetail->delete();
+            }
             $order->delete();
             UserActivityService::log($user->id,UserActivityConstants::PRICING_ACTIVITY,"Order Deleted","User Deleted Order",null);
             return redirect()->route('orders.index')->with('message','Data Deleted Successfully');
