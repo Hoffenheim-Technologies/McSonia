@@ -94,7 +94,40 @@
                 </div>
             </div>
 
+            <div class="container-fluid">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ucwords($user->firstname)}} Memo</h4>
+                                <form class="" action="{{route('drivers.storeMemo',$user)}}" method="post">
+                                    @csrf @method('POST')
+                                    <div class="form-row">
+                                        <div class="form-group col-7">
+                                            <textarea name="memo" placeholder="Memo" class="form-control" cols="20" rows="3" id=""> </textarea>
+                                        </div>
+                                        <div class="form-group align-items-center col-4">
+                                            <button type="submit" class="btn btn-primary px-3 ml-4">Submit</button>
+                                        </div>
 
+                                    </div>
+                                </form>
+                                <div id="activity">
+                                    @foreach ($memos as $item)
+                                        <div class="media border-bottom-1 pt-3 pb-3">
+                                            <div class="media-body">
+                                                <p class="mb-0">{{$item->memo}}</p>
+                                            </div><span class="text-muted ">{{$item->created_at->toDayDateTimeString()}}</span>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="container-fluid">
                 <!-- row -->
@@ -124,30 +157,31 @@
                                                     {{$loop->iteration}}
                                                 </td>
                                                 <td>
-                                                    {{$item->reference}}
+                                                    {{$item->order->reference}}
                                                 </td>
                                                 <td>
-                                                    {{ucwords($item->lastname.' '.$item->firstname)}}
+                                                    {{ucwords($item->order->lastname.' '.$item->order->firstname)}}
                                                 </td>
                                                 <td>
-                                                    {{$item->email}}
+                                                    {{$item->order->email}}
                                                 </td>
                                                 <td>
-                                                    {{$item->phone}}
+                                                    {{$item->order->phone}}
                                                 </td>
                                                 <td>
-                                                    {{-- <td class="" >
-                                                        <span class="{{ $item->status == 1 ? 'label gradient-1' : 'label gradient-2'}} "> {{$item->status == 1 ? 'Active' : 'Inactive'}} </span>
-                                                    </td>
-                                                     --}}
+                                                    @if ($item->status != 'Delivered' && $item->status != 'Completed')
+                                                        <i class="fa fa-circle-o text-warning  mr-2"></i> {{$item->status}}
+                                                    @else
+                                                        <i class="fa fa-circle-o text-success  mr-2"></i>  {{$item->status}}
+                                                    @endif
                                                 </td>
                                                 <th>
                                                     {{$item->created_at}}
                                                 </th>
                                                 <td>
-                                                    <form action="{{ route('order.destroy', $item)}}" method="post">@csrf @method('delete')
+                                                    <form action="{{ route('orders.destroy', $item->order)}}" method="post">@csrf @method('delete')
                                                         <span>
-                                                            <a class="btn btn-info btn-sm mx-2" href="{{ route('order.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
+                                                            <a class="btn btn-info btn-sm mx-2" href="{{ route('orders.show', $item->order) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
                                                             <button type="submit" class="btn btn-danger btn-sm mx-2" onsubmit="checkDelete(this)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
                                                         </span>
                                                     </form>
@@ -161,7 +195,8 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
+
         </div>
         <!--**********************************
             Content body end

@@ -21,7 +21,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title mb-5">Cash Flow Report</h4>
-                                <form>
+                                <form class="d-none">
                                     <div class="form-row align-items-center">
                                         <div class="col-auto">
                                             <h5 class="box-title m-t-30">Date Range</h5>

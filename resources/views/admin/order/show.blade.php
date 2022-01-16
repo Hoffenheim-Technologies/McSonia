@@ -151,7 +151,7 @@
                                                         {{$item->vehicle->vehicle_name ?? ''}}
                                                     </td>
                                                     <td>
-                                                        <form action="{{ route('order.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')
+                                                        <form action="{{ route('orders.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')
                                                             <span class="">
                                                                 <button type="submit" class="btn btn-success confirm-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Assign"><i class="fa fa-check color-success"></i> Assign</button>
                                                             </span>
@@ -171,7 +171,79 @@
                                         <div class="progress-bar {{($orderDetail->statusNo <= 0) ? 'bg-inverse' : ($orderDetail->statusNo <= 10) ? 'bg-danger' : ($orderDetail->statusNo <= 50) ? 'bg-info' : 'bg-success' }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
                                         </div>
                                     </div>
+                                    <div class="mt-4">
+                                        <h4 class="card-title">Update Status</h4>
+                                        <form action="{{route('orders.update', $orderDetail)}}" method="POST">
+                                            @csrf @method('PUT')
+                                            @if ($orderDetail->status == 'Awaiting Pickup By Driver' || $orderDetail->status == 'Pending')
+                                            <div class="general-button">
+                                                <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 btn-primary">
+                                            </div>
+                                            @endif
+                                            @if ($orderDetail->status == 'On Route To Deliver')
+                                            <div class="general-button">
+                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-warning">
+                                                <input type="submit" name="status" value="Delivered" class="btn mb-1 btn-info">
+                                            </div>
+                                            @endif
+                                            @if ($orderDetail->status == 'Delivered')
+                                            <div class="general-button">
+                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-secondary">
+                                                <input type="submit" name="status" value="Cancel" class="btn mb-1 btn-danger">
+                                                <input type="submit" name="status" value="Completed" class="btn mb-1 btn-success">
+                                            </div>
+                                            @endif
+                                            @if ($orderDetail->status == 'Completed')
+                                            <div class="general-submit">
+                                                <h4 class="text-center">Order Completed!! </h4>
+                                            </div>
+                                            @endif
+                                            @if ($orderDetail->status == 'Back To Sender')
+                                            <div class="general-button">
+                                                <h4 class="text-center">Package Returned To Sender !! </h4>
+                                            </div>
+                                            @endif
+                                        </form>
+                                    </div>
                                 @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Order Reports</h4>
+                                <div id="activity">
+                                    @foreach ($reports as $item)
+                                        <div class="media border-bottom-1 pt-3 pb-3">
+                                            <div class="media-body">
+                                                <h5>{{$item->description}}</h5>
+                                                <p class="mb-0">By: {{$item->user->firstname.' '.$item->user->lastname}}</p>
+                                                <p class="mb-0">Comment: {{$item->comments ?? 'None'}}</p>
+                                            </div><span class="text-muted ">{{$item->created_at->toDayDateTimeString()}}</span>
+                                        </div>
+                                        @if ($item->comments == null)
+                                            <form action="{{route('reports.update', $item)}}" method="post">
+                                                @csrf @method('PUT')
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-10">
+                                                        <label>Add Comment</label>
+                                                        <textarea class="form-control" rows="3" id="" name="comments" placeholder="Comment"> </textarea>
+                                                    </div>
+                                                    <div class="form-group col-md-10">
+                                                        <input type="submit"  class="btn btn-primary" value="Submit">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        @endif
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>

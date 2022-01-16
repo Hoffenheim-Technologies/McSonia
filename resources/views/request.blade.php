@@ -66,14 +66,14 @@
 
             },
             error: (e) => {
-                console.log(e);
+                //console.log(e);
             }
         });
     }
-    
+
     var locales
     function getLocation(id) {
-        console.log(id)
+        //console.log(id)
         $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
         $('#dstate').html(`<option selected disabled>Choose a State</option>`)
         $('#dlocation').niceSelect('update')
@@ -102,7 +102,7 @@
     const setLocations = (id) => {
         $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
         for (const destination of locales[id]) {
-            console.log(destination)
+            //console.log(destination)
             $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
             $('#dlocation').niceSelect('update')
         }
@@ -130,13 +130,16 @@
         var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
         $('.price').text('Price - '+ price.toString())
         $('[name=subtotal]').val(price)
+        $('[name=total]').val(price)
     })
     $('[name=item]').change(() => {
         $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(":selected").text())
         $('.end').text($('[name=dlocation]').find(":selected").text())
         var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $('[name=item]').find(":selected").attr('price')) ? +sval : 0)
         $('.price').text('Price - '+ price.toString())
+        console.log(price)
         $('[name=subtotal]').val(price)
+        $('[name=total]').val(price)
     })
 </script>
 @guest
@@ -184,37 +187,28 @@ $('[name=phone]').change(()=>{
                 <div class="col-md-8 col-md-offset-2">
                     <p>
                         <div>
-                            ₦ 2,950
+                        <strong>Total:</strong>  @money($order->total)
                         </div>
                     </p>
                     <input type="hidden" name="email" value="otemuyiwa@gmail.com"> {{-- required --}}
-                    <input type="hidden" name="orderID" value="345">
-                    <input type="hidden" name="amount" value="800"> {{-- required in kobo --}}
-                    <input type="hidden" name="quantity" value="3">
-                    <input type="hidden" name="currency" value="NGN">
-                    <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
+                    <input type="hidden" name="orderID" value="{{$order->id}}">
+                    <input type="hidden" name="amount" value="{{$order->total*100}}"> {{-- required in kobo --}}
+                    <input type="hidden" name="quantity" value="">
+                    <input type="hidden" name="currency" value="{{env('CURRENCY')}}">
                     <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
 
-                    <input type="hidden" name="split_code" value="SPL_EgunGUnBeCareful"> {{-- to support transaction split. more details https://paystack.com/docs/payments/multi-split-payments/#using-transaction-splits-with-payments --}}
-                    <input type="hidden" name="split" value="{{ json_encode($split) }}"> {{-- to support dynamic transaction split. More details https://paystack.com/docs/payments/multi-split-payments/#dynamic-splits --}}
                     {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}
 
                     <p>
                         <button class="btn btn-success btn-lg btn-block" type="submit" value="Pay Now!">
-                            <i class="fa fa-plus-circle fa-lg"></i> Pay Now!
+                            <i class="fa fa-credit fa-lg"></i> Pay Now!
                         </button>
                     </p>
                 </div>
             </div>
         </form>
-        <div class="text-center lg:flex sm:text-2xl text-center py-2">
-            <a href="{{route('pay')}}" id="btn_payment" class="btn-lg text-success font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault();">
-                Pay Now
-                <i class="fa fa-credit-card text-white"></i>
-            </a>
-        </div>
         @endisset
 
     </div>
@@ -262,7 +256,7 @@ $('[name=phone]').change(()=>{
                 <div class="w-full bg-white border-y py-3">
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
                     <div class="sm:flex flex-row">
-                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">    
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">
                             <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect border-0 w-full">
                                 <option @isset($input->plocation) @else selected @endisset disabled>Choose a State</option>
                                 @foreach ($states as $state)
@@ -270,7 +264,7 @@ $('[name=phone]').change(()=>{
                                 @endforeach
                             </select>
                         </div>
-                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">    
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">
                             <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect border-0 w-full">
                                 <option @isset($input->plocation) @else selected @endisset disabled>Choose a Location</option>
                             </select>
@@ -287,12 +281,12 @@ $('[name=phone]').change(()=>{
                 <div class="w-full bg-white border-t py-3">
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Location *</label>
                     <div class="sm:flex flex-row">
-                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">    
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">
                             <select name="dstate" id="dstate" class="niceselect border-0 w-full"onchange="setLocations($(this).val())">
                                 <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your State</option>
                             </select>
-                        </div>    
-                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">    
+                        </div>
+                        <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">
                                 <select name="dlocation" id="dlocation" class="niceselect border-0 w-full">
                                     <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your location</option>
                                 </select>
@@ -319,7 +313,8 @@ $('[name=phone]').change(()=>{
                             <span class="mx-3 end">End</span>
                         </div>
                         <div class="mx-3 justify-center grid grid-cols-2">
-                            <input disabled name="subtotal" class="price">
+                            <input disabled name="subtotal" class="">
+                            <input disabled name="total" class="">
                         </div>
                     </div>
                 </div>

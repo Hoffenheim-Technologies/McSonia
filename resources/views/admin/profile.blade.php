@@ -21,7 +21,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="media align-items-center mb-4">
-                                    <img class="mr-3" src="{{asset($user->image)}}" width="80" height="80" alt="">
+                                    <img class="mr-3" src="{{Storage::url($user->image)}}" width="80" height="80" alt="">
                                     <div class="media-body">
                                         <h3 class="mb-0">{{$user->name}}</h3>
                                     </div>
@@ -43,9 +43,8 @@
                                     @csrf @method('PUT')
                                     <div class="form-group">
                                         <div class="input-group col-md-5">
-                                            <div class="custom-file">
-                                                <input type="file" accept="image/*" name="photo" class="custom-file-input">
-                                                <label class="custom-file-label">Choose file</label>
+                                            <div class="">
+                                                <input type="file" accept="image/*" name="photo" class="form-control-file">
                                                 <span class="form-text text-muted">Accepted Images: jpeg, png. Max file size 2Mb</span>
                                             </div>
                                         </div>

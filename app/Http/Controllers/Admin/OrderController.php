@@ -11,9 +11,11 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\OrderDetails;
+use App\Models\Report;
 use App\Models\User;
 use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -116,6 +118,12 @@ class OrderController extends Controller
             if($order->user_id){
                 $order->user = User::find($order->user_id);
             }
+            $reports = Report::where('reference_id',$order->id)->orderBy('created_at','DESC')->get();
+            if($reports){
+                foreach($reports as $item){
+                    $item->user = User::find($item->user_id);
+                }
+            }
 
 
             $drivers = User::where('role','driver')->get();
@@ -132,7 +140,7 @@ class OrderController extends Controller
                 $orderDetail->statusNo = OrderStatusConstants::ORDER_STATUS_NO[$orderDetail->status];
                 $orderDetail->driver = User::where('id',$orderDetail->user_id)->first();
             }
-            return view('admin.order.show', compact('order','drivers','orderDetail'));
+            return view('admin.order.show', compact('order','drivers','orderDetail','reports'));
         }
     }
 
@@ -156,15 +164,15 @@ class OrderController extends Controller
             $data = [];
             $data['user_id'] = $driver->id;
             $data['order_id'] = $order->id;
-            $data['status'] = 'Pending';
+            $data['status'] = 'Awaiting Pickup By Driver';
             OrderDetails::create($data);
             DB::commit();
             UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Driver To Order",null);
-            return redirect()->route('order.show', $order->id)->with('message','Driver Assigned Successfully');
+            return redirect()->route('orders.show', $order->id)->with('message','Driver Assigned Successfully');
         }catch(Exception $ae){
             dd($ae);
             DB::rollback();
-            return redirect()->route('order.show', $order->id)->with('error','Driver Assign Unsuccessful');
+            return redirect()->route('orders.show', $order->id)->with('error','Driver Assign Unsuccessful');
 
         }
     }
@@ -184,12 +192,37 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateOrderRequest  $request
-     * @param  \App\Models\Order  $order
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+        DB::beginTransaction();
+        $orderDetail = OrderDetails::find($id);
+        try {
+            if($orderDetail){
+                $orderDetail->status = $request->status;
+                if($request->status == 'On Route To Deliver'){
+                    $orderDetail->pickup_ts = Carbon::now();
+                }
+                if($request->status == 'Canceled'){
+                    $orderDetail->canceled_ts = Carbon::now();
+                }
+                if($request->status == 'Completed'){
+                    $orderDetail->completed_ts = Carbon::now();
+                }
+                $orderDetail->save();
+                DB::commit();
+                UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Updated","User Updated Order Status",null);
+                return redirect()->route('orders.show', $orderDetail->order_id)->with('message','Order Updated Successfully');
+            }else{
+                return redirect()->route('orders.show', $orderDetail->order_id)->with('error','Unable to Update');
+            }
+        } catch (Exception $th) {
+            DB::rollBack();
+            dd($th);
+        }
     }
 
     /**
@@ -200,14 +233,19 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        //dd($order);
         $user = Auth::user();
         try {
             $order = Order::find($order->id);
+            $orderDetail = OrderDetails::where('order_id',$order->id)->first();
+            if($orderDetail){
+                $orderDetail->delete();
+            }
             $order->delete();
             UserActivityService::log($user->id,UserActivityConstants::PRICING_ACTIVITY,"Order Deleted","User Deleted Order",null);
-            return redirect()->route('order.index')->with('message','Data Deleted Successfully');
+            return redirect()->route('orders.index')->with('message','Data Deleted Successfully');
         }catch (Exception $e) {
-            return redirect()->route('order.index')->with('error','Data Not Found');
+            return redirect()->route('orders.index')->with('error','Data Not Found');
         }
     }
 }

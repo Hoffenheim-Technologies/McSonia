@@ -6,8 +6,15 @@ use App\Models\Items;
 use App\Models\Location;
 use App\Models\Order;
 use App\Models\State;
+use App\Http\Controllers\EmailController;
+use App\Mail\McSoniaOrderMail;
+use App\Mail\McSoniaMail;
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use stdClass;
 
 class BookRequestController extends Controller
 {
@@ -29,6 +36,7 @@ class BookRequestController extends Controller
      */
     public function storeOrder(Request $request)
     {
+        try{
 
         $order = new Order();
         $order->pdate = $request->pdate;
@@ -60,7 +68,9 @@ class BookRequestController extends Controller
             $order->discount = $request->discount;
         }
 
-        $order->subtotal = $request->subtotal;
+        $order->subtotal = $request->subtotal ?? 0.00;
+        $order->total = $request->total ?? 1000.00;
+        $order->description = $request->description ?? 'No Description Here';
 
         function random_strings($length_of_string)
         {
@@ -73,7 +83,46 @@ class BookRequestController extends Controller
 
         $order->save();
 
-        return view('request')->with('message', 'Success')->with('reference', $order->reference);
+        //Mail Function
+        if($order->user_id){
+            $order->user = User::find($order->user_id);
+            $name = $order->user->firstname.' '.$order->user->lastname;
+        }else{
+            $name = $request->firstname.' '.$request->lastname;
+        }
+        $company_name = \env('APP_NAME');
+        $formatted_date = $order->created_at->toDayDateTimeString();
+        $location = new stdClass();
+        $location->plocation = Location::find($request->plocation)->value('location');
+        $location->dlocation = Location::find($request->dlocation)->value('location');
+        $location->paddress = $request->paddress;
+        $location->daddress = $request->daddress;
+        $body = "
+            Thank you for choosing $company_name on $formatted_date. Your booking #$request->reference has been received and will be processed immediately.
+            Please confirm your Pickup and Dropoff Locations respectively
+        ";
+        $details = [
+            'name' => $name,
+            'title' => "Order Confirmation #$request->reference",
+            'body' => $body,
+            'location' => $location,
+            'description' => $order->description
+        ];
+        $details2 = [
+            'title' => "New Order Booking #$request->reference",
+            'body' => "You have received a new booking request with Order #$request->reference. Login to proceed with order request"
+        ];
+        //Mail Client
+        Mail::to($request->email)->send(new McSoniaOrderMail($details));
+
+        //Mail Admin
+        Mail::to(env('MAIL_ADMIN '))->send(new McSoniaMail($details2));
+
+        return view('request')->with('message', 'Success')->with('reference', $order->reference)->with('order',$order);
+
+        }catch(Exception $e){
+            dd($e);
+        }
     }
 
 

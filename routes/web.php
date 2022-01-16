@@ -7,11 +7,11 @@ use App\Models\Location;
 use App\Models\Items;
 use App\Models\State;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\AccountChartsController;
+use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ItemsController;
 use App\Http\Controllers\HomeController;
@@ -23,6 +23,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FinancesController;
 use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\VehiclesController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -83,11 +84,19 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('accounts', '\App\Http\Controllers\Admin\AccountChartsController');
 
     //Orders
-    Route::resource('order', '\App\Http\Controllers\Admin\OrderController');
-    Route::post('/order/{driver}/{order}', [OrderController::class, 'assign'])->name('order.assign');
+    Route::prefix('orders')->group(function(){
+        Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/create', [DriveOrderControllerrController::class, 'create'])->name('orders.create');
+        Route::post('/create', [OrderController::class, 'store'])->name('orders.store');
+        Route::post('/{driver}/{order}', [OrderController::class, 'assign'])->name('orders.assign');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
+        Route::put('/{id}', [OrderController::class, 'update'])->name('orders.update');
+        Route::delete('/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    });
 
     //vehicles
     Route::resource('vehicles', '\App\Http\Controllers\Admin\VehiclesController');
+    Route::post('vehicles/{id}', [VehiclesController::class, 'storeMemo'])->name('vehicles.storeMemo');
 
     //Finances
     Route::resource('finances', '\App\Http\Controllers\Admin\FinancesController');
@@ -99,6 +108,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/', [DriverController::class, 'index'])->name('drivers');
         Route::get('/create', [DriverController::class, 'create'])->name('drivers.create');
         Route::post('/create', [DriverController::class, 'store'])->name('drivers.store');
+        Route::post('/{id}', [DriverController::class, 'storeMemo'])->name('drivers.storeMemo');
         Route::get('/{id}', [DriverController::class, 'show'])->name('drivers.show');
         Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
     });
@@ -110,6 +120,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/profit-loss', [ReportsController::class, 'profit_loss'])->name('reports.profit-loss');
         Route::get('/sales-report', [ReportsController::class, 'sales_report'])->name('reports.sales-report');
         Route::get('/defaulters', [ReportsController::class, 'defaulters'])->name('reports.defaulters');
+        Route::put('/{id}', [ReportsController::class, 'update'])->name('reports.update');
     });
 
     //Clients
@@ -133,9 +144,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 });
 
 Route::middleware(['auth', 'isDriver'])->group(function () {
-    Route::get('/driver', function () {
-        return view ('driver.dashboard');
-    });
+    Route::get('/driver', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('driver_dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('driver_dashboard');
+    Route::get('driver/profile', [App\Http\Controllers\Driver\ProfileController::class, 'index'])->name('driver_profile');
+    Route::put('driver/profile/{id}', [App\Http\Controllers\Driver\ProfileController::class, 'store'])->name('driver_profile.store');
+    Route::get('driver/activity_log', [App\Http\Controllers\Driver\DashboardController::class, 'activity'])->name('driver_activity_log');
+    Route::resource('order', '\App\Http\Controllers\Driver\OrderController');
+    Route::resource('report', '\App\Http\Controllers\Driver\ReportController');
+    Route::resource('vehicle', '\App\Http\Controllers\Driver\VehiclesController');
+    Route::post('vehicle/{id}', [App\Http\Controllers\Driver\VehiclesController::class, 'storeMemo'])->name('vehicle.storeMemo');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
