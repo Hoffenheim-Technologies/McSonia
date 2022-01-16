@@ -27,7 +27,6 @@
                                         <tr>
                                             <th>SN</th>
                                             <th>Name</th>
-                                            <th>Driver Assigned</th>
                                             <th>Type</th>
                                             <th>Reg No</th>
                                             <th>Status</th>
@@ -44,12 +43,7 @@
                                                 {{$item->vehicle_name}}
                                             </td>
                                             <td>
-                                               <a href="{{route('drivers.show', $item->driver->id)}}">
-                                                    {{$item->driver->lastname ?? ''}} {{$item->driver->firstname ?? ''}}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                {{$item->type}} 
+                                                {{$item->type}}
                                             </td>
                                             <td>
                                                 {{$item->reg_no}}
@@ -58,12 +52,7 @@
                                                 <span class="{{ $item->status == 'Inactive' ? 'label gradient-2' : 'label gradient-1'}} "> {{$item->status}} </span>
                                             </td>
                                             <td>
-                                                <form action="{{ route('vehicles.destroy', $item)}}" method="post">@csrf @method('delete')
-                                                    <span>
-                                                        <a class="btn btn-info btn-sm mx-2" href="{{ route('vehicles.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
-                                                        <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
-                                                    </span>
-                                                </form>
+                                                <a class="btn btn-info btn-sm mx-2" href="{{ route('vehicle.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
                                             </td>
                                         </tr>
                                         @endforeach

@@ -11,6 +11,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\OrderDetails;
+use App\Models\Report;
 use App\Models\User;
 use App\Models\Vehicles;
 use App\Services\Activity\User\UserActivityService;
@@ -117,6 +118,12 @@ class OrderController extends Controller
             if($order->user_id){
                 $order->user = User::find($order->user_id);
             }
+            $reports = Report::where('reference_id',$order->id)->orderBy('created_at','DESC')->get();
+            if($reports){
+                foreach($reports as $item){
+                    $item->user = User::find($item->user_id);
+                }
+            }
 
 
             $drivers = User::where('role','driver')->get();
@@ -133,7 +140,7 @@ class OrderController extends Controller
                 $orderDetail->statusNo = OrderStatusConstants::ORDER_STATUS_NO[$orderDetail->status];
                 $orderDetail->driver = User::where('id',$orderDetail->user_id)->first();
             }
-            return view('admin.order.show', compact('order','drivers','orderDetail'));
+            return view('admin.order.show', compact('order','drivers','orderDetail','reports'));
         }
     }
 

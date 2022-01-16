@@ -2,15 +2,48 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\UserActivityConstants;
 use App\Http\Controllers\Controller;
 use App\Models\Finances;
+use App\Models\Report;
+use App\Services\Activity\User\UserActivityService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
 class ReportsController extends Controller
 {
-    
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $user = Auth::user();
+        $report = Report::find($id);
+        if(!empty($report)){
+            DB::beginTransaction();
+            try {
+                $report->comments = $request->comments;
+                $report->save();
+                DB::commit();
+                UserActivityService::log($user->id,UserActivityConstants::REPORT_ACTIVITY,"Report COmmented","User Commented On $report->category Report", null);
+                return redirect()->back()->with('message','Data Updated Successfully');
+
+            }catch(Exception $as){
+                DB::rollback();
+                //dd($as);
+                return redirect()->back()->with('error','Data Entry Unsuccessful, Check Values');
+            }
+        }
+    }
 
     public function cash_flow(){
         $total_data = new stdClass();

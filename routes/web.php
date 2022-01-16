@@ -120,6 +120,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/profit-loss', [ReportsController::class, 'profit_loss'])->name('reports.profit-loss');
         Route::get('/sales-report', [ReportsController::class, 'sales_report'])->name('reports.sales-report');
         Route::get('/defaulters', [ReportsController::class, 'defaulters'])->name('reports.defaulters');
+        Route::put('/{id}', [ReportsController::class, 'update'])->name('reports.update');
     });
 
     //Clients
@@ -147,9 +148,11 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Driver\DashboardController::class, 'dashboard'])->name('driver_dashboard');
     Route::get('driver/profile', [App\Http\Controllers\Driver\ProfileController::class, 'index'])->name('driver_profile');
     Route::put('driver/profile/{id}', [App\Http\Controllers\Driver\ProfileController::class, 'store'])->name('driver_profile.store');
-
     Route::get('driver/activity_log', [App\Http\Controllers\Driver\DashboardController::class, 'activity'])->name('driver_activity_log');
     Route::resource('order', '\App\Http\Controllers\Driver\OrderController');
+    Route::resource('report', '\App\Http\Controllers\Driver\ReportController');
+    Route::resource('vehicle', '\App\Http\Controllers\Driver\VehiclesController');
+    Route::post('vehicle/{id}', [App\Http\Controllers\Driver\VehiclesController::class, 'storeMemo'])->name('vehicle.storeMemo');
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -21,6 +21,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Orders</h4>
+                            <div class="card-body text-right">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_report">Add Report</button>
+                            </div>
 
                             <div class="basic-list-group">
                                 <div class="row">
@@ -118,20 +121,20 @@
                                     @csrf @method('PUT')
                                     @if ($orderDetail->status == 'Awaiting Pickup By Driver' || $orderDetail->status == 'Pending')
                                     <div class="general-button">
-                                        <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 btn-primary">
+                                        <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 confirm-btn btn-primary">
                                     </div>
                                     @endif
                                     @if ($orderDetail->status == 'On Route To Deliver')
                                     <div class="general-button">
-                                        <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-warning">
-                                        <input type="submit" name="status" value="Delivered" class="btn mb-1 btn-info">
+                                        <input type="submit" name="status" value="Back To Sender" class="btn confirm-btn mb-1 btn-warning">
+                                        <input type="submit" name="status" value="Delivered" class="btn mb-1 confirm-btn btn-info">
                                     </div>
                                     @endif
                                     @if ($orderDetail->status == 'Delivered')
                                     <div class="general-button">
-                                        <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-secondary">
-                                        <input type="submit" name="status" value="Cancel" class="btn mb-1 btn-danger">
-                                        <input type="submit" name="status" value="Completed" class="btn mb-1 btn-success">
+                                        <input type="submit" name="status" value="Back To Sender" class="btn confirm-btn mb-1 btn-secondary">
+                                        <input type="submit" name="status" value="Cancel" class="btn mb-1 confirm-btn btn-danger">
+                                        <input type="submit" name="status" value="Completed" class="btn mb-1 confirm-btn btn-success">
                                     </div>
                                     @endif
                                     @if ($orderDetail->status == 'Completed')
@@ -147,6 +150,70 @@
                                 </form>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Order Reports</h4>
+                                <div id="activity">
+                                    @foreach ($reports as $item)
+                                    <div class="media border-bottom-1 pt-3 pb-3">
+                                        <div class="media-body">
+                                            <h5>{{$item->description}}</h5>
+                                            <p class="mb-0">By: {{$item->user->firstname.' '.$item->user->lastname}}</p>
+                                            <p class="mb-0">Comment: {{$item->comments ?? 'None'}}</p>
+                                        </div><span class="text-muted ">{{$item->created_at->toDayDateTimeString()}}</span>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12">
+            <div class="bootstrap-modal">
+                <!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade" id="add_report">
+                    <div class="modal-dialog " role="document">
+                        <form action="{{ route('report.store') }}" enctype="multipart/form-data" class="form-valide" method="POST">
+                            @csrf @method('POST')
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">ADD REPORT</h5>
+                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-10">
+                                                <label>Category</label>
+                                                <input type="text" readonly value="Order" class="form-control" name="category">
+                                                <input type="hidden" name="reference_id" value="{{$order->id}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-10">
+                                                <label>Description</label>
+                                                <textarea class="form-control" rows="3" id="" name="description" placeholder="Description"> </textarea>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
