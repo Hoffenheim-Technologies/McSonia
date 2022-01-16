@@ -17,7 +17,6 @@ class CreateUserMemosTable extends Migration
             $table->id();
             $table->string('user_id');
             $table->longText('memo')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
