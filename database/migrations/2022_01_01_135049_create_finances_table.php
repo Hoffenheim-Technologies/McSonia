@@ -21,8 +21,8 @@ class CreateFinancesTable extends Migration
             $table->enum('payment_type',['Bank Transfer','Cheque','Cash'])->nullable();
             $table->string('payment_category')->nullable();
             $table->string('category')->nullable();
-            $table->string('details')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('details')->nullable();
+            $table->longText('description')->nullable();
             $table->double('amount',10,2);
             $table->timestamp('transaction_date');
             $table->timestamps();

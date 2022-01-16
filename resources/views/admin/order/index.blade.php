@@ -30,7 +30,7 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
-                                            <th>Status</th>
+                                            <th>Payment Status</th>
                                             <th>Date Added</th>
                                             <th>Action</th>
                                         </tr>
@@ -64,9 +64,9 @@
                                                 {{$item->created_at->toDayDateTimeString()}}
                                             </td>
                                             <td>
-                                                <form action="{{ route('order.destroy', $item)}}" method="post">@csrf @method('delete')
+                                                <form action="{{ route('orders.destroy', $item)}}" method="post">@csrf @method('delete')
                                                     <span>
-                                                        <a class="btn btn-info btn-sm mx-2" href="{{ route('order.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
+                                                        <a class="btn btn-info btn-sm mx-2" href="{{ route('orders.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
                                                         <button type="submit" class="btn btn-danger delete-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
                                                     </span>
                                                 </form>

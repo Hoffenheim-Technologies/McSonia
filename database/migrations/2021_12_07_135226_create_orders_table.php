@@ -19,8 +19,8 @@ class CreateOrdersTable extends Migration
             $table->time('ptime');
             $table->string('item');
             $table->string('plocation');
-            $table->string('paddress')->nullable();
-            $table->string('daddress')->nullable();
+            $table->longText('paddress')->nullable();
+            $table->longText('daddress')->nullable();
             $table->string('dlocation');
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();

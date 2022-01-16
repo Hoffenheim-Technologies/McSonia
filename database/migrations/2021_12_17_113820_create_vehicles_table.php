@@ -19,11 +19,11 @@ class CreateVehiclesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('reg_no');
             $table->enum('type',['Bicycle','Van','Truck','Car','SUV','MiniBus','Bus','Motorcycle','Airplane','Boat'])->default('Motorcycle');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('make')->nullable();
             $table->string('model')->nullable();
             $table->string('year')->nullable();
-            $table->string('condition')->nullable();
+            $table->longText('condition')->nullable();
             $table->enum('status',['Active','Inactive'])->default('Active');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

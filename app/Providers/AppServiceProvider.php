@@ -36,7 +36,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Blade::directive('dateformat', function ($timestamp) {
-            //dd($timestamp);
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp)->toDayDateTimeString();
             return "<?php echo $date ?>";
         });

@@ -19,7 +19,7 @@ class CreateUserActivityLogsTable extends Migration
             $table->string('email');
             $table->string('activity');
             $table->string('title');
-            $table->text('description');
+            $table->longText('description');
             $table->longText('data')->nullable();
             $table->timestamps();
         });

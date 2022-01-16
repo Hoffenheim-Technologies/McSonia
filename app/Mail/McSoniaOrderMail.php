@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class McSoniaTestMail extends Mailable
+class McSoniaOrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -21,7 +21,7 @@ class McSoniaTestMail extends Mailable
     {
         $this->details = $details;
     }
-   
+
     /**
      * Build the message.
      *
@@ -29,7 +29,7 @@ class McSoniaTestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from McSonia')
-                    ->view('emails.email_template');
+        return $this->subject('Mcsonia Booking Confirmation')
+                    ->view('emails.order_email_template');
     }
 }

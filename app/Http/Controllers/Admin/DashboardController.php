@@ -22,7 +22,6 @@ class DashboardController extends Controller
         $dashboard['vehicles'] = Vehicles::count();
         $dashboard['activity'] = UserActivityLog::where('activity','!=','PROFILE_ACTIVITY')->orderBy('created_at', 'desc')->paginate(5);
 
-        //dd($dashboard);
         return view("admin.dashboard", compact('user','dashboard'));
     }
 
