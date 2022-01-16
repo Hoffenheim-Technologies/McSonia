@@ -65,7 +65,7 @@ class ProfileController extends Controller
                     $f = MS::getFileMetaData($photo);
                     $f['name'] = 'photo.' . $f['ext'];
                     $f['path'] = $photo->storeAs(MS::getUploadPath($check->role) . $data['code'], $f['name']);
-                    $check->image = asset('storage/app/' . $f['path']);
+                    $check->image = $f['path'];
                 }
                 $check->save();
                 UserActivityService::log($user->id,UserActivityConstants::PROFILE_ACTIVITY,"Profile Update","User Updated Profile",null);

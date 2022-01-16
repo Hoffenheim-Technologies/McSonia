@@ -18,8 +18,8 @@ class CreateReportsTable extends Migration
             $table->string('reference_id')->nullable();
             $table->string('user_id');
             $table->enum('category',['Order','Vehicle','General']);
-            $table->string('description');
-            $table->string('comments')->nullable();
+            $table->longText('description');
+            $table->longText('comments')->nullable();
             $table->timestamps();
         });
     }

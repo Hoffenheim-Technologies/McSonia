@@ -65,14 +65,14 @@ class ProfileController extends Controller
                     $f = MS::getFileMetaData($photo);
                     $f['name'] = 'photo.' . $f['ext'];
                     $f['path'] = $photo->storeAs(MS::getUploadPath($check->role) . $data['code'], $f['name']);
-                    $check->image = asset('storage/app/' . $f['path']);
+                    $check->image = $f['path'];
                 }
                 $check->save();
                 UserActivityService::log($user->id,UserActivityConstants::PROFILE_ACTIVITY,"Profile Update","User Updated Profile",null);
                 DB::commit();
-                return redirect()->route('profile')->with('message','Data Updated Successfully');
+                return redirect()->route('driver_profile')->with('message','Data Updated Successfully');
             }
-            return redirect()->route('profile')->with('info','Data Not Found ');
+            return redirect()->route('driver_profile')->with('info','Data Not Found ');
         }catch (Exception $e) {
             dd($e);
             DB::rollback();

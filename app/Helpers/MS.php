@@ -17,7 +17,7 @@ class MS{
 
     public static function getUploadPath($user_type)
     {
-        return 'uploads/' . $user_type . '/';
+        return 'public/' . $user_type . '/';
     }
 
     public static function formatBytes($size, $precision = 2)

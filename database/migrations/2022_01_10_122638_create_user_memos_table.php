@@ -16,7 +16,7 @@ class CreateUserMemosTable extends Migration
         Schema::create('user_memos', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('memo')->nullable();
+            $table->longText('memo')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

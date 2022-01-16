@@ -16,7 +16,7 @@ class CreateVehicleMemosTable extends Migration
         Schema::create('vehicle_memos', function (Blueprint $table) {
             $table->id();
             $table->string('vehicle_id');
-            $table->string('memo')->nullable();
+            $table->longText('memo')->nullable();
             $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
             $table->timestamps();
         });

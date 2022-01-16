@@ -14,7 +14,7 @@ class AddDescriptionToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
         });
     }
 

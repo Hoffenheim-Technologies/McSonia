@@ -22,7 +22,7 @@ class CreateVendorsTable extends Migration
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
-            $table->string('address');
+            $table->longText('address');
             $table->timestamps();
         });
     }
