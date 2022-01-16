@@ -64,7 +64,9 @@ class OrderController extends Controller
         if($order){
             $order->plocation = Location::find($order->plocation);
             $order->dlocation = Location::find($order->dlocation);
-            $reports = Report::where('reference_id',$order->id)->orderBy('created_at','DESC')->get();
+            $reports = Report::where('reference_id',$order->id)
+                                ->where('user_id',Auth::user()->id)
+                                ->orderBy('created_at','DESC')->get();
             if($reports){
                 foreach($reports as $item){
                     $item->user = User::find($item->user_id);
