@@ -17,7 +17,6 @@ class CreateVehicleMemosTable extends Migration
             $table->id();
             $table->string('vehicle_id');
             $table->longText('memo')->nullable();
-            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
             $table->timestamps();
         });
     }
