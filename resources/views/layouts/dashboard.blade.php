@@ -54,7 +54,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="rounded-lg w-full py-2 sm:py-3">
+                        <li class="hidden rounded-lg w-full py-2 sm:py-3">
                             <a href="#" class="lg:px-3 justify-center lg:justify-start flex items-center"> 
                                 <span class="material-icons-outlined text-md">
                                     badge
@@ -76,7 +76,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="rounded-lg w-full py-2 sm:py-3">
+                        <li class="hidden rounded-lg w-full py-2 sm:py-3">
                             <a href="#" class="lg:px-3 justify-center lg:justify-start flex items-center"> 
                                 <span class="material-icons-outlined text-md">
                                     timeline
@@ -87,7 +87,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="rounded-lg w-full py-2 sm:py-3">
+                        <li class="hidden rounded-lg w-full py-2 sm:py-3">
                             <a href="#" class="lg:px-3 justify-center lg:justify-start flex items-center"> 
                                 <span class="material-icons-outlined text-md">
                                     history
