@@ -61,14 +61,14 @@
                 <img src="images/tracking.svg" alt="order">
             </div>
             <div class="text-3xl py-8 text-yellow-900 font-bold capitalize">
-                my payments
+                order status
             </div>
-            <div class="text-gray-500 font-semibold text-sm">
+            <!-- <div class="text-gray-500 font-semibold text-sm">
                 <span class="capitalize text-yellow-900">{{ Auth::user()->firstname }}</span>
                 , we at {{ config('app.name') }} are delighted to note that you  have 
                 used our service 90 times, and we certainly hope we've delighted you too.
                 We hope to keep seeing more of you here. Here's a summary of your orders.
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
