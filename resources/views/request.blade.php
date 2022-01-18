@@ -260,7 +260,7 @@ $('[name=phone]').change(()=>{
                             <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect border-0 w-full">
                                 <option @isset($input->plocation) @else selected @endisset disabled>Choose a State</option>
                                 @foreach ($states as $state)
-                                    <option @isset($input->plocation) @if($input->plocation == $location->id) selected @endif @endisset class="capitalize" value="{{$state->id}}">{{$state->state}}</option>
+                                    <option @isset($input->plocation) @if($input->plocation == $state->id) selected @endif @endisset class="capitalize" value="{{$state->id}}">{{$state->state}}</option>
                                 @endforeach
                             </select>
                         </div>
