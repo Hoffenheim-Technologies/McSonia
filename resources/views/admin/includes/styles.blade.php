@@ -15,4 +15,13 @@
         background-color: #fd7e14;
         color: #fff !important;
     }
+    .chat-user:hover{
+        background-color: #dadada;
+    }
+    .chat{
+        cursor:pointer!important;
+    }
+    .messages{
+        min-height: 120px;
+    }
 </style>
