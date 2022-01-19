@@ -25,17 +25,17 @@ class ChatsController extends Controller
      */
     public function index()
     {
-        $users = DB::select("select firstname,lastname,image,email,users.id,messages.created_at, count(is_read) as unread
+        $users = DB::select("select firstname,lastname,image,email,users.id, count(is_read) as unread
         from users LEFT JOIN  messages ON users.id = messages.user_id and is_read = 0 and messages.receiver_id = " . Auth::id() . "
         where users.id != " . Auth::id() . " and users.role <> 'default'
-        group by users.id,firstname,lastname,image,email,messages.created_at order by messages.created_at DESC");
+        group by users.id,firstname,lastname,image,email");
         // $users = User::leftJoin('messages', function($join) {
         //                     $join->on('users.id', '=', 'messages.user_id');
         //                 })
         //                 ->count('is_read',0)
         //                 ->where('users.id','!=',Auth::user()->id)
         //                 ->where('role','!=','default')->get();
-        dd($users);
+        //dd($users);
 
         return view('chat', compact('users'));
     }
@@ -59,8 +59,9 @@ class ChatsController extends Controller
             })->orwhere(function ($query) use ($my_id,$id) {
                 $query->where('user_id', $id)
                     ->Where('receiver_id', $my_id);
-            })->get();
-
+            })
+            ->orderBy('created_at','ASC')
+            ->get();
         return view('messages',compact('messages','receiver'));
     }
 
@@ -78,6 +79,7 @@ class ChatsController extends Controller
             $data['user_id'] = $user->id;
             $data['receiver_id'] = $request->receiver_id;
             $data['message'] = $request->message;
+            $data['is_read'] = 0;
 
             Message::create($data);
 

@@ -20,18 +20,29 @@
     }
     .chat-wrapper, .message-wrapper {
         border: 1px solid #dddddd;
+        border-radius: 2px;
         overflow-y: auto;
     }
     .chat-wrapper {
         height: 600px;
     }
+    .message-wrapper {
+        color: #000;
+        padding: 10px;
+        height: 470px;
+        background-image: url('images/chat_background.jpg');
+        opacity: .7;
+    }
+    .send-row{
+
+    }
     .chat-user{
         cursor:pointer!important;
     }
     .messages{
-        min-height: 120px;
-    }.pending {
-            position: absolute;
+
+    }
+    .pending {
             left: 13px;
             top: 9px;
             background: #b600ff;
@@ -53,11 +64,6 @@
         }
         .media-body p {
             margin: 6px 0;
-        }
-        .message-wrapper {
-            padding: 10px;
-            height: 536px;
-            background: #eeeeee;
         }
         .messages .message {
             margin-bottom: 15px;

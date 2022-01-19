@@ -24,14 +24,15 @@
                                 <div id="activity chat-wrapper">
                                     @foreach ($users as $item)
                                         <div id="{{$item->id}}" class="media border-bottom-1 chat-user user p-3">
-                                            @if($item->unread)
-                                                <span class="pending">{{ $item->unread }}</span>
-                                            @endif
+
                                             <img width="35" height="35"  src="{{Storage::url($item->image)}}" class="mr-3 rounded-circle">
                                             <div class="media-body">
                                                 <h5>{{$item->lastname.' '.$item->firstname}}</h5>
+                                                @if($item->unread)
+                                                <span class="pending float-right">{{ $item->unread }}</span>
+                                                @endif
                                                 <p class="mb-0">{{$item->email}}</p>
-                                            </div><span class="text-muted ">April 24, 2018</span>
+                                            </div>
                                         </div>
                                     @endforeach
 
