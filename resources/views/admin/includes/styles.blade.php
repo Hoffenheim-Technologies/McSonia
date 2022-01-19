@@ -80,8 +80,9 @@
             background: #ffffff;
         }
         .sent {
-            background: #3bebff;
+            background: #0065b8;
             float: right;
+            color: white;
             text-align: right;
         }
         .message p {
