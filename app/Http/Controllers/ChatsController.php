@@ -51,7 +51,7 @@ class ChatsController extends Controller
         $receiver = User::find($id);
 
         // Make read all unread message
-        Message::where(['user_id' => $my_id, 'receiver_id' => $id])->update(['is_read' => 1]);
+        Message::where(['user_id' => $receiver, 'receiver_id' => $my_id])->update(['is_read' => 1]);
 
         $messages = Message::where(function ($query) use ($my_id,$id) {
                 $query->where('user_id', $my_id)
@@ -100,7 +100,7 @@ class ChatsController extends Controller
             $pusher->trigger('my-channel', 'my-event', $data);
 
         }catch(Exception $d){
-            dd($d);
+            //dd($d);
         }
 
 
