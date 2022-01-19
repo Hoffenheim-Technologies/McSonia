@@ -37,7 +37,7 @@ class ChatsController extends Controller
         //                 ->where('role','!=','default')->get();
         //dd($users);
 
-        return view('chat', compact('users'));
+        return view(Auth::user()->role.".chats.chat", compact('users'));
     }
 
     /**
@@ -62,7 +62,7 @@ class ChatsController extends Controller
             })
             ->orderBy('created_at','ASC')
             ->get();
-        return view('messages',compact('messages','receiver'));
+        return view("messages",compact("messages",'receiver'));
     }
 
     /**

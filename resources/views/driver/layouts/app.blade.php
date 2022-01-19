@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
-    @include('driver.includes.styles')
+    @include('admin.includes.styles')
     <title>
         @yield('title')
     </title>
@@ -57,6 +57,6 @@
     ***********************************-->
 
 </body>
-@include('driver.includes.scripts')
+@include('admin.includes.scripts')
 @yield('custom-script')
 </html>
