@@ -123,9 +123,9 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('reports.cash-flow')}}">Cash flow</a></li>
-                            <li><a href="{{route('reports.sales-report')}}">Sales Report</a></li>
+                            <li class="d-none"><a href="{{route('reports.sales-report')}}">Sales Report</a></li>
                             <li><a href="{{route('reports.profit-loss')}}">Profit Loss Report</a></li>
-                            <li><a href="{{route('reports.balance-sheet')}}">Balance sheet</a></li>
+                            <li class="d-none"><a href="{{route('reports.balance-sheet')}}">Balance sheet</a></li>
                         </ul>
                     </li>
                     <li >
