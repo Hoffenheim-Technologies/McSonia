@@ -57,18 +57,6 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Description</label>
-                                        <input type="text" value="{{old('description')}}" name="description" class="form-control" id="">
-
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Make</label>
-                                        <input type="text"  value="{{old('make')}}" name="make" class="form-control" id="">
-
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
                                         <label>Model</label>
                                         <input type="text"  value="{{old('model')}}" name="model" class="form-control" id="">
 

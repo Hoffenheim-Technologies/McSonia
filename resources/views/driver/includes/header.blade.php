@@ -132,7 +132,7 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="driver/profile"><i class="icon-user"></i> <span>Profile</span></a>
+                                            <a href="driverprofile"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
 
                                         <hr class="my-2">
