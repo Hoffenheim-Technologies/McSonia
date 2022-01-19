@@ -19,8 +19,8 @@
                 <div class="input-text col-md-9">
                     <input type="text" value="" name="message" class="form-control " id="">
                 </div>
-                <div class="col-md-3">
-                    <button id="submit" onclick="" class="btn btn-primary mx-2"><i class="fa fa-plane"></i> Send</button>
+                <div class="col-md-3 mt-2">
+                    <button id="submit" onclick="" class="btn btn-primary mx-4">Send</button>
                 </div>
             </div>
         </div>

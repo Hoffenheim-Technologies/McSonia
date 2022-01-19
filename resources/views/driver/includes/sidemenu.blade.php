@@ -46,9 +46,7 @@
                             <i class="icon-envelope menu-icon"></i> <span class="nav-text">Chat</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="/sendChat">Inbox</a></li>
-                            <li><a href="#">Read</a></li>
-                            <li><a href="/sendChat">Compose</a></li>
+                            <li><a href="/chat">Chat</a></li>
                         </ul>
                     </li>
                 </ul>
