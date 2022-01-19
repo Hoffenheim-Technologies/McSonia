@@ -21,10 +21,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Chats</h4>
-                                <div id="activity">
+                                <div id="activity chat-wrapper">
                                     @foreach ($users as $item)
                                         <div id="{{$item->id}}" class="media border-bottom-1 chat-user user p-3">
-                                            <img width="35" src="{{Storage::url($item->image)}}" class="mr-3 rounded-circle">
+                                            @if($item->unread)
+                                                <span class="pending">{{ $item->unread }}</span>
+                                            @endif
+                                            <img width="35" height="35"  src="{{Storage::url($item->image)}}" class="mr-3 rounded-circle">
                                             <div class="media-body">
                                                 <h5>{{$item->lastname.' '.$item->firstname}}</h5>
                                                 <p class="mb-0">{{$item->email}}</p>
@@ -51,33 +54,48 @@
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('6318b08f48b8edb19eaa', {
-        cluster: 'mt1'
-        });
-
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
-            alert(JSON.stringify(data));
-        });
-
         var receiver_id = '';
         var my_id = "{{Auth::id()}}";
         $(document).ready(function (){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('6318b08f48b8edb19eaa', {
+                cluster: 'mt1'
+            });
+
+            var channel = pusher.subscribe('my-channel');
+            channel.bind('my-event', function(data) {
+                //alert(JSON.stringify(data));
+                if(my_id == data.from){
+                    $('#'+data.to).click();
+                }else if(my_id == data.to){
+                    if(receiver_id == data.from){
+                        $('#'+data.from).click();
+                    }else{
+                        // if receiver is not seleted, add notification for that user
+                        var pending = parseInt($('#' + data.from).find('.pending').html());
+                        if (pending) {
+                            $('#' + data.from).find('.pending').html(pending + 1);
+                        } else {
+                            $('#' + data.from).append('<span class="pending">1</span>');
+                        }
+                    }
+                }
+            });
+
             $('.user').on('click keyup', function(){
                 $('.user').removeClass('menu-active');
                 $(this).addClass('menu-active');
                 receiver_id = $(this).attr('id');
-                //alert(receiver_id);
-
+                $(this).find('.pending').remove();
                 $.ajax({
                     type: "GET",
                     url: "messages/"+receiver_id,
@@ -85,6 +103,7 @@
                     cache: false,
                     success: function (response) {
                         $('#messages').html(response);
+                        scrollToBottomFunc();
                     }
                 });
 
@@ -119,13 +138,20 @@
 
                         },
                         complete:function(){
-
+                            scrollToBottomFunc();
                         }
                     });
                 }
             }
 
         });
+
+
+    function scrollToBottomFunc() {
+        $('.message-wrapper').animate({
+            scrollTop: $('.message-wrapper').get(0).scrollHeight
+        }, 0);
+    }
 
     </script>
 @endsection

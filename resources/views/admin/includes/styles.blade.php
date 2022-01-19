@@ -16,12 +16,70 @@
         color: #fff !important;
     }
     .chat-user:hover{
-        background-color: #dadada;
+        background-color: #ffbb83;
     }
-    .chat{
+    .chat-wrapper, .message-wrapper {
+        border: 1px solid #dddddd;
+        overflow-y: auto;
+    }
+    .chat-wrapper {
+        height: 600px;
+    }
+    .chat-user{
         cursor:pointer!important;
     }
     .messages{
         min-height: 120px;
-    }
+    }.pending {
+            position: absolute;
+            left: 13px;
+            top: 9px;
+            background: #b600ff;
+            margin: 0;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            padding-left: 5px;
+            color: #ffffff;
+            font-size: 12px;
+        }
+        .media-left {
+            margin: 0 10px;
+        }
+        .media-left img {
+            width: 64px;
+            border-radius: 64px;
+        }
+        .media-body p {
+            margin: 6px 0;
+        }
+        .message-wrapper {
+            padding: 10px;
+            height: 536px;
+            background: #eeeeee;
+        }
+        .messages .message {
+            margin-bottom: 15px;
+        }
+        .messages .message:last-child {
+            margin-bottom: 0;
+        }
+        .received, .sent {
+            width: 45%;
+            padding: 3px 10px;
+            border-radius: 10px;
+        }
+        .received {
+            background: #ffffff;
+        }
+        .sent {
+            background: #3bebff;
+            float: right;
+            text-align: right;
+        }
+        .message p {
+            margin: 5px 0;
+        }
+
 </style>
