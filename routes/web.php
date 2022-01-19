@@ -20,6 +20,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FinancesController;
 use App\Http\Controllers\Admin\ReportsController;
@@ -62,13 +63,22 @@ Route::get('/app', function () {
     return view('layouts.app');
 });
 
+
 Auth::routes();
+
+Route::get('/chat', [ChatsController::class, 'index'])->middleware('auth');
+Route::get('/messages/{id}', [ChatsController::class, 'fetchMessages'])->middleware('auth');
+Route::post('/chat/message', [ChatsController::class, 'sendMessage'])->middleware('auth');
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/admin', [DashboardController::class, 'dashboard'])->name('admin_dashboard');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile/{id}', [ProfileController::class, 'store'])->name('profile.store');
+
+    //Route::get('/chat', [ChatsController::class, 'index'])->name('chat.index');
+    Route::get('/sendChat', [ChatsController::class, 'index'])->name('chat.index');
+    Route::post('/sendChat', [ChatsController::class, 'sendMessage'])->name('chat.sendMessage');
 
     Route::get('/activity_log', [DashboardController::class, 'activity'])->name('activity_log');
 
@@ -86,7 +96,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //Orders
     Route::prefix('orders')->group(function(){
         Route::get('/', [OrderController::class, 'index'])->name('orders.index');
-        Route::get('/create', [DriveOrderControllerrController::class, 'create'])->name('orders.create');
+        Route::get('/create', [OrderController::class, 'create'])->name('orders.create');
         Route::post('/create', [OrderController::class, 'store'])->name('orders.store');
         Route::post('/{driver}/{order}', [OrderController::class, 'assign'])->name('orders.assign');
         Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
