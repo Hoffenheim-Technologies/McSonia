@@ -151,6 +151,44 @@
                     </div>
                 </div>
             </div>
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Vehicle Reports</h4>
+                                <div id="activity">
+                                    @foreach ($reports as $item)
+                                    <div class="media border-bottom-1 pt-3 pb-3">
+                                        <div class="media-body">
+                                            <h5>{{$item->description}}</h5>
+                                            <p class="mb-0">By: {{$item->user->firstname.' '.$item->user->lastname}}</p>
+                                            <p class="mb-0">Comment: {{$item->comments ?? 'None'}}</p>
+                                        </div><span class="text-muted ">{{$item->created_at->toDayDateTimeString()}}</span>
+                                    </div>
+                                    @if ($item->comments == null)
+                                        <form action="{{route('reports.update', $item)}}" method="post">
+                                            @csrf @method('PUT')
+                                            <div class="form-row">
+                                                <div class="form-group col-md-10">
+                                                    <label>Add Comment</label>
+                                                    <textarea class="form-control" rows="3" id="" name="comments" placeholder="Comment"> </textarea>
+                                                </div>
+                                                <div class="form-group col-md-10">
+                                                    <input type="submit"  class="btn btn-primary" value="Submit">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- #/ container -->
         </div>
         <!--**********************************
