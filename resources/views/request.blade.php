@@ -183,6 +183,7 @@ $('[name=phone]').change(()=>{
            <div>Your booking reference is</div><div class="pl-5 text-yellow-500 text-3xl sm:text-6xl font-extrabold">{{ $reference }}</div>
         </div>
         <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
+            @csrf @method('POST')
             <div class="row" style="margin-bottom:40px;">
                 <div class="col-md-8 col-md-offset-2">
                     <p>
@@ -190,17 +191,12 @@ $('[name=phone]').change(()=>{
                         <strong>Total:</strong>  @money($order->total)
                         </div>
                     </p>
-                    <input type="hidden" name="email" value="otemuyiwa@gmail.com"> {{-- required --}}
+                    <input type="hidden" name="email" value="{{$order->email}}"> {{-- required --}}
                     <input type="hidden" name="orderID" value="{{$order->id}}">
                     <input type="hidden" name="amount" value="{{$order->total*100}}"> {{-- required in kobo --}}
                     <input type="hidden" name="quantity" value="">
                     <input type="hidden" name="currency" value="{{env('CURRENCY')}}">
                     <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
-
-                    {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
-
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}
-
                     <p>
                         <button class="btn btn-success btn-lg btn-block" type="submit" value="Pay Now!">
                             <i class="fa fa-credit fa-lg"></i> Pay Now!
