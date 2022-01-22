@@ -165,10 +165,10 @@
                                 @else
                                 <h4 class="card-title">Order Progress</h4>
                                     <div class="">
-                                        <h4><span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span></h4>
+                                        <h4><span class="badge {{($orderDetail->status != 'Pending') ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span></h4>
                                     </div>
                                     <div class="progress" style="height: 15px;">
-                                        <div class="progress-bar {{($orderDetail->statusNo <= 0) ? 'bg-inverse' : ($orderDetail->statusNo <= 10) ? 'bg-danger' : ($orderDetail->statusNo <= 50) ? 'bg-info' : 'bg-success' }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
+                                        <div class="progress-bar {{$orderDetail->statusNo <= 0 ? 'bg-inverse' : ($orderDetail->statusNo <= 10 ? 'bg-danger' : ($orderDetail->statusNo <= 50 ? 'bg-info' : 'bg-success')) }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
                                         </div>
                                     </div>
                                     <div class="mt-4">
