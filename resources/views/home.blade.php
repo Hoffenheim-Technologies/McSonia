@@ -23,20 +23,20 @@
                 <div class="text-center mx-1">
                     <div class="flex flex-row items-center justify-between">
                         <span>Completed Orders</span>
-                        <span class="text-3xl text-green-600">7</span>
+                        <span class="text-3xl text-green-600">{{ $complete }}</span>
                     </div>
                     <div class="flex flex-row items-center justify-between">
                         <span>Pending Orders</span>
-                        <span class="text-3xl text-yellow-800">14</span>
+                        <span class="text-3xl text-yellow-800">{{ $pending }}</span>
                     </div>
                     <div class="flex flex-row items-center justify-between">
                         <span>Cancelled Orders</span>
-                        <span class="text-3xl text-red-800">2</span>
+                        <span class="text-3xl text-red-800">{{ $cancelled }}</span>
                     </div>
                    
                     <div class="flex flex-row border-t-2 border-b-2 items-center justify-between">
                         <span>Total Orders</span>
-                        <span class="text-3xl text-black">23</span>
+                        <span class="text-3xl text-black">{{ $total }}</span>
                     </div>
                 </div>
             </div>
