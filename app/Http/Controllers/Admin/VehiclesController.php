@@ -8,6 +8,7 @@ use App\Models\Vehicles;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVehiclesRequest;
 use App\Http\Requests\UpdateVehiclesRequest;
+use App\Models\Report;
 use App\Models\User;
 use App\Models\VehicleMemo;
 use App\Services\Activity\User\UserActivityService;
@@ -103,7 +104,15 @@ class VehiclesController extends Controller
             $types = VehicleTypesConstants::VEHICLE_TYPES;
             $drivers = User::where('role','driver')->get();
             $memos = VehicleMemo::where('vehicle_id',$id)->get();
-            return view('admin.vehicle.show', compact('vehicle','drivers','types','memos'));
+
+            $reports = Report::where('reference_id',$vehicle->id)->orderBy('created_at','DESC')->get();
+            if($reports){
+                foreach($reports as $item){
+                    $item->user = User::find($item->user_id);
+                }
+            }
+
+            return view('admin.vehicle.show', compact('vehicle','drivers','types','memos','reports'));
         }catch(Exception $e){
             //dd($e);
         }

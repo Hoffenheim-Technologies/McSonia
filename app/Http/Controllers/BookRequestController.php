@@ -49,8 +49,8 @@ class BookRequestController extends Controller
         if(Auth::check()){
             $order->user_id = Auth::id();
         } else {
-            $order->firstname = $request->fname;
-            $order->lastname = $request->lname;
+            $order->firstname = $request->firstname;
+            $order->lastname = $request->lastname;
             $order->email = $request->email;
             $order->phone = $request->phone;
         }
@@ -70,7 +70,7 @@ class BookRequestController extends Controller
 
         $order->subtotal = $request->subtotal ?? 0.00;
         $order->total = $request->total ?? 1000.00;
-        $order->description = $request->description ?? 'No Description Here';
+        $order->description = $request->comments ?? 'No Description Here';
 
         function random_strings($length_of_string)
         {
@@ -91,32 +91,36 @@ class BookRequestController extends Controller
             $name = $request->firstname.' '.$request->lastname;
         }
         $company_name = \env('APP_NAME');
+        $admin_email = \env('MAIL_ADMIN');
         $formatted_date = $order->created_at->toDayDateTimeString();
         $location = new stdClass();
-        $location->plocation = Location::find($request->plocation)->value('location');
-        $location->dlocation = Location::find($request->dlocation)->value('location');
+        $locate = Location::find($request->plocation);
+        $location->plocation = $locate->location;
+        $locate = Location::find($request->dlocation);
+        $location->dlocation = $locate->location;
         $location->paddress = $request->paddress;
         $location->daddress = $request->daddress;
         $body = "
-            Thank you for choosing $company_name on $formatted_date. Your booking #$request->reference has been received and will be processed immediately.
+            Thank you for choosing $company_name on $formatted_date. Your booking #$order->reference has been received and will be processed immediately.
             Please confirm your Pickup and Dropoff Locations respectively
         ";
         $details = [
             'name' => $name,
-            'title' => "Order Confirmation #$request->reference",
+            'title' => "Order Confirmation #$order->reference",
             'body' => $body,
             'location' => $location,
             'description' => $order->description
         ];
         $details2 = [
-            'title' => "New Order Booking #$request->reference",
-            'body' => "You have received a new booking request with Order #$request->reference. Login to proceed with order request"
+            'title' => "New Order Booking #$order->reference",
+            'body' => "You have received a new booking request with Order #$order->reference. Login to proceed with order request"
         ];
+        //Mail Admin
+        Mail::to($admin_email)->send(new McSoniaMail($details2));
+
         //Mail Client
         Mail::to($request->email)->send(new McSoniaOrderMail($details));
 
-        //Mail Admin
-        Mail::to(env('MAIL_ADMIN '))->send(new McSoniaMail($details2));
 
         return view('request')->with('message', 'Success')->with('reference', $order->reference)->with('order',$order);
 
