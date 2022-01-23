@@ -174,5 +174,6 @@ Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('requ
 
 // Laravel 8
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
+Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 
 Route::get('/send-mail', [EmailController::class, 'testMail'])->name('testMail');

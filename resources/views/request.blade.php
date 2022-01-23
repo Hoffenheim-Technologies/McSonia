@@ -192,7 +192,7 @@ $('[name=phone]').change(()=>{
                         </div>
                     </p>
                     <input type="hidden" name="email" value="{{$order->email}}"> {{-- required --}}
-                    <input type="hidden" name="orderID" value="{{$order->id}}">
+                    <input type="hidden" name="order_id" value="{{$order->id}}">
                     <input type="hidden" name="amount" value="{{$order->total*100}}"> {{-- required in kobo --}}
                     <input type="hidden" name="quantity" value="">
                     <input type="hidden" name="currency" value="{{env('CURRENCY')}}">
