@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\Account\FinanceService;
+use App\Services\Payment\TransactionService;
+use App\Services\Activity\User\UserActivityService;
 use Illuminate\Support\Facades\Redirect;
 use Unicodeveloper\Paystack\Paystack;
 
@@ -47,34 +49,44 @@ class PaymentController extends Controller
     public function handleGatewayCallback()
     {
         $paymentDetails = $this->paystack->getPaymentData();
-        if($paymentDetails->data['status'] == 'success'){
+        if($paymentDetails['data']['status'] == 'success'){
+            $paymentData = $paymentDetails['data'];
+            $metadata = $paymentData['metadata'];
+            //dd($metadata);
             try {
-                //update order payment info
-                $order = Order::find($paymentDetails->data['order_id']);
-                $order->status('Paid');
+
+                $order = Order::find($metadata['order_id']);
+                $order->status = 'Paid';
                 $order->save();
 
                 FinanceService::log(
-                    $paymentDetails->data['account'],
-                    $paymentDetails->data['beneficiary'],
-                    $paymentDetails->data['payment_type'],
-                    $paymentDetails->data['payment_category'],
-                    $paymentDetails->data['category'],
-                    $paymentDetails->data['details'],
-                    $paymentDetails->data['description'],
-                    $paymentDetails->data['amount'],
-                    $paymentDetails->data['transaction_date']
+                    'Cash In Bank',
+                    'Self',
+                    null,
+                    'Income',
+                    'Cash And Bank',
+                    'Sales',
+                    $order->reference,
+                    $paymentData['amount']/100
                 );
+
+                TransactionService::log(
+                    $order->user_id ?? null,
+                    $order->email,
+                    $order->reference,
+                    'Paystack',
+                    'Order Booking',
+                    $paymentData['amount']/100,
+                    'Success'
+                );
+
+                return redirect()->view('thankYou')->with('order',$order);
 
             } catch (\Throwable $th) {
                 return Redirect::back()->withMessage(['msg'=>'Please try again.', 'type'=>'error']);
-
             }
 
-        }else{
-
         }
-        dd($paymentDetails);
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
         // you can then redirect or do whatever you want
