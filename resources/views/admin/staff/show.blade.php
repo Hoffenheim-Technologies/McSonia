@@ -21,7 +21,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Driver {{$user->firstname}}</h4>
-                                <form action="{{ route('drivers.update', $user->id) }}" enctype="multipart/form-data" class="form-valide" method="POST">
+                                <form action="{{ route('staffs.update', $user->id) }}" enctype="multipart/form-data" class="form-valide" method="POST">
                                     @csrf @method('PUT')
                                     <div class="form-group">
                                         <div class="input-group col-md-7">
@@ -74,23 +74,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-xl-3">
-
-                        <div class="card">
-                            <div class="card-body">
-                                <h4>Vehicles Managing</h4>
-                                <div class="basic-list-group">
-                                    <ul class="list-group">
-                                        @foreach ($vehicles as $item)
-                                            <li class="list-group-item">
-                                             {{$loop->iteration}}. <a href="{{ route('vehicles.show', $item) }}">{{$item->vehicle_name}} - {{$item->reg_no}}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -101,7 +84,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">{{ucwords($user->firstname)}} Memo</h4>
-                                <form class="" action="{{route('drivers.storeMemo',$user)}}" method="post">
+                                <form class="" action="{{route('staffs.storeMemo',$user)}}" method="post">
                                     @csrf @method('POST')
                                     <div class="form-row">
                                         <div class="form-group col-7">
@@ -128,75 +111,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="container-fluid">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ucwords($user->firstname)}} Orders</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration">
-                                        <thead>
-                                            <tr>
-                                                <th>SN</th>
-                                                <th>Reference</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Status</th>
-                                                <th>Date Added</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($orders as $item)
-                                            <tr>
-                                                <td>
-                                                    {{$loop->iteration}}
-                                                </td>
-                                                <td>
-                                                    {{$item->order->reference}}
-                                                </td>
-                                                <td>
-                                                    {{ucwords($item->order->lastname.' '.$item->order->firstname)}}
-                                                </td>
-                                                <td>
-                                                    {{$item->order->email}}
-                                                </td>
-                                                <td>
-                                                    {{$item->order->phone}}
-                                                </td>
-                                                <td>
-                                                    @if ($item->status != 'Delivered' && $item->status != 'Completed')
-                                                        <i class="fa fa-circle-o text-warning  mr-2"></i> {{$item->status}}
-                                                    @else
-                                                        <i class="fa fa-circle-o text-success  mr-2"></i>  {{$item->status}}
-                                                    @endif
-                                                </td>
-                                                <th>
-                                                    {{$item->created_at}}
-                                                </th>
-                                                <td>
-                                                    <form action="{{ route('orders.destroy', $item->order)}}" method="post">@csrf @method('delete')
-                                                        <span>
-                                                            <a class="btn btn-info btn-sm mx-2" href="{{ route('orders.show', $item->order) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
-                                                            <button type="submit" class="btn btn-danger btn-sm mx-2" onsubmit="checkDelete(this)" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-close color-danger"></i> Delete</button>
-                                                        </span>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
         <!--**********************************
             Content body end

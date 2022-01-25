@@ -192,9 +192,10 @@ $('[name=phone]').change(()=>{
                         </div>
                     </p>
                     <input type="hidden" name="email" value="{{$order->email}}"> {{-- required --}}
-                    <input type="hidden" name="orderID" value="{{$order->id}}">
+                    <input type="hidden" name="order_id" value="{{$order->id}}">
                     <input type="hidden" name="amount" value="{{$order->total*100}}"> {{-- required in kobo --}}
                     <input type="hidden" name="quantity" value="">
+                    <input type="hidden" name="metadata" value="{{ json_encode($array = ['order_id' => $order->id,'user_id'=>$order->user_id]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
                     <input type="hidden" name="currency" value="{{env('CURRENCY')}}">
                     <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
                     <p>

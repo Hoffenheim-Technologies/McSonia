@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Services\Account\FinanceService;
+use App\Services\Payment\TransactionService;
+use App\Services\Activity\User\UserActivityService;
 use Illuminate\Support\Facades\Redirect;
 use Unicodeveloper\Paystack\Paystack;
 
@@ -45,8 +49,44 @@ class PaymentController extends Controller
     public function handleGatewayCallback()
     {
         $paymentDetails = $this->paystack->getPaymentData();
+        if($paymentDetails['data']['status'] == 'success'){
+            $paymentData = $paymentDetails['data'];
+            $metadata = $paymentData['metadata'];
+            //dd($metadata);
+            try {
 
-        dd($paymentDetails);
+                $order = Order::find($metadata['order_id']);
+                $order->status = 'Paid';
+                $order->save();
+
+                FinanceService::log(
+                    'Cash In Bank',
+                    'Self',
+                    null,
+                    'Income',
+                    'Cash And Bank',
+                    'Sales',
+                    $order->reference,
+                    $paymentData['amount']/100
+                );
+
+                TransactionService::log(
+                    $order->user_id ?? null,
+                    $order->email,
+                    $order->reference,
+                    'Paystack',
+                    'Order Booking',
+                    $paymentData['amount']/100,
+                    'Success'
+                );
+
+                return redirect()->view('thankYou')->with('order',$order);
+
+            } catch (\Throwable $th) {
+                return Redirect::back()->withMessage(['msg'=>'Please try again.', 'type'=>'error']);
+            }
+
+        }
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
         // you can then redirect or do whatever you want

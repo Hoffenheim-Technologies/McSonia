@@ -135,6 +135,11 @@ class BookRequestController extends Controller
         return view('request')->with('locations', Location::all())->with('items', Items::all())->with('states', State::orderBy('state')->get());
     }
 
+
+    public function thankYou(){
+        return view('thankYou');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

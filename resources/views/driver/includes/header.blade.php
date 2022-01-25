@@ -137,6 +137,11 @@
 
                                         <hr class="my-2">
                                         <li>
+                                            <a href="driver/change-password"><i class="icon-key"></i> <span>Change Password</span></a>
+                                        </li>
+
+                                        <hr class="my-2">
+                                        <li>
                                             <a href="driver/activity_log"><i class="icon-docs"></i> <span>Activity Log</span></a>
                                         </li>
 
