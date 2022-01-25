@@ -34,7 +34,7 @@ class ReportsController extends Controller
                 $report->comments = $request->comments;
                 $report->save();
                 DB::commit();
-                UserActivityService::log($user->id,UserActivityConstants::REPORT_ACTIVITY,"Report COmmented","User Commented On $report->category Report", null);
+                UserActivityService::log($user->id,UserActivityConstants::REPORT_ACTIVITY,"Report Commented","User Commented On $report->category Report", null);
                 return redirect()->back()->with('message','Data Updated Successfully');
 
             }catch(Exception $as){

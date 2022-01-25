@@ -45,10 +45,10 @@
                                                     Name: {{ucfirst($order->user->lastname ?? $order->lastname)}} {{ucfirst($order->user->firstname ?? $order->firstname)}}
                                                 </p>
                                                 <p>
-                                                    Phone: <a href="tel:+{{$order->user->phone ?? $order->phone}}">{{$order->user->phone ?? $order->phone}}</a>
+                                                    Phone: <a class="text-primary" href="tel:+{{$order->user->phone ?? $order->phone}}">{{$order->user->phone ?? $order->phone}}</a>
                                                 </p>
                                                 <p>
-                                                    Email: <a href="mailto:{{$order->user->email ?? $order->email}}">{{$order->user->email ?? $order->email}}</a>
+                                                    Email: <a class="text-primary" href="mailto:{{$order->user->email ?? $order->email}}">{{$order->user->email ?? $order->email}}</a>
                                                 </p>
                                                 <p>
                                                     Company: {{$order->company}}
@@ -165,10 +165,10 @@
                                 @else
                                 <h4 class="card-title">Order Progress</h4>
                                     <div class="">
-                                        <h4><span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span></h4>
+                                        <h4><span class="badge {{($orderDetail->status != 'Pending') ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span></h4>
                                     </div>
-                                    <div class="progress" style="height: 15px;">
-                                        <div class="progress-bar {{($orderDetail->statusNo <= 0) ? 'bg-inverse' : ($orderDetail->statusNo <= 10) ? 'bg-danger' : ($orderDetail->statusNo <= 50) ? 'bg-info' : 'bg-success' }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
+                                    <div class="progress mb-4" style="height: 15px;">
+                                        <div class="progress-bar {{$orderDetail->statusNo <= 0 ? 'bg-inverse' : ($orderDetail->statusNo <= 10 ? 'bg-danger' : ($orderDetail->statusNo <= 50 ? 'bg-info' : 'bg-success')) }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
                                         </div>
                                     </div>
                                     <div class="mt-4">
@@ -177,20 +177,20 @@
                                             @csrf @method('PUT')
                                             @if ($orderDetail->status == 'Awaiting Pickup By Driver' || $orderDetail->status == 'Pending')
                                             <div class="general-button">
-                                                <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 btn-primary">
+                                                <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 confirm-btn btn-primary">
                                             </div>
                                             @endif
                                             @if ($orderDetail->status == 'On Route To Deliver')
                                             <div class="general-button">
-                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-warning">
-                                                <input type="submit" name="status" value="Delivered" class="btn mb-1 btn-info">
+                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 confirm-btn btn-warning">
+                                                <input type="submit" name="status" value="Delivered" class="btn mb-1 confirm-btn btn-info">
                                             </div>
                                             @endif
                                             @if ($orderDetail->status == 'Delivered')
                                             <div class="general-button">
-                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-secondary">
-                                                <input type="submit" name="status" value="Cancel" class="btn mb-1 btn-danger">
-                                                <input type="submit" name="status" value="Completed" class="btn mb-1 btn-success">
+                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 confirm-btn btn-secondary">
+                                                <input type="submit" name="status" value="Cancel" class="btn mb-1 confirm-btn btn-danger">
+                                                <input type="submit" name="status" value="Completed" class="btn mb-1 confirm-btn btn-success">
                                             </div>
                                             @endif
                                             @if ($orderDetail->status == 'Completed')

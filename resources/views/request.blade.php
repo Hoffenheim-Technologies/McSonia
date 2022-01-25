@@ -183,6 +183,7 @@ $('[name=phone]').change(()=>{
            <div>Your booking reference is</div><div class="pl-5 text-yellow-500 text-3xl sm:text-6xl font-extrabold">{{ $reference }}</div>
         </div>
         <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
+            @csrf @method('POST')
             <div class="row" style="margin-bottom:40px;">
                 <div class="col-md-8 col-md-offset-2">
                     <p>
@@ -190,17 +191,13 @@ $('[name=phone]').change(()=>{
                         <strong>Total:</strong>  @money($order->total)
                         </div>
                     </p>
-                    <input type="hidden" name="email" value="otemuyiwa@gmail.com"> {{-- required --}}
-                    <input type="hidden" name="orderID" value="{{$order->id}}">
+                    <input type="hidden" name="email" value="{{$order->email}}"> {{-- required --}}
+                    <input type="hidden" name="order_id" value="{{$order->id}}">
                     <input type="hidden" name="amount" value="{{$order->total*100}}"> {{-- required in kobo --}}
                     <input type="hidden" name="quantity" value="">
+                    <input type="hidden" name="metadata" value="{{ json_encode($array = ['order_id' => $order->id,'user_id'=>$order->user_id]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
                     <input type="hidden" name="currency" value="{{env('CURRENCY')}}">
                     <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}"> {{-- required --}}
-
-                    {{ csrf_field() }} {{-- works only when using laravel 5.1, 5.2 --}}
-
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}"> {{-- employ this in place of csrf_field only in laravel 5.0 --}}
-
                     <p>
                         <button class="btn btn-success btn-lg btn-block" type="submit" value="Pay Now!">
                             <i class="fa fa-credit fa-lg"></i> Pay Now!
@@ -301,20 +298,20 @@ $('[name=phone]').change(()=>{
                 </div>
                 <div class="w-full bg-white border py-3">
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Item Description</label>
-                    <textarea id="comments" name="comments" class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" placeholder="Describe your item"></textarea>
+                    <textarea id="comments" name="comments" class="w-full focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" placeholder="Describe your item"></textarea>
                 </div>
             </div>
-            <div class="border relative rounded bg-yellow-100 mx-5">
+            <div class="border relative rounded bg-yellow-100 mx-3 my-3 sm:my-0 sm:mx-5">
                 <div class="h-full">
                     <div class="flex flex-col h-full justify-evenly">
-                        <div class="flex flex-row items-center">
-                            <span class="mx-3 start">Start</span>
+                        <div class="flex flex-col items-start text-3xl font-bold px-4">
+                            <div class="flex flex-row items-center">From <span class="mx-3 text-green-400 text-5xl start">Start</span></div>
                             <span class="flex-grow border-b-4 border-yellow-500"></span>
-                            <span class="mx-3 end">End</span>
+                            <div class="flex flex-row items-center">To <span class="mx-3 text-green-400 text-5xl end">End</span></div>
                         </div>
-                        <div class="mx-3 justify-center grid grid-cols-2">
-                            <input disabled name="subtotal" class="">
-                            <input disabled name="total" class="">
+                        <div class="mx-3 hidden justify-center grid grid-cols-2">
+                            <input readonly name="subtotal" class="">
+                            <input readonly name="total" class="">
                         </div>
                     </div>
                 </div>
@@ -347,16 +344,6 @@ $('[name=phone]').change(()=>{
                         <input id="summary_pickup_details" value="" class="timing w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
 
                     </div>
-                    <!-- <div class="flex flex-row mx-3 border-b border-b">
-                        <div class="w-1/2">
-                            <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">distance</label>
-                            <input id="summary_distance" value="300km" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
-                        </div>
-                        <div class="w-1/2 border-l">
-                            <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">time</label>
-                            <input id="summary_time" value="90 minutes" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
-                        </div>
-                    </div> -->
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">vehicle</label>
                         <input id="summary_vehicle" value="Truck" class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text"  disabled>
@@ -477,10 +464,6 @@ $('[name=phone]').change(()=>{
                             <label for="" class="uppercase text-xs px-2 text-gray-500">phone number *</label>
                             <input disabled value="{{ Auth::user()->phone }}" name="phone" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="phone" >
                         </div>
-                    </div>
-                    <div class="w-full bg-white border py-3">
-                        <label for="" class="uppercase text-xs px-2 text-gray-500">Comments</label>
-                        <textarea name="comments" class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" ></textarea>
                     </div>
                     <div class="w-full bg-yellow-100 py-3 px-5">
                         <div class="flex flex-row items-center py-3">
