@@ -31,6 +31,7 @@
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>Payment Status</th>
+                                            <th>Order Status</th>
                                             <th>Date Added</th>
                                             <th>Action</th>
                                         </tr>
@@ -58,6 +59,13 @@
                                                     <i class="fa fa-circle-o text-warning  mr-2"></i> {{$item->status}}
                                                 @else
                                                     <i class="fa fa-circle-o text-success  mr-2"></i>  {{$item->status}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($item->order_detail == null)
+                                                    <i class="fa fa-circle-o text-warning  mr-2"></i> Process Pending
+                                                @else
+                                                    <i class="fa fa-circle-o text-success  mr-2"></i>  Processed
                                                 @endif
                                             </td>
                                             <td>
