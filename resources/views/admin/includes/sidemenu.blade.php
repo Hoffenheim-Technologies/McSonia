@@ -37,6 +37,7 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('clients')}}">Clients</a></li>
+                            <li><a href="{{route('testimonials.index')}}">Testimonials</a></li>
                         </ul>
                     </li>
 
