@@ -4,7 +4,7 @@ let RideDetails = {};
 
 const tabs = [
     {name: 'ride', fields: ['pdate', 'ptime', 'item', 'plocation', 'dlocation', 'paddress', 'daddress', 'pstate', 'dstate']},
-    {name: 'contact', fields: ['firstname', 'lastname', 'email', 'phone',/* 'billing', 'street', 'snumber', 'city', 'state', 'postal', 'country'*/]}
+    {name: 'contact', fields: ['firstname', 'lastname', 'email', /*'phone', 'billing', 'street', 'snumber', 'city', 'state', 'postal', 'country'*/]}
 ]
 var errors
 const validate = (index, status) => {
@@ -37,7 +37,7 @@ $('#btn_contact_details').on("click", function(){
             dlocation : $('#dlocation').val(),
             plocation : $('#plocation').val(),
         };
-        $('.content-1').hide(); 
+        $('.content-1').hide();
         $('.content-2').show();
     } else {
         console.log(errors)
