@@ -136,10 +136,11 @@ class BookRequestController extends Controller
     }
 
 
-    public function thankYou(){
-        return view('thankYou');
+    public function thankYou($id){
+        $order = Order::find($id);
+        return view('thankYou',compact('order'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
