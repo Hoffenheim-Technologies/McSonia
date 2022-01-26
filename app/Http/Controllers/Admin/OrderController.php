@@ -35,6 +35,7 @@ class OrderController extends Controller
                 if($item->user_id){
                     $item->user = User::find($item->user_id);
                 }
+                $item->order_detail = OrderDetails::find($item->id);
             }
         }
         //dd($orders);
