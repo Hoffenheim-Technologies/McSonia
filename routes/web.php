@@ -101,6 +101,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //Accounts
     Route::resource('accounts', '\App\Http\Controllers\Admin\AccountChartsController');
 
+    //Testimonials
+    Route::resource('testimonials', '\App\Http\Controllers\Admin\TestimonialController');
+
     //Orders
     Route::prefix('orders')->group(function(){
         Route::get('/', [OrderController::class, 'index'])->name('orders.index');
