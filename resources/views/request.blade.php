@@ -35,7 +35,6 @@
 @isset($reference)
 @else
 <script>
-
     $(window).on('load', () => {
         getLocation($('#plocation').val())
     })
@@ -242,7 +241,7 @@ $('[name=phone]').change(()=>{
                     </div>
                     <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-l">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Item *</label>
-                        <select class="niceselect border-0 border-b sm:border-0 w-full" name="item" id="">
+                        <select class="niceselect item border-0 border-b sm:border-0 w-full" name="item" id="">
                             <option selected disabled>Choose</option>
                             @foreach ($items as $item)
                                 <option value="{{$item->id}}" price="{{$item->price}}">{{$item->item}}</option>
@@ -254,7 +253,7 @@ $('[name=phone]').change(()=>{
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
                     <div class="sm:flex flex-row">
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">
-                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect border-0 w-full">
+                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect pstate border-0 w-full">
                                 <option @isset($input->plocation) @else selected @endisset disabled>Choose a State</option>
                                 @foreach ($states as $state)
                                     <option @isset($input->plocation) @if($input->plocation == $state->id) selected @endif @endisset class="capitalize" value="{{$state->id}}">{{$state->state}}</option>
@@ -262,7 +261,7 @@ $('[name=phone]').change(()=>{
                             </select>
                         </div>
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">
-                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect border-0 w-full">
+                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect plocation border-0 w-full">
                                 <option @isset($input->plocation) @else selected @endisset disabled>Choose a Location</option>
                             </select>
                         </div>
@@ -279,12 +278,12 @@ $('[name=phone]').change(()=>{
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Location *</label>
                     <div class="sm:flex flex-row">
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">
-                            <select name="dstate" id="dstate" class="niceselect border-0 w-full"onchange="setLocations($(this).val())">
+                            <select name="dstate" id="dstate" class="niceselect dstate border-0 w-full" onchange="setLocations($(this).val())">
                                 <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your State</option>
                             </select>
                         </div>
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">
-                                <select name="dlocation" id="dlocation" class="niceselect border-0 w-full">
+                                <select name="dlocation" id="dlocation" class="niceselect dlocation border-0 w-full">
                                     <option @isset($input->dlocation) @else selected @endisset  value="" selected disabled>Choose your location</option>
                                 </select>
                             </div>
@@ -293,12 +292,12 @@ $('[name=phone]').change(()=>{
                 <div class="w-full bg-white border-t py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Address *</label>
-                        <input id="daddress" name="daddress" class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
+                        <input id="daddress" name="daddress" class="w-full bg-yellow-100 focus:bg-white border-0 focus:outline-none focus:border-none focus:ring-0" type="text" >
                     </div>
                 </div>
                 <div class="w-full bg-white border py-3">
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Item Description</label>
-                    <textarea id="comments" name="comments" class="w-full focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="email" placeholder="Describe your item"></textarea>
+                    <textarea id="comments" name="comments" class="w-full focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="text" placeholder="Describe your item"></textarea>
                 </div>
             </div>
             <div class="border relative rounded bg-yellow-100 mx-3 my-3 sm:my-0 sm:mx-5">
@@ -516,14 +515,13 @@ $('[name=phone]').change(()=>{
                 </div>
                 @endguest
             </div>
-
         </div>
         <div class="flex flex-row justify-between mt-8">
-            <button class="underline" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">
+            <button class="underline" id="return_item_details" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">
                 <i class="fa fa-arrow-left text-black"></i>
                 Choose Ride Details
             </button>
-            <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit" onclick="event.preventDefault(); $('.content-2').hide(); $('.content-3').show()">
+            <button class="btn-lg font-semibold block uppercase border rounded-lg" id="button_booking_summary" type="submit" onclick="event.preventDefault(); if(validate(1, {{Auth::check()}})){ $('.content-2').hide(); $('.content-3').show() }">
                 Booking Summary
                 <i class="fa fa-arrow-right text-white"></i>
             </button>
