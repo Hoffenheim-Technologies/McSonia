@@ -30,6 +30,16 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = User::where('role','driver')->orderBy('created_at', 'desc')->get();
+        if($drivers){
+            foreach($drivers as $item){
+                $item->pending_order = OrderDetails::where('user_id',$item->id)
+                                                    ->where('status','<>','Completed')
+                                                    ->count();
+                $item->completed_order = OrderDetails::where('user_id',$item->id)
+                                                    ->where('status','Completed')
+                                                    ->count();
+            }
+        }
         return view("admin.driver.index", compact('drivers'));
     }
 

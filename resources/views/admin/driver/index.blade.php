@@ -28,6 +28,8 @@
                                                 <th>SN</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Orders Completed</th>
+                                                <th>Orders Pending</th>
                                                 <th>Date Added</th>
                                                 <th>Action</th>
                                             </tr>
@@ -43,6 +45,12 @@
                                                 </td>
                                                 <td>
                                                     <a href="mailto:{{$item->email}}">{{$item->email}}</a>
+                                                </td>
+                                                <td>
+                                                    {{$item->completed_order}}
+                                                </td>
+                                                <td>
+                                                    {{$item->pending_order}}
                                                 </td>
                                                 <td>
                                                     {{$item->created_at->toDayDateTimeString()}}
