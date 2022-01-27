@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Mail\McSoniaMail;
 use App\Models\Items;
 use App\Models\OrderDetails;
 use App\Models\Report;
@@ -20,6 +21,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -36,7 +38,7 @@ class OrderController extends Controller
                 if($item->user_id){
                     $item->user = User::find($item->user_id);
                 }
-                $item->order_detail = OrderDetails::find($item->id);
+                $item->order_detail = OrderDetails::where('order_id',$item->id)->first();
             }
         }
         //dd($orders);
@@ -161,6 +163,12 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $order = Order::find($order);
+            $location = Location::find($order->plocation);
+            $order->plocation = $location->location;
+            $location = Location::find($order->dlocation);
+            $order->dlocation = $location->location;
+            $item = Items::find($order->item);
+            $order->item = $item->item;
             $driver = User::find($driver);
 
             $data = [];
@@ -169,6 +177,23 @@ class OrderController extends Controller
             $data['status'] = 'Awaiting Pickup By Driver';
             OrderDetails::create($data);
             DB::commit();
+
+            $details = [
+                'title' => "New Order Notification",
+                'body' => "A new Order #$order->reference has been assigned to you .\n
+                The details are below: \n
+                Pickup Location: $order->plocation \n
+                Pickup Address: $order->paddress\n
+                Pickup Time: $order->pdate on $order->ptime\n
+                Dropoff Location: $order->dlocation \n
+                Dropoff Address: $order->daddress\n
+                Item: $order->item->item\n
+                Description: $order->description\n
+                Please contact the Administrator, for more information \n"
+            ];
+
+            Mail::to($user->email)->send(new McSoniaMail($details));
+
             UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Driver To Order",null);
             return redirect()->route('orders.show', $order->id)->with('message','Driver Assigned Successfully');
         }catch(Exception $ae){
