@@ -39,52 +39,58 @@
                                         <div class="tab-content" id="nav-tabContent">
                                             <div class="tab-pane fade show active" id="list-one">
                                                 <p>
-                                                    Reference: {{$order->reference}}
+                                                    <strong>Reference:</strong> {{$order->reference}}
                                                 </p>
                                                 <p>
-                                                    Name: {{ucfirst($order->user->lastname ?? $order->lastname)}} {{ucfirst($order->user->firstname ?? $order->firstname)}}
+                                                    <strong>Name:</strong> {{ucfirst($order->user->lastname ?? $order->lastname)}} {{ucfirst($order->user->firstname ?? $order->firstname)}}
                                                 </p>
                                                 <p>
-                                                    Phone: <a class="text-primary" href="tel:+{{$order->user->phone ?? $order->phone}}">{{$order->user->phone ?? $order->phone}}</a>
+                                                    <strong>Phone:</strong> <a class="text-primary" href="tel:+{{$order->user->phone ?? $order->phone}}">{{$order->user->phone ?? $order->phone}}</a>
                                                 </p>
                                                 <p>
-                                                    Email: <a class="text-primary" href="mailto:{{$order->user->email ?? $order->email}}">{{$order->user->email ?? $order->email}}</a>
+                                                    <strong>Email:</strong> <a class="text-primary" href="mailto:{{$order->user->email ?? $order->email}}">{{$order->user->email ?? $order->email}}</a>
                                                 </p>
                                                 <p>
-                                                    Company: {{$order->company}}
+                                                    <strong>Company:</strong> {{$order->company}}
                                                 </p>
 
                                             </div>
                                             <div class="tab-pane fade" id="list-two" role="tabpanel">
                                                 <p>
-                                                    Reference: {{$order->reference}}
+                                                    <strong>Reference:</strong> {{$order->reference}}
                                                 </p>
                                                 <p>
-                                                    Pickup Location: {{($order->plocation->location) ?? ' ' }}
+                                                    <strong>Pickup Location:</strong> {{($order->plocation->location) ?? ' ' }}
                                                 </p>
                                                 <p>
-                                                    Pickup Address: {{$order->paddress}}
+                                                    <strong>Pickup Address:</strong> {{$order->paddress}}
                                                 </p>
                                                 <p>
-                                                    Pickup Time: {{$order->pdate.' '.$order->ptime}}
+                                                    <strong>Pickup Time:</strong> {{$order->pdate.' '.$order->ptime}}
                                                 </p>
                                                 <p>
-                                                    Dropoff Location: {{($order->dlocation->location) ?? ' ' }}
+                                                    <strong>Dropoff Location:</strong> {{($order->dlocation->location) ?? ' ' }}
                                                 </p>
                                                 <p>
-                                                    Dropoff Address: {{$order->daddress}}
+                                                    <strong>Dropoff Address:</strong> {{$order->daddress}}
                                                 </p>
                                                 <p>
-                                                    Discount: @money($order->discount)
+                                                    <strong>Item:</strong> {{$order->item->item}}
                                                 </p>
                                                 <p>
-                                                    Sub Total: @money($order->subtotal)
+                                                    <strong>Description:</strong> {{$order->description}}
                                                 </p>
                                                 <p>
-                                                    Total: @money($order->total)
+                                                    <strong>Discount:</strong> @money($order->discount)
                                                 </p>
                                                 <p>
-                                                    Status: <span class="badge {{$order->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$order->status}}</span>
+                                                    <strong>Sub Total:</strong> @money($order->subtotal)
+                                                </p>
+                                                <p>
+                                                    <strong>Total:</strong> @money($order->total)
+                                                </p>
+                                                <p>
+                                                    <strong>Status:</strong> <span class="badge {{$order->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$order->status}}</span>
                                                 </p>
 
                                             </div>
@@ -92,10 +98,10 @@
                                                 @if ($orderDetail)
                                                     <p>Reference: {{$order->reference}}</p>
                                                     <p>
-                                                        Driver: {{ucwords($orderDetail->driver->lastname ?? '')}} {{ucwords($orderDetail->driver->firstname ?? '')}}
+                                                       <strong> Driver:</strong> {{ucwords($orderDetail->driver->lastname ?? '')}} {{ucwords($orderDetail->driver->firstname ?? '')}}
                                                     </p>
                                                     <p>
-                                                            Status: <span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span>
+                                                            <strong>Status:</strong> <span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span>
 
                                                     </p>
                                                 @else

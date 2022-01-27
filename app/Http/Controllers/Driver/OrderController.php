@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\Items;
 use App\Models\OrderDetails;
 use App\Models\Report;
 use App\Models\User;
@@ -64,6 +65,7 @@ class OrderController extends Controller
         if($order){
             $order->plocation = Location::find($order->plocation);
             $order->dlocation = Location::find($order->dlocation);
+            $order->item = Items::find($order->item);
             $reports = Report::where('reference_id',$order->id)
                                 ->where('user_id',Auth::user()->id)
                                 ->orderBy('created_at','DESC')->get();
