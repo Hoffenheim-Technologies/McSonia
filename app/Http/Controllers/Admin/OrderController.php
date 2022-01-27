@@ -195,9 +195,9 @@ class OrderController extends Controller
                 Please contact the Administrator, for more information \n"
             ];
 
-            Mail::to($user->email)->send(new McSoniaMail($details));
+            Mail::to($driver->email)->send(new McSoniaMail($details));
 
-            UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Driver To Order",null);
+            UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Order To Driver $driver->lastname",null);
             return redirect()->route('orders.show', $order->id)->with('message','Driver Assigned Successfully');
         }catch(Exception $ae){
             dd($ae);
