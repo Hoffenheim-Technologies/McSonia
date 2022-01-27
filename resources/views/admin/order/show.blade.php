@@ -138,6 +138,7 @@
                                                     <th>Name</th>
                                                     <th>Vehicle Type</th>
                                                     <th>Vehicle Name</th>
+                                                    <th>Orders Pending</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -155,6 +156,9 @@
                                                     </td>
                                                     <td>
                                                         {{$item->vehicle->vehicle_name ?? ''}}
+                                                    </td>
+                                                    <td>
+                                                        {{$item->pending_order}}
                                                     </td>
                                                     <td>
                                                         <form action="{{ route('orders.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')

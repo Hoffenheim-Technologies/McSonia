@@ -134,6 +134,9 @@ class OrderController extends Controller
             if($drivers){
                 foreach($drivers as $item){
                     $item->vehicle = Vehicles::where('user_id',$item->id)->first();
+                    $item->pending_order = OrderDetails::where('user_id',$item->id)
+                                                        ->where('status','<>','Completed')
+                                                        ->count();
                 }
             }
 
