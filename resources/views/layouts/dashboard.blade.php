@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <base href="{{config('app.url')}}/">
 
     <!-- Scripts -->
     <script src="js/app.js" defer></script>
@@ -22,6 +23,7 @@
     <!-- Styles -->
     @yield('pageStyles')
 
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
     <link href="{{ $admin_source }}/plugins/toastr/css/toastr.min.css" rel="stylesheet">

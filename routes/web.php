@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FinancesController;
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\VehiclesController;
+use App\Http\Controllers\ClientOrderController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -165,6 +166,9 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
     Route::post('vehicle/{id}', [App\Http\Controllers\Driver\VehiclesController::class, 'storeMemo'])->name('vehicle.storeMemo');
 });
 
+Route::middleware(['auth'])->prefix('client')->group(function () {
+    Route::get('/orders', [ClientOrderController::class, 'index'])->name('client-orders');
+});
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/location/{id}', [AjaxController::class, 'location']);
 Route::get('/pstate/{id}', [AjaxController::class, 'state']);
