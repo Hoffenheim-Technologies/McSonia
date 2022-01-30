@@ -11,7 +11,7 @@
             </form>
         </div>
         <div class="mx-auto self-center order-first lg:order-last">
-            <img src="images/confirmation.svg" alt="confirmation">
+            <img src="{{ $web_source }}/images/confirmation.svg" alt="confirmation">
         </div>
     </div>
 </div>
