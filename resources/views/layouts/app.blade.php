@@ -10,8 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="js/app.js" defer></script>
-    <script src="js/jquery.min.js"></script>
+    <script src="{{ $web_source }}/js/app.js" defer></script>
+    <script src="{{ $web_source }}/js/jquery.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,14 +21,14 @@
     @yield('pageStyles')
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="css/app.css" rel="stylesheet">
+    <link href="{{ $web_source }}/css/app.css" rel="stylesheet">
     <link href="{{ $admin_source }}/plugins/toastr/css/toastr.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="images/favicon.webp" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ $web_source }}/images/favicon.webp" type="image/x-icon">
 </head>
 <body>
     <div class="loader z-50 bg-white">
         <div class="w-full h-max absolute top-1/2 transform -translate-y-1/2">
-            <img src="images/logo.png" alt="Logo" class="mx-auto">
+            <img src="{{ $web_source }}/images/logo.png" alt="Logo" class="mx-auto">
         </div>
         <div class="bar"></div>
     </div>
@@ -36,7 +36,7 @@
         <header class="md:hidden">
             <nav class="flex items-center justify-between w-full">
                 <div class="pl-3">
-                    <img src="images/logo.png" alt="Logo" class="mx-auto sm:w-44 w-28">
+                    <img src="{{ $web_source }}/images/logo.png" alt="Logo" class="mx-auto sm:w-44 w-28">
                 </div>
                 <div class="pr-3">
                     <ul class="flex justify-between items-center">
@@ -108,7 +108,7 @@
         <div class="min-h-screen">
         <header class="hidden md:flex mx-2 mb-3 md:mb-5 items-center h-auto justify-between bg-white">
             <a class="ml-3" href="{{ url('/') }}">
-                <img src="images/logo.webp" alt="McSonia Logistics" class="h-8">
+                <img src="{{ $web_source }}/images/logo.webp" alt="McSonia Logistics" class="h-8">
             </a>
             <!-- <button class="hidden navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
@@ -178,7 +178,7 @@
                     </ul>
                 </div>
             </nav>
-            
+
             <!-- <div class="central mx-auto mt-5">
                 <div class="absolute block top-1/2 left-1/4">
                     <img src="images/logo.png" alt="Logo" class="mx-auto">
@@ -213,7 +213,7 @@
             </div>
             <div class="hidden w-full bg-yellow-100 text-xl flex justify-around">
                 <span class="flex-grow">Get Connected </span>
-                <div class="flex flex-grow justify-around"> 
+                <div class="flex flex-grow justify-around">
                     <a href="">Facebook</a>
                     <a href="">Instagram</a>
                 </div>
@@ -228,7 +228,7 @@
     <script src="{{ $admin_source }}/plugins/toastr/js/toastr.min.js"></script>
     <script src="{{ $admin_source }}/plugins/toastr/js/toastr.init.js"></script>
     @yield('extraScripts')
-    <script src="js/main.js"></script>
+    <script src="{{ $web_source }}/js/main.js"></script>
     <script>
         $('.menu-icon__cheeckbox').click( () => {
             $('.mobile-nav').toggleClass('hidden')
