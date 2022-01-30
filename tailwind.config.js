@@ -8,6 +8,11 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    screens: {
+      'xs': '360px',
+      'xsm': '500px',
+      ...defaultTheme.screens,
+    },
     extend: {
       backgroundImage: {
         'home-page': "url('/images/deliveries.svg')",
@@ -18,6 +23,7 @@ module.exports = {
   },
   variants: {
     extend: {
+      fontSize: ['hover'],
       backgroundColor: ['checked'],
       borderColor: ['checked'],
     },
@@ -25,8 +31,4 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
   ],
-  screens: {
-    'xs': '475px',
-    ...defaultTheme.screens,
-  },
 }

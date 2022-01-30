@@ -47,11 +47,11 @@
                         </div>
                     </div>
                 </div>
-                
 
-                <div class="w-full flex mt-3">
+
+                <div class="w-max mx-auto flex mt-3">
                     <div class="flex flex-row justify-between w-full">
-                        <button type="submit" class="text-white px-5 py-3 bg-yellow-400 rounded hover:bg-yellow-500 cursor-pointer">
+                        <button type="submit" class="text-white px-5  mx-2 py-3 bg-yellow-400 rounded hover:bg-yellow-500 cursor-pointer">
                             {{ __('Login') }}
                         </button>
 
@@ -64,7 +64,7 @@
                 </div>
             </form>
         </div>
-        
+
         <div class="mx-auto order-first lg:order-last py-5">
             <img src="images/login.svg" alt="deliveries">
         </div>
