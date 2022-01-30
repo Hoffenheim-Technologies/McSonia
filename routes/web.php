@@ -199,7 +199,7 @@ Route::middleware(['auth'])->prefix('client')->group(function () {
     Route::get('/orders', [ClientOrderController::class, 'index'])->name('client-orders');
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/thankYou', [BookRequestController::class, 'thankYou'])->name('thankYou');
+Route::get('/thankYou/{id}', [BookRequestController::class, 'thankYou'])->name('thankYou');
 Route::get('/location/{id}', [AjaxController::class, 'location']);
 Route::get('/pstate/{id}', [AjaxController::class, 'state']);
 Route::get('/dstate/{id}', [AjaxController::class, 'state']);
@@ -209,5 +209,4 @@ Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('requ
 // Laravel 8
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
-
 Route::get('/send-mail', [EmailController::class, 'testMail'])->name('testMail');
