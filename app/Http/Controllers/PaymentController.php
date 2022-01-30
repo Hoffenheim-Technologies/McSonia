@@ -80,7 +80,11 @@ class PaymentController extends Controller
                     'Success'
                 );
 
+<<<<<<< HEAD
                 return redirect()->route('thankYou',['order'=>$order])->with('message', 'Payment Successful');
+=======
+                return redirect()->route('thankYou',$order)->with('message', 'Payment Successful');;
+>>>>>>> 0f35798701cf95160b2e01d652e0c65fb48c12c7
 
             } catch (\Throwable $th) {
                 dd($th);
