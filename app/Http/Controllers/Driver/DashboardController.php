@@ -19,8 +19,7 @@ class DashboardController extends Controller
         $dashboard['completed_orders'] = OrderDetails::where('user_id',Auth::user()->id)
                                                     ->where('status','Completed')->count();
         $dashboard['pending_orders'] = OrderDetails::where('user_id',Auth::user()->id)
-                                                    ->where('status','Pending')->count();
-        $dashboard['profit'] = 0.00;
+                                                    ->where('status','Awaiting Pickup By Driver')->count();
         $dashboard['vehicles'] = Vehicles::where('user_id',Auth::user()->id)
                                             ->count();
         $dashboard['activity'] = UserActivityLog::where('email',Auth::user()->email)
