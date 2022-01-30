@@ -86,6 +86,8 @@ class PaymentController extends Controller
                 return Redirect::back()->withMessage(['msg'=>'Please try again.', 'type'=>'error']);
             }
 
+        }else{
+            return Redirect::back()->withMessage(['msg'=>'Please try again.', 'type'=>'error']);
         }
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
