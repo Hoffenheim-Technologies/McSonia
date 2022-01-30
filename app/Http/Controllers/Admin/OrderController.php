@@ -183,16 +183,16 @@ class OrderController extends Controller
 
             $details = [
                 'title' => "New Order Notification",
-                'body' => "A new Order #$order->reference has been assigned to you .\n
-                The details are below: \n
-                Pickup Location: $order->plocation \n
-                Pickup Address: $order->paddress\n
-                Pickup Time: $order->pdate on $order->ptime\n
-                Dropoff Location: $order->dlocation \n
-                Dropoff Address: $order->daddress\n
-                Item: $order->item->item\n
-                Description: $order->description\n
-                Please contact the Administrator, for more information \n"
+                'body' => "A new Order #$order->reference has been assigned to you .   \r\n
+                The details are below:    \r\n
+                Pickup Location: $order->plocation    \r\n
+                Pickup Address: $order->paddress   \r\n
+                Pickup Time: $order->pdate on $order->ptime   \r\n
+                Dropoff Location: $order->dlocation    \r\n
+                Dropoff Address: $order->daddress   \r\n
+                Item: $order->item   \r\n
+                Description: $order->description   \r\n
+                Please contact the Administrator, for more information    \r\n"
             ];
 
             Mail::to($driver->email)->send(new McSoniaMail($details));

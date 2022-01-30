@@ -113,7 +113,7 @@
                                                     {{$item->created_at->toDayDateTimeString()}}
                                                 </th>
                                                 <td>
-                                                    <a class="btn btn-info btn-sm mx-2" href="{{ route('order.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
+                                                    <a class="btn btn-info btn-sm mx-2" href="{{ route('orders.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
                                                 </td>
                                             </tr>
                                             @endforeach
