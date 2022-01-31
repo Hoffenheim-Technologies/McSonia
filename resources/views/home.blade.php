@@ -8,14 +8,14 @@
     <div class="grid grid-cols-3 items-center">
         <div class="mx-3">
             <div class="w-full">
-                <img src="images/order.svg" alt="order">
+                <img src="{{ $web_source }}/images/order.svg" alt="order">
             </div>
             <div class="text-3xl py-8 text-yellow-900 font-bold capitalize">
                 my orders
             </div>
             <div class="text-gray-500 font-semibold text-sm">
                 <span class="capitalize text-yellow-900">{{ Auth::user()->firstname }}</span>
-                , we at {{ config('app.name') }} are delighted to note that you  have 
+                , we at {{ config('app.name') }} are delighted to note that you  have
                 used our service 90 times, and we certainly hope we've delighted you too.
                 We hope to keep seeing more of you here. Here's a summary of your orders.
             </div>
@@ -33,7 +33,7 @@
                         <span>Cancelled Orders</span>
                         <span class="text-3xl text-red-800">{{ $cancelled }}</span>
                     </div>
-                   
+
                     <div class="flex flex-row border-t-2 border-b-2 items-center justify-between">
                         <span>Total Orders</span>
                         <span class="text-3xl text-black">{{ $total }}</span>
@@ -43,7 +43,7 @@
         </div>
         <div class="mx-3">
             <div class="w-full">
-                <img src="images/payment.svg" alt="order">
+                <img src="{{ $web_source }}/images/payment.svg" alt="order">
             </div>
             <div class="text-3xl py-8 text-yellow-900 font-bold capitalize">
                 my payments
@@ -58,14 +58,14 @@
         </div>
         <div class="mx-3">
             <div class="w-full">
-                <img src="images/tracking.svg" alt="order">
+                <img src="{{ $web_source }}/images/tracking.svg" alt="order">
             </div>
             <div class="text-3xl py-8 text-yellow-900 font-bold capitalize">
                 order status
             </div>
             <!-- <div class="text-gray-500 font-semibold text-sm">
                 <span class="capitalize text-yellow-900">{{ Auth::user()->firstname }}</span>
-                , we at {{ config('app.name') }} are delighted to note that you  have 
+                , we at {{ config('app.name') }} are delighted to note that you  have
                 used our service 90 times, and we certainly hope we've delighted you too.
                 We hope to keep seeing more of you here. Here's a summary of your orders.
             </div> -->

@@ -6,11 +6,12 @@ use App\Models\faq;
 use App\Models\Location;
 use App\Models\Items;
 use App\Models\State;
+use App\Models\Testimonial;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\VendorController;
-use App\Http\Controllers\Admin\AccountChartsController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ItemsController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FinancesController;
 use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\VehiclesController;
 use App\Http\Controllers\ClientOrderController;
 use Illuminate\Support\Facades\Auth;
@@ -53,7 +55,7 @@ Route::get('/solution', function () {
 })->name('contact');
 
 Route::get('/testimonial', function () {
-    return view('testimonial');
+    return view('testimonial')->with('testimonials', Testimonial::all());
 })->name('testimonial');
 
 Route::get('/about', function () {
@@ -77,6 +79,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile/{id}', [ProfileController::class, 'store'])->name('profile.store');
 
+
+    Route::get('/change-password', function () {
+        return view('admin.change-password');
+    });
+
+    Route::put('/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');
+
     //Route::get('/chat', [ChatsController::class, 'index'])->name('chat.index');
     Route::get('/sendChat', [ChatsController::class, 'index'])->name('chat.index');
     Route::post('/sendChat', [ChatsController::class, 'sendMessage'])->name('chat.sendMessage');
@@ -94,6 +103,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //Accounts
     Route::resource('accounts', '\App\Http\Controllers\Admin\AccountChartsController');
 
+    //Testimonials
+    Route::resource('testimonials', '\App\Http\Controllers\Admin\TestimonialController');
+
     //Orders
     Route::prefix('orders')->group(function(){
         Route::get('/', [OrderController::class, 'index'])->name('orders.index');
@@ -103,6 +115,13 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
         Route::put('/{id}', [OrderController::class, 'update'])->name('orders.update');
         Route::delete('/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    });
+
+    //Transactions
+    Route::prefix('transactions')->group(function(){
+        Route::get('/', [TransactionController::class, 'index'])->name('transactions.index');
+        Route::get('/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
+        Route::put('/{id}', [TransactionController::class, 'update'])->name('transactions.update');
     });
 
     //vehicles
@@ -122,6 +141,16 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('/{id}', [DriverController::class, 'storeMemo'])->name('drivers.storeMemo');
         Route::get('/{id}', [DriverController::class, 'show'])->name('drivers.show');
         Route::put('/{id}', [DriverController::class, 'update'])->name('drivers.update');
+    });
+
+    //Staff
+    Route::prefix('staffs')->group(function(){
+        Route::get('/', [StaffController::class, 'index'])->name('staffs');
+        Route::get('/create', [StaffController::class, 'create'])->name('staffs.create');
+        Route::post('/create', [StaffController::class, 'store'])->name('staffs.store');
+        Route::post('/{id}', [StaffController::class, 'storeMemo'])->name('staffs.storeMemo');
+        Route::get('/{id}', [StaffController::class, 'show'])->name('staffs.show');
+        Route::put('/{id}', [StaffController::class, 'update'])->name('staffs.update');
     });
 
     //Reports
@@ -160,6 +189,7 @@ Route::middleware(['auth', 'isDriver'])->group(function () {
     Route::get('driver/profile', [App\Http\Controllers\Driver\ProfileController::class, 'index'])->name('driver_profile');
     Route::put('driver/profile/{id}', [App\Http\Controllers\Driver\ProfileController::class, 'store'])->name('driver_profile.store');
     Route::get('driver/activity_log', [App\Http\Controllers\Driver\DashboardController::class, 'activity'])->name('driver_activity_log');
+    Route::put('driver/change-password', [App\Http\Controllers\Driver\ProfileController::class, 'changePassword'])->name('driver_profile.changePassword');
     Route::resource('order', '\App\Http\Controllers\Driver\OrderController');
     Route::resource('report', '\App\Http\Controllers\Driver\ReportController');
     Route::resource('vehicle', '\App\Http\Controllers\Driver\VehiclesController');
@@ -170,6 +200,7 @@ Route::middleware(['auth'])->prefix('client')->group(function () {
     Route::get('/orders', [ClientOrderController::class, 'index'])->name('client-orders');
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/thankYou/{id}', [BookRequestController::class, 'thankYou'])->name('thankYou');
 Route::get('/location/{id}', [AjaxController::class, 'location']);
 Route::get('/pstate/{id}', [AjaxController::class, 'state']);
 Route::get('/dstate/{id}', [AjaxController::class, 'state']);
@@ -178,5 +209,5 @@ Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('requ
 
 // Laravel 8
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
-
+Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback']);
 Route::get('/send-mail', [EmailController::class, 'testMail'])->name('testMail');

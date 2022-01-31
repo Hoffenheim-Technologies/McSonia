@@ -27,7 +27,7 @@
                                         <div class="input-group col-md-7">
                                             <div class="bootstrap-media">
                                                 <div class="media">
-                                                    <img class="mr-3 img-fluid" src="{{$user->image}}" alt="{{$user->firstname}} image">
+                                                    <img class="mr-3 img-fluid" width="80" height="80" src="{{Storage::url($user->image)}}" alt="{{$user->firstname}} image">
                                                 </div>
                                             </div>
                                             <div class="custom-file">

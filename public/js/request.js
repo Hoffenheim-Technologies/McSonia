@@ -28,6 +28,7 @@ const tabs = [
     },
 ];
 var errors;
+
 const validate = (index, status) => {
     errors = [];
     console.log(status);
@@ -67,6 +68,7 @@ $("#btn_contact_details").on("click", function () {
         };
         $(".content-1").hide();
         $(".content-2").show();
+
     } else {
         console.log(errors);
         alert("Please fill all compulsory values");

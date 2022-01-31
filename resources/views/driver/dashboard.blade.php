@@ -32,18 +32,6 @@
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
-                        <div class="card gradient-2">
-                            <div class="card-body">
-                                <h3 class="card-title text-white">Net Profit</h3>
-                                <div class="d-inline-block">
-                                    <h2 class="text-white">@money($dashboard['profit'])</h2>
-                                    <p class="text-white mb-0 d-none">Jan - March 2019</p>
-                                </div>
-                                <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
                         <div class="card gradient-4">
                             <div class="card-body">
                                 <h3 class="card-title text-white">Total Fleet</h3>
@@ -56,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
                         <div class="card">

@@ -9,7 +9,7 @@
                 <div class="col p-md-0">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Client</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Driver</a></li>
                     </ol>
                 </div>
             </div>
@@ -20,14 +20,14 @@
                     <div class="col-lg-8 col-xl-9">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">{{$user->firstname}}</h4>
-                                <form action="{{ route('clients.update', $user->id) }}" enctype="multipart/form-data" class="form-valide" method="POST">
+                                <h4 class="card-title">Driver {{$user->firstname}}</h4>
+                                <form action="{{ route('staffs.update', $user->id) }}" enctype="multipart/form-data" class="form-valide" method="POST">
                                     @csrf @method('PUT')
                                     <div class="form-group">
                                         <div class="input-group col-md-7">
                                             <div class="bootstrap-media">
                                                 <div class="media">
-                                                    <img class="mr-3 img-fluid" src="{{$user->image}}" alt="{{$user->firstname}} image">
+                                                    <img class="mr-3 img-fluid" width="80" height="80" src="{{Storage::url($user->image)}}" alt="{{$user->firstname}} image">
                                                 </div>
                                             </div>
                                             <div class="custom-file">
@@ -77,54 +77,40 @@
                 </div>
             </div>
 
-
-
             <div class="container-fluid">
                 <!-- row -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-7">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">{{ucwords($user->firstname)}} Orders</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration">
-                                        <thead>
-                                            <tr>
-                                                <th>SN</th>
-                                                <th>Reference</th>
-                                                <th>Status</th>
-                                                <th>Date Added</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($orders as $item)
-                                            <tr>
-                                                <td>
-                                                    {{$loop->iteration}}
-                                                </td>
-                                                <td>
-                                                    {{$item->reference}}
-                                                </td>
-                                                <td>
-                                                    <span class="{{ $item->status != 'Pending' ? 'label gradient-1' : 'label gradient-2'}} "> {{$item->status}} </span>
-                                                </td>
-                                                <th>
-                                                    {{$item->created_at->toDayDateTimeString()}}
-                                                </th>
-                                                <td>
-                                                    <a class="btn btn-info btn-sm mx-2" href="{{ route('orders.show', $item) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-info color-muted mr-1"></i>View</a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                <h4 class="card-title">{{ucwords($user->firstname)}} Memo</h4>
+                                <form class="" action="{{route('staffs.storeMemo',$user)}}" method="post">
+                                    @csrf @method('POST')
+                                    <div class="form-row">
+                                        <div class="form-group col-7">
+                                            <textarea name="memo" placeholder="Memo" class="form-control" cols="20" rows="3" id=""> </textarea>
+                                        </div>
+                                        <div class="form-group align-items-center col-4">
+                                            <button type="submit" class="btn btn-primary px-3 ml-4">Submit</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                                <div id="activity">
+                                    @foreach ($memos as $item)
+                                        <div class="media border-bottom-1 pt-3 pb-3">
+                                            <div class="media-body">
+                                                <p class="mb-0">{{$item->memo}}</p>
+                                            </div><span class="text-muted ">{{$item->created_at->toDayDateTimeString()}}</span>
+                                        </div>
+                                    @endforeach
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
         <!--**********************************
             Content body end

@@ -112,6 +112,16 @@ class FinancesController extends Controller
      */
     public function destroy(Finances $finances)
     {
-        //
+        $user = Auth::user();
+        try {
+            $finance = Finances::find($finances->id);
+            if($finance){
+                $finance->delete();
+                UserActivityService::log($user->id,UserActivityConstants::FINANCE_ACTIVITY,"Finance Deleted","User Deleted Finance",null);
+                return redirect()->route('finances.index')->with('message','Data Deleted Successfully');
+            }
+        }catch (Exception $e) {
+            return redirect()->route('finances.index')->with('error','Data Not Found');
+        }
     }
 }

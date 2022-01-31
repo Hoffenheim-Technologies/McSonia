@@ -48,6 +48,10 @@ class BookRequestController extends Controller
         $order->daddress = $request->daddress;
         if(Auth::check()){
             $order->user_id = Auth::id();
+            $order->firstname = Auth::user()->firstname;
+            $order->lastname = Auth::user()->lastname;
+            $order->email = Auth::user()->email;
+            $order->phone = Auth::user()->phone;
         } else {
             $order->firstname = $request->firstname;
             $order->lastname = $request->lastname;
@@ -133,6 +137,12 @@ class BookRequestController extends Controller
 
     public function order(){
         return view('request')->with('locations', Location::all())->with('items', Items::all())->with('states', State::orderBy('state')->get());
+    }
+
+
+    public function thankYou($id){
+        $order = Order::find($id);
+        return view('thankYou',compact('order'));
     }
 
     /**

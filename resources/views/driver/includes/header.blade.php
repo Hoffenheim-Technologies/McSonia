@@ -11,7 +11,7 @@
                 </div>
                 <div class="header-right">
                     <ul class="clearfix">
-                        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        {{-- <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-email-outline"></i>
                                 <span class="badge badge-pill gradient-1">3</span>
                             </a>
@@ -122,7 +122,7 @@
 
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
@@ -133,6 +133,11 @@
                                     <ul>
                                         <li>
                                             <a href="driverprofile"><i class="icon-user"></i> <span>Profile</span></a>
+                                        </li>
+
+                                        <hr class="my-2">
+                                        <li>
+                                            <a href="driver/change-password"><i class="icon-key"></i> <span>Change Password</span></a>
                                         </li>
 
                                         <hr class="my-2">

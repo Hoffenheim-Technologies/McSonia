@@ -39,52 +39,58 @@
                                         <div class="tab-content" id="nav-tabContent">
                                             <div class="tab-pane fade show active" id="list-one">
                                                 <p>
-                                                    Reference: {{$order->reference}}
+                                                    <strong>Reference:</strong> {{$order->reference}}
                                                 </p>
                                                 <p>
-                                                    Name: {{ucfirst($order->user->lastname ?? $order->lastname)}} {{ucfirst($order->user->firstname ?? $order->firstname)}}
+                                                    <strong>Name:</strong> {{ucfirst($order->user->lastname ?? $order->lastname)}} {{ucfirst($order->user->firstname ?? $order->firstname)}}
                                                 </p>
                                                 <p>
-                                                    Phone: <a href="tel:+{{$order->user->phone ?? $order->phone}}">{{$order->user->phone ?? $order->phone}}</a>
+                                                    <strong>Phone:</strong> <a class="text-primary" href="tel:+{{$order->user->phone ?? $order->phone}}">{{$order->user->phone ?? $order->phone}}</a>
                                                 </p>
                                                 <p>
-                                                    Email: <a href="mailto:{{$order->user->email ?? $order->email}}">{{$order->user->email ?? $order->email}}</a>
+                                                    <strong>Email:</strong> <a class="text-primary" href="mailto:{{$order->user->email ?? $order->email}}">{{$order->user->email ?? $order->email}}</a>
                                                 </p>
                                                 <p>
-                                                    Company: {{$order->company}}
+                                                    <strong>Company:</strong> {{$order->company}}
                                                 </p>
 
                                             </div>
                                             <div class="tab-pane fade" id="list-two" role="tabpanel">
                                                 <p>
-                                                    Reference: {{$order->reference}}
+                                                    <strong>Reference:</strong> {{$order->reference}}
                                                 </p>
                                                 <p>
-                                                    Pickup Location: {{($order->plocation->location) ?? ' ' }}
+                                                    <strong>Pickup Location:</strong> {{($order->plocation->location) ?? ' ' }}
                                                 </p>
                                                 <p>
-                                                    Pickup Address: {{$order->paddress}}
+                                                    <strong>Pickup Address:</strong> {{$order->paddress}}
                                                 </p>
                                                 <p>
-                                                    Pickup Time: {{$order->pdate.' '.$order->ptime}}
+                                                    <strong>Pickup Time:</strong> {{$order->pdate.' '.$order->ptime}}
                                                 </p>
                                                 <p>
-                                                    Dropoff Location: {{($order->dlocation->location) ?? ' ' }}
+                                                    <strong>Dropoff Location:</strong> {{($order->dlocation->location) ?? ' ' }}
                                                 </p>
                                                 <p>
-                                                    Dropoff Address: {{$order->daddress}}
+                                                    <strong>Dropoff Address:</strong> {{$order->daddress}}
                                                 </p>
                                                 <p>
-                                                    Discount: @money($order->discount)
+                                                    <strong>Item:</strong> {{$order->item->item}}
                                                 </p>
                                                 <p>
-                                                    Sub Total: @money($order->subtotal)
+                                                    <strong>Description:</strong> {{$order->description}}
                                                 </p>
                                                 <p>
-                                                    Total: @money($order->total)
+                                                    <strong>Discount:</strong> @money($order->discount)
                                                 </p>
                                                 <p>
-                                                    Status: <span class="badge {{$order->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$order->status}}</span>
+                                                    <strong>Sub Total:</strong> @money($order->subtotal)
+                                                </p>
+                                                <p>
+                                                    <strong>Total:</strong> @money($order->total)
+                                                </p>
+                                                <p>
+                                                    <strong>Status:</strong> <span class="badge {{$order->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$order->status}}</span>
                                                 </p>
 
                                             </div>
@@ -92,10 +98,10 @@
                                                 @if ($orderDetail)
                                                     <p>Reference: {{$order->reference}}</p>
                                                     <p>
-                                                        Driver: {{ucwords($orderDetail->driver->lastname ?? '')}} {{ucwords($orderDetail->driver->firstname ?? '')}}
+                                                       <strong> Driver:</strong> {{ucwords($orderDetail->driver->lastname ?? '')}} {{ucwords($orderDetail->driver->firstname ?? '')}}
                                                     </p>
                                                     <p>
-                                                            Status: <span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span>
+                                                            <strong>Status:</strong> <span class="badge {{$orderDetail->status != 'Pending' ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span>
 
                                                     </p>
                                                 @else
@@ -132,6 +138,7 @@
                                                     <th>Name</th>
                                                     <th>Vehicle Type</th>
                                                     <th>Vehicle Name</th>
+                                                    <th>Orders Pending</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -151,6 +158,9 @@
                                                         {{$item->vehicle->vehicle_name ?? ''}}
                                                     </td>
                                                     <td>
+                                                        {{$item->pending_order}}
+                                                    </td>
+                                                    <td>
                                                         <form action="{{ route('orders.assign', ['driver'=>$item, 'order'=>$order])}}" method="post">@csrf @method('POST')
                                                             <span class="">
                                                                 <button type="submit" class="btn btn-success confirm-btn btn-sm mx-2" data-toggle="tooltip" data-placement="top" title="Assign"><i class="fa fa-check color-success"></i> Assign</button>
@@ -167,7 +177,7 @@
                                     <div class="">
                                         <h4><span class="badge {{($orderDetail->status != 'Pending') ? 'badge-primary' : 'badge-warning text-white'}} px-2">{{$orderDetail->status}}</span></h4>
                                     </div>
-                                    <div class="progress" style="height: 15px;">
+                                    <div class="progress mb-4" style="height: 15px;">
                                         <div class="progress-bar {{$orderDetail->statusNo <= 0 ? 'bg-inverse' : ($orderDetail->statusNo <= 10 ? 'bg-danger' : ($orderDetail->statusNo <= 50 ? 'bg-info' : 'bg-success')) }}" style="width: {{$orderDetail->statusNo}}%;" role="progressbar"><span class="">{{$orderDetail->statusNo}}% Complete</span>
                                         </div>
                                     </div>
@@ -177,20 +187,20 @@
                                             @csrf @method('PUT')
                                             @if ($orderDetail->status == 'Awaiting Pickup By Driver' || $orderDetail->status == 'Pending')
                                             <div class="general-button">
-                                                <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 btn-primary">
+                                                <input type="submit" name="status" value="On Route To Deliver" class="btn mb-1 confirm-btn btn-primary">
                                             </div>
                                             @endif
                                             @if ($orderDetail->status == 'On Route To Deliver')
                                             <div class="general-button">
-                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-warning">
-                                                <input type="submit" name="status" value="Delivered" class="btn mb-1 btn-info">
+                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 confirm-btn btn-warning">
+                                                <input type="submit" name="status" value="Delivered" class="btn mb-1 confirm-btn btn-info">
                                             </div>
                                             @endif
                                             @if ($orderDetail->status == 'Delivered')
                                             <div class="general-button">
-                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 btn-secondary">
-                                                <input type="submit" name="status" value="Cancel" class="btn mb-1 btn-danger">
-                                                <input type="submit" name="status" value="Completed" class="btn mb-1 btn-success">
+                                                <input type="submit" name="status" value="Back To Sender" class="btn mb-1 confirm-btn btn-secondary">
+                                                <input type="submit" name="status" value="Cancel" class="btn mb-1 confirm-btn btn-danger">
+                                                <input type="submit" name="status" value="Completed" class="btn mb-1 confirm-btn btn-success">
                                             </div>
                                             @endif
                                             @if ($orderDetail->status == 'Completed')
@@ -257,18 +267,22 @@
 @section('custom-script')
     <script>
         $('.confirm-btn').on('click',function(e){
-
+            var status = $(this).val();
+            var form_applet = `<input type="hidden" name="status" value="${status}" />`;
             e.preventDefault();
 
             var form = $(this).parents('form:first');
+
             swal({title:"Are you sure ?",
                 text:"Do you want to perform this action? !!",
                 type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",
-                confirmButtonText:"Yes !!",cancelButtonText:"No, cancel it !!",
+                confirmButtonText:"Yes update status!!",cancelButtonText:"No, cancel it !!",
                 closeOnConfirm:1,closeOnCancel:1},
                 function(e){
-                    if(e)
+                    if(e){
+                        $(form).append(form_applet);
                         $(form).submit();
+                    }
                 }
             )
         });

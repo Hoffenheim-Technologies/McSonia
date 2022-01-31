@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\UserActivityConstants;
 use App\Helpers\MS;
 use App\Http\Controllers\Controller;
+use App\Mail\McSoniaMail;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\User;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class DriverController extends Controller
@@ -28,6 +30,16 @@ class DriverController extends Controller
     public function index()
     {
         $drivers = User::where('role','driver')->orderBy('created_at', 'desc')->get();
+        if($drivers){
+            foreach($drivers as $item){
+                $item->pending_order = OrderDetails::where('user_id',$item->id)
+                                                    ->where('status','<>','Completed')
+                                                    ->count();
+                $item->completed_order = OrderDetails::where('user_id',$item->id)
+                                                    ->where('status','Completed')
+                                                    ->count();
+            }
+        }
         return view("admin.driver.index", compact('drivers'));
     }
 
@@ -70,7 +82,19 @@ class DriverController extends Controller
                     $f = MS::getFileMetaData($photo);
                     $f['name'] = 'photo.' . $f['ext'];
                     $f['path'] = $photo->storeAs(MS::getUploadPath($data['role']) . $data['code'], $f['name']);
-                    $data['image'] = asset('storage/app/' . $f['path']);
+                    $data['image'] = $f['path'];
+                }
+                $details2 = [
+                    'title' => "Account Notification",
+                    'body' => "Your Mcsonia Account has successfully been created.\n
+                    Please Login with the following credentials \n
+                    Email: $request->email \n
+                    Note: Your password is your last name in small letters"
+                ];
+
+                if($request->email){
+                    //Mail STaff
+                    Mail::to($request->email)->send(new McSoniaMail($details2));
                 }
                 User::create($data);
                 UserActivityService::log($user->id,UserActivityConstants::PROFILE_ACTIVITY,"Profile Create","User Created Driver Profile",null);
@@ -177,7 +201,7 @@ class DriverController extends Controller
                     $f = MS::getFileMetaData($photo);
                     $f['name'] = 'photo.' . $f['ext'];
                     $f['path'] = $photo->storeAs(MS::getUploadPath($check->role) . $data['code'], $f['name']);
-                    $check->image = asset('storage/' . $f['path']);
+                    $check->image = $f['path'];
                 }
 
                 $check->save();

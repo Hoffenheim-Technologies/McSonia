@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Mail\McSoniaMail;
+use App\Models\Items;
 use App\Models\OrderDetails;
 use App\Models\Report;
 use App\Models\User;
@@ -19,6 +21,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -35,6 +38,7 @@ class OrderController extends Controller
                 if($item->user_id){
                     $item->user = User::find($item->user_id);
                 }
+                $item->order_detail = OrderDetails::where('order_id',$item->id)->first();
             }
         }
         //dd($orders);
@@ -115,6 +119,7 @@ class OrderController extends Controller
         if($order){
             $order->plocation = Location::find($order->plocation);
             $order->dlocation = Location::find($order->dlocation);
+            $order->item = Items::find($order->item);
             if($order->user_id){
                 $order->user = User::find($order->user_id);
             }
@@ -125,11 +130,13 @@ class OrderController extends Controller
                 }
             }
 
-
             $drivers = User::where('role','driver')->get();
             if($drivers){
                 foreach($drivers as $item){
                     $item->vehicle = Vehicles::where('user_id',$item->id)->first();
+                    $item->pending_order = OrderDetails::where('user_id',$item->id)
+                                                        ->where('status','<>','Completed')
+                                                        ->count();
                 }
             }
 
@@ -159,6 +166,12 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $order = Order::find($order);
+            $location = Location::find($order->plocation);
+            $order->plocation = $location->location;
+            $location = Location::find($order->dlocation);
+            $order->dlocation = $location->location;
+            $item = Items::find($order->item);
+            $order->item = $item->item;
             $driver = User::find($driver);
 
             $data = [];
@@ -167,7 +180,24 @@ class OrderController extends Controller
             $data['status'] = 'Awaiting Pickup By Driver';
             OrderDetails::create($data);
             DB::commit();
-            UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Driver To Order",null);
+
+            $details = [
+                'title' => "New Order Notification",
+                'body' => "A new Order #$order->reference has been assigned to you .   \r\n
+                The details are below:    \r\n
+                Pickup Location: $order->plocation    \r\n
+                Pickup Address: $order->paddress   \r\n
+                Pickup Time: $order->pdate on $order->ptime   \r\n
+                Dropoff Location: $order->dlocation    \r\n
+                Dropoff Address: $order->daddress   \r\n
+                Item: $order->item   \r\n
+                Description: $order->description   \r\n
+                Please contact the Administrator, for more information    \r\n"
+            ];
+
+            Mail::to($driver->email)->send(new McSoniaMail($details));
+
+            UserActivityService::log($user->id,UserActivityConstants::ORDER_ACTIVITY,"Order Proccessed","User Assigned Order To Driver $driver->lastname",null);
             return redirect()->route('orders.show', $order->id)->with('message','Driver Assigned Successfully');
         }catch(Exception $ae){
             dd($ae);
