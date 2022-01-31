@@ -26,9 +26,9 @@ class HomeController extends Controller
     public function index()
     {
         return view('home')->with('total', count(Order::where('user_id', Auth::id())->get()))
-            ->with('pending', count(OrderDetails::where('user_id', Auth::id())->where('status', 'Pending')->get()))
-            ->with('complete', count(OrderDetails::where('user_id', Auth::id())->where('status', 'Completed')->get()))
-            ->with('cancelled', count(OrderDetails::where('user_id', Auth::id())->where('status', 'Canceled')->get()))
+            ->with('pending', count(Order::where('user_id', Auth::id())->where('status', 'Pending')->get()))
+            ->with('complete', count(Order::where('user_id', Auth::id())->where('status', 'Completed')->get()))
+            ->with('cancelled', count(Order::where('user_id', Auth::id())->where('status', 'Canceled')->get()))
 ;
     }
 
