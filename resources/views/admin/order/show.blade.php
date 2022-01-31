@@ -267,18 +267,22 @@
 @section('custom-script')
     <script>
         $('.confirm-btn').on('click',function(e){
-
+            var status = $(this).val();
+            var form_applet = `<input type="hidden" name="status" value="${status}" />`;
             e.preventDefault();
 
             var form = $(this).parents('form:first');
+
             swal({title:"Are you sure ?",
                 text:"Do you want to perform this action? !!",
                 type:"warning",showCancelButton:!0,confirmButtonColor:"#DD6B55",
-                confirmButtonText:"Yes !!",cancelButtonText:"No, cancel it !!",
+                confirmButtonText:"Yes update status!!",cancelButtonText:"No, cancel it !!",
                 closeOnConfirm:1,closeOnCancel:1},
                 function(e){
-                    if(e)
+                    if(e){
+                        $(form).append(form_applet);
                         $(form).submit();
+                    }
                 }
             )
         });
