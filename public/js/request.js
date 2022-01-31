@@ -23,17 +23,19 @@ const tabs = [
             "firstname",
             "lastname",
             "email",
-            "phone" /* 'billing', 'street', 'snumber', 'city', 'state', 'postal', 'country'*/,
+            "phone",
         ],
     },
 ];
+ /* 'billing', 'street', 'snumber', 'city', 'state', 'postal', 'country'*/
 var errors;
 
 const validate = (index, status) => {
     errors = [];
     console.log(status);
-    if (status) {
+    if (!status) {
         tabs[index].fields.forEach((field) => {
+            console.log(field)
             if (!$(`[name=${field}]`).val()) {
                 errors.push({
                     field: field,
@@ -53,13 +55,13 @@ const validate = (index, status) => {
         }
         return true;
     } else {
-        return false;
+        return true;
     }
 };
 
 $("#btn_contact_details").on("click", function () {
     //console.log("contact button");
-    if (validate(0, true)) {
+    if (validate(0, false)) {
         RideDetails = {
             pdate: $("#pdate").val(),
             ptime: $("#ptime").val(),
