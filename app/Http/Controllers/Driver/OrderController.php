@@ -112,7 +112,6 @@ class OrderController extends Controller
         $user = Auth::user();
         DB::beginTransaction();
         $orderDetail = OrderDetails::find($id);
-        //dd($orderDetail);
         try {
             if($orderDetail){
                 $orderDetail->status = $request->status;
