@@ -6,6 +6,7 @@ use App\Models\faq;
 use App\Models\Location;
 use App\Models\Items;
 use App\Models\State;
+use App\Models\Testimonial;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\LocationController;
@@ -54,7 +55,7 @@ Route::get('/solution', function () {
 })->name('contact');
 
 Route::get('/testimonial', function () {
-    return view('testimonial');
+    return view('testimonial')->with('testimonials', Testimonial::all());
 })->name('testimonial');
 
 Route::get('/about', function () {
