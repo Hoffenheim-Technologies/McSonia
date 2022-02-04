@@ -42,9 +42,15 @@
                                                 {{(!empty($item->user)) ? $item->user->firstname.' '.$item->user->lastname : $item->user_email}}
                                             </td>
                                             <td>
-                                               <a class="text-bold text-primary" href="{{route('orders.show', $item->order->id)}}">
-                                                    {{$item->reference ?? ''}}}}
-                                                </a>
+                                                @if ($item->order)
+                                                <a class="text-bold text-primary" href="{{route('orders.show', $item->order->id)}}">
+                                                     {{$item->reference ?? ''}}}}
+                                                 </a>
+                                                @else
+                                                <a class="text-bold text-primary" href="#">
+                                                     {{$item->reference ?? ''}}}}
+                                                 </a>
+                                                @endif
                                             </td>
                                             <td>
                                                 @money($item->amount)
