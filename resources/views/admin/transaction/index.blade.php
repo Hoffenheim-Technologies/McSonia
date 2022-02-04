@@ -44,11 +44,11 @@
                                             <td>
                                                 @if ($item->order)
                                                 <a class="text-bold text-primary" href="{{route('orders.show', $item->order->id)}}">
-                                                     {{$item->reference ?? ''}}}}
+                                                     {{$item->reference ?? ''}}
                                                  </a>
                                                 @else
                                                 <a class="text-bold text-primary" href="#">
-                                                     {{$item->reference ?? ''}}}}
+                                                     {{$item->reference ?? ''}}
                                                  </a>
                                                 @endif
                                             </td>
