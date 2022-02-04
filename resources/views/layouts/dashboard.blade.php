@@ -40,13 +40,13 @@
     <div id="app" class="hidden">
         <div class="flex flex-row">
             <div class="fixed left-0 h-screen bg-black w-1/6 text-white font-semibold">
-                <div class="w-full pt-2 pb-8 hidden lg:block">
+                <a class="w-full pt-2 pb-8 hidden lg:block" href="{{ url('/') }}">
                     <img src="images/logo-dark.webp" alt="Logo" class="mx-auto w-7/12">
-                </div>
+                </a>
                 <div class="w-full absolute top-1/2 transform -translate-y-1/2">
                     <ul class="px-1 xs:px-3 xsm:px-5 sm:px-8 lg:px-3">
                         <li class="rounded-lg w-full py-2 sm:py-3">
-                            <a href="#" class="lg:px-3 justify-center lg:justify-start flex items-center">
+                            <a href="{{ url('home') }}" class="lg:px-3 justify-center lg:justify-start flex items-center">
                                 <span class="material-icons-outlined text-md">
                                     dashboard
                                 </span>

@@ -42,7 +42,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome')->with('faqs', faq::all())->with('locations', Location::all())->with('states', State::orderBy('state')->get());
+    return view('welcome')->with('faqs', faq::all())->with('items', Items::all())->with('locations', Location::all())->with('states', State::orderBy('state')->get());
 });
 
 Route::post('/', function (Request $request) {

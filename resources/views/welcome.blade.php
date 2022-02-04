@@ -39,6 +39,8 @@ $(window).on('load', () => {
 <script>
 $('body').click((event) => {
     if (!$(event.target).is($('.modal').find('*'))) {
+        $('.plocation').slideUp()
+        $('.dstate').slideUp()
         $('.dlocation').slideUp()
         $('.pdate').slideUp()
         $('.ptime').slideUp()
@@ -51,9 +53,9 @@ $('.fa-minus').click((event) => {
 </script>
 <script>
 function getName(id) {
-    var locations = {
-        !!json_encode($locations) !!
-    }
+    var locations = <?php
+        echo(json_encode($locations));
+    ?>;
     for (const location of locations) {
         if (location.id == id) {
             return location.location
@@ -61,25 +63,69 @@ function getName(id) {
     }
 }
 
+function getPickupLocales(id) {
+    $("#plocation").html(`<option selected disabled>Choose a Location</option>`)
+    //console.log(id)
+
+    $.ajax({
+        type: 'GET',
+        url: `/pstate/${id}`,
+        data: id,
+        success: (response) => {
+            //console.log(response)
+            for (const destination of response.locations) {
+                $("#plocation").append(
+                    `<option class="capitalize" value="${destination.id}">${destination.location}</option>`
+                )
+                $('#plocation').niceSelect('update')
+            }
+
+        },
+        error: (e) => {
+            //console.log(e);
+        }
+    });
+}
+
+var locales
+
 function getLocation(id) {
+    //console.log(id)
     $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
+    $('#dstate').html(`<option selected disabled>Choose a State</option>`)
     $('#dlocation').niceSelect('update')
+    $('#dstate').niceSelect('update')
     $.ajax({
         type: 'GET',
         url: `/location/${id}`,
         data: id,
         success: (response) => {
-            for (const destination of response.destination) {
-                $("#dlocation").append(
-                    `<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`
-                )
-                $('#dlocation').niceSelect('update')
+            locales = response.locales
+            // for (const destination of response.destination) {
+            //     $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
+            //     $('#dlocation').niceSelect('update')
+            // }
+            for (const state of response.states) {
+                $("#dstate").append(
+                    `<option class="capitalize" value="${state.id}">${state.state}</option>`)
+                $('#dstate').niceSelect('update')
             }
+
         },
         error: (e) => {
             console.log(e);
         }
     });
+}
+const setLocations = (id) => {
+    $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
+    for (const destination of locales[id]) {
+        //console.log(destination)
+        $("#dlocation").append(
+            `<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`
+        )
+        $('#dlocation').niceSelect('update')
+    }
 }
 </script>
 <script>
@@ -90,7 +136,16 @@ $('.question').click(function() {
 })
 </script>
 <script>
+$('.item').change(() => {
+    $('.pstate').slideDown()
+})
+$('.pstate').change(() => {
+    $('.plocation').slideDown()
+})
 $('.plocation').change(() => {
+    $('.dstate').slideDown()
+})
+$('.dstate').change(() => {
     $('.dlocation').slideDown()
 })
 $('.dlocation').change(() => {
@@ -237,13 +292,38 @@ $('.ptime').change(() => {
             <div class="text-2xl text-white font-bold">Order Now</div>
             <i class="fa fa-minus text-white hover:text-black"></i>
         </div>
-        <div class="plocation px-3 mb-2">
+        <div class="item hidden px-3 mb-2">
+            <label for="" class="uppercase text-xs px-2 text-white">Items *</label>
+            <select name="item" id="item" class="niceselect border-0 w-full">
+                <option selected disabled>Choose an Item</option>
+                @foreach ($items as $item)
+                <option value="{{$item->id}}" price="{{$item->price}}">{{$item->item}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="pstate px-3 mb-2">
+            <label for="" class="uppercase text-xs px-2 text-white">Pickup State *</label>
+            <select onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect border-0 w-full">
+                <option selected disabled>Choose a State</option>
+                @foreach ($states as $state)
+                <option value="{{$state->id}}">{{$state->state}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="plocation px-3 mb-2" style="display: none">
             <label for="" class="uppercase text-xs px-2 text-white">Pickup Location *</label>
-            <select onchange="getLocation($(this).val())" name="plocation" id="" class="niceselect border-0 w-full">
+            <select onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect border-0 w-full">
                 <option selected disabled>Choose a Location</option>
                 @foreach ($locations as $location)
                 <option class="capitalize" value="{{$location->id}}">{{$location->location}}</option>
                 @endforeach
+            </select>
+        </div>
+        <div class="dstate px-3 mb-2" style="display: none">
+            <label for="" class="uppercase text-xs px-2 text-white">Dropoff State *</label>
+            <select name="dstate" id="dstate" class="niceselect border-0 w-full"
+                onchange="setLocations($(this).val())">
+                <option value="" selected disabled>Choose your State</option>
             </select>
         </div>
         <div class="dlocation px-3" style="display: none;">

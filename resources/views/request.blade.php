@@ -38,7 +38,24 @@ ul.list::-webkit-scrollbar-thumb {
 
 <script>
 $(window).on('load', () => {
-    getLocation($('#plocation').val())
+    getPickupLocales($('#pstate').val())
+    
+    
+    
+    var pstate_set = @isset($input) <?php echo($input->pstate) ?> @else '' @endisset;
+    getLocation(pstate_set)
+
+
+    $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(
+        ":selected").text())
+    $('.end').text($('[name=dlocation]').find(":selected").text())
+    $('.start').text($('[name=plocation]').find(":selected").text())
+    var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $(
+        '[name=item]').find(":selected").attr('price')) ? +sval : 0)
+    $('.price').text('Price - ' + price.toString())
+    console.log(price)
+    $('[name=subtotal]').val(price)
+    $('[name=total]').val(price)
 })
 
 function getName(id) {
@@ -61,10 +78,13 @@ function getPickupLocales(id) {
         url: `/pstate/${id}`,
         data: id,
         success: (response) => {
-            //console.log(response)
+            var plocation_set = @isset($input)<?php echo(($input->plocation)) ?>@else '' @endisset;
+            $('[name=plocation]').val(plocation_set)
+            console.log(response)
+            console.log(plocation_set)
             for (const destination of response.locations) {
                 $("#plocation").append(
-                    `<option class="capitalize" value="${destination.id}">${destination.location}</option>`
+                    `<option class="capitalize" value="${destination.id}" ${(plocation_set == destination.id) ? 'selected' : '' }>${destination.location}</option>`
                 )
                 $('#plocation').niceSelect('update')
             }
@@ -90,13 +110,16 @@ function getLocation(id) {
         data: id,
         success: (response) => {
             locales = response.locales
+            var pstate_set = @isset($input)<?php echo($input->pstate) ?>@else '' @endisset;
+            var dstate_set = @isset($input)<?php echo($input->dstate) ?> @else '' @endisset;
+            if(dstate_set) {setLocations(dstate_set)}
             // for (const destination of response.destination) {
             //     $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
             //     $('#dlocation').niceSelect('update')
             // }
             for (const state of response.states) {
                 $("#dstate").append(
-                    `<option class="capitalize" value="${state.id}">${state.state}</option>`)
+                    `<option class="capitalize" value="${state.id}"  ${pstate_set ? ((pstate_set == state.id) ? 'selected' : '' ) : ''}>${state.state}</option>`)
                 $('#dstate').niceSelect('update')
             }
 
@@ -108,10 +131,11 @@ function getLocation(id) {
 }
 const setLocations = (id) => {
     $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
+    var dlocation_set = @isset($input) <?php echo(($input->dlocation)); ?> @else '' @endisset;
     for (const destination of locales[id]) {
         //console.log(destination)
         $("#dlocation").append(
-            `<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`
+            `<option price="${destination.price}" value="${destination.dropoff_id}" ${(dlocation_set == destination.id) ? 'selected' : '' }>${getName(destination.dropoff_id)}</option>`
         )
         $('#dlocation').niceSelect('update')
     }
@@ -137,6 +161,7 @@ $('[name=plocation]').change(() => {
 $('[name=dlocation]').change(() => {
     $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(
         ":selected").text())
+    $('.start').text($('[name=plocation]').find(":selected").text())
     $('.end').text($('[name=dlocation]').find(":selected").text())
     var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $(
         '[name=item]').find(":selected").attr('price')) ? +sval : 0)
@@ -147,6 +172,7 @@ $('[name=dlocation]').change(() => {
 $('[name=item]').change(() => {
     $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(
         ":selected").text())
+    $('.start').text($('[name=plocation]').find(":selected").text())
     $('.end').text($('[name=dlocation]').find(":selected").text())
     var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $(
         '[name=item]').find(":selected").attr('price')) ? +sval : 0)
@@ -269,7 +295,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                         <select class="niceselect item border-0 border-b sm:border-0 w-full" name="item" id="">
                             <option selected disabled>Choose</option>
                             @foreach ($items as $item)
-                            <option value="{{$item->id}}" price="{{$item->price}}">{{$item->item}}</option>
+                            <option value="{{$item->id}}" price="{{$item->price}}" @isset($input->item) @if($input->item == $item->id) selected @endif @endisset>{{$item->item}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -278,14 +304,13 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
                     <div class="sm:flex flex-row">
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">
-                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset
+                            <select @isset($input->pstate) value="{{$input->pstate}}" @endisset
                                 onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect
                                 pstate border-0 w-full">
-                                <option @isset($input->plocation) @else selected @endisset disabled>Choose a State
+                                <option @isset($input->state) @else selected @endisset disabled>Choose a State
                                 </option>
                                 @foreach ($states as $state)
-                                <option @isset($input->plocation) @if($input->plocation == $state->id) selected @endif
-                                    @endisset class="capitalize" value="{{$state->id}}">{{$state->state}}</option>
+                                <option @isset($input->pstate) @if($input->pstate == $state->id) selected @endif @endisset class="capitalize" value="{{$state->id}}">{{$state->state}}</option>
                                 @endforeach
                             </select>
                         </div>

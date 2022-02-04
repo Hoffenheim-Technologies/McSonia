@@ -27,6 +27,10 @@
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Payment Status
                                 </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Fee
+                                </th>
                                 <!-- <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Driver Assigned
@@ -62,7 +66,12 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    Paid
+                                    <?php 
+                                        echo($order->status == "Paid" ? 'Paid' : 'Pending'); 
+                                    ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ $order->total }}
                                 </td>
                                 <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     Mark Anthony

@@ -38,6 +38,7 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->string('reference');
             $table->timestamps();
+            $table->enum('status', ['Pending', 'Paid'])->default('Pending');
         });
 
         Schema::table('orders', function (Blueprint $table) {
