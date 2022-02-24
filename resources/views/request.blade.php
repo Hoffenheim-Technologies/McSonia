@@ -70,7 +70,7 @@ function getName(id) {
 }
 
 function getPickupLocales(id) {
-    $("#plocation").html(`<option selected disabled>Choose a Location</option>`)
+    $("#plocation").html(`<option selected disabled>Loading...</option>`)
     //console.log(id)
 
     $.ajax({
@@ -78,16 +78,30 @@ function getPickupLocales(id) {
         url: `/pstate/${id}`,
         data: id,
         success: (response) => {
-            var plocation_set = @isset($input)<?php echo(($input->plocation)) ?>@else '' @endisset;
+            var plocation_set = @isset($input)<?php echo(($input->plocation)) ?>@else null @endisset;
             $('[name=plocation]').val(plocation_set)
             console.log(response)
             console.log(plocation_set)
-            for (const destination of response.locations) {
+            if (plocation_set) {
+                console.log(true)
+                $("#plocation").html(`<option selected disabled>Select a location</option>`)
+                for (const destination of response.locations) {
                 $("#plocation").append(
                     `<option class="capitalize" value="${destination.id}" ${(plocation_set == destination.id) ? 'selected' : '' }>${destination.location}</option>`
                 )
                 $('#plocation').niceSelect('update')
             }
+            } else {
+                console.log(false)
+                $("#plocation").html(`<option selected disabled>Select a location</option>`)
+                for (const destination of response.locations) {
+                $("#plocation").append(
+                    `<option class="capitalize" value="${destination.id}">${destination.location}</option>`
+                )
+                $('#plocation').niceSelect('update')
+            }
+            }
+            
 
         },
         error: (e) => {
