@@ -53,7 +53,7 @@ $(window).on('load', () => {
     var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $(
         '[name=item]').find(":selected").attr('price')) ? +sval : 0)
     $('.price').text('Price - ' + price.toString())
-    console.log(price)
+    
     $('[name=subtotal]').val(price)
     $('[name=total]').val(price)
 })
@@ -70,8 +70,9 @@ function getName(id) {
 }
 
 function getPickupLocales(id) {
-    $("#plocation").html(`<option selected disabled>Loading...</option>`)
-    //console.log(id)
+    $("#plocation").html(`<option selected disabled>Select a State</option>`)
+    $('#plocation').niceSelect('update')
+    
 
     $.ajax({
         type: 'GET',
@@ -80,27 +81,31 @@ function getPickupLocales(id) {
         success: (response) => {
             var plocation_set = @isset($input)<?php echo(($input->plocation)) ?>@else null @endisset;
             $('[name=plocation]').val(plocation_set)
-            console.log(response)
-            console.log(plocation_set)
-            if (plocation_set) {
-                console.log(true)
-                $("#plocation").html(`<option selected disabled>Select a location</option>`)
-                for (const destination of response.locations) {
-                $("#plocation").append(
-                    `<option class="capitalize" value="${destination.id}" ${(plocation_set == destination.id) ? 'selected' : '' }>${destination.location}</option>`
-                )
+            
+            if (!response.locations.length > 0) {
+                $("#plocation").html(`<option selected disabled>No selections available</option>`)
                 $('#plocation').niceSelect('update')
-            }
             } else {
-                console.log(false)
-                $("#plocation").html(`<option selected disabled>Select a location</option>`)
-                for (const destination of response.locations) {
-                $("#plocation").append(
-                    `<option class="capitalize" value="${destination.id}">${destination.location}</option>`
-                )
-                $('#plocation').niceSelect('update')
+                if (plocation_set) {
+                    $("#plocation").html(`<option selected disabled>Select a location</option>`)
+                    for (const destination of response.locations) {
+                        $("#plocation").append(
+                            `<option class="capitalize" value="${destination.id}" ${(plocation_set == destination.id) ? 'selected' : '' }>${destination.location}</option>`
+                        )
+                        $('#plocation').niceSelect('update')
+                    }
+                } else {
+                   
+                    $("#plocation").html(`<option selected disabled>Select a location</option>`)
+                    for (const destination of response.locations) {
+                        $("#plocation").append(
+                            `<option class="capitalize" value="${destination.id}">${destination.location}</option>`
+                        )
+                        $('#plocation').niceSelect('update')
+                    }
+                }
             }
-            }
+            
             
 
         },
@@ -113,11 +118,12 @@ function getPickupLocales(id) {
 var locales
 
 function getLocation(id) {
-    //console.log(id)
-    $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
-    $('#dstate').html(`<option selected disabled>Choose a State</option>`)
+    $("#dlocation").html(`<option selected disabled>Choose a State</option>`)
+    $('#dstate').html(`<option selected disabled>Loading...</option>`)
     $('#dlocation').niceSelect('update')
     $('#dstate').niceSelect('update')
+    
+    
     $.ajax({
         type: 'GET',
         url: `/location/${id}`,
@@ -131,12 +137,23 @@ function getLocation(id) {
             //     $("#dlocation").append(`<option price="${destination.price}" value="${destination.dropoff_id}">${getName(destination.dropoff_id)}</option>`)
             //     $('#dlocation').niceSelect('update')
             // }
-            for (const state of response.states) {
-                $("#dstate").append(
-                    `<option class="capitalize" value="${state.id}"  ${pstate_set ? ((pstate_set == state.id) ? 'selected' : '' ) : ''}>${state.state}</option>`)
+            if (!response.states.length > 0){
+                $("#dlocation").html(`<option selected disabled>No Destinations Available!</option>`)
+                $('#dstate').html(`<option selected disabled>No Destinations Available!</option>`)
+                $('#dlocation').niceSelect('update')
                 $('#dstate').niceSelect('update')
+            } else {
+                console.log(response.states)
+                for (const state of response.states) {
+                    $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
+                    $('#dstate').html(`<option selected disabled>Choose a State</option>`)
+                    $('#dlocation').niceSelect('update')
+                    $('#dstate').niceSelect('update')
+                    $("#dstate").append(
+                        `<option class="capitalize" value="${state.id}"  ${pstate_set ? ((pstate_set == state.id) ? 'selected' : '' ) : ''}>${state.state}</option>`)
+                    $('#dstate').niceSelect('update')
+                }
             }
-
         },
         error: (e) => {
             console.log(e);
@@ -147,7 +164,7 @@ const setLocations = (id) => {
     $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
     var dlocation_set = @isset($input) <?php echo(($input->dlocation)); ?> @else '' @endisset;
     for (const destination of locales[id]) {
-        //console.log(destination)
+       
         $("#dlocation").append(
             `<option price="${destination.price}" value="${destination.dropoff_id}" ${(dlocation_set == destination.id) ? 'selected' : '' }>${getName(destination.dropoff_id)}</option>`
         )
@@ -179,7 +196,7 @@ $('[name=dlocation]').change(() => {
     $('.end').text($('[name=dlocation]').find(":selected").text())
     var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $(
         '[name=item]').find(":selected").attr('price')) ? +sval : 0)
-    $('.price').text('Price - ' + price.toString())
+    $('.price').html('&#8358;' + price.toFixed(2).toLocaleString())
     $('[name=subtotal]').val(price)
     $('[name=total]').val(price)
 })
@@ -190,7 +207,7 @@ $('[name=item]').change(() => {
     $('.end').text($('[name=dlocation]').find(":selected").text())
     var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $(
         '[name=item]').find(":selected").attr('price')) ? +sval : 0)
-    $('.price').text('Price - ' + price.toString())
+    $('.price').html('&#8358;' + price.toFixed(2).toLocaleString())
     console.log(price)
     $('[name=subtotal]').val(price)
     $('[name=total]').val(price)
@@ -443,13 +460,13 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <h6 class="font-medium">
                         Selection
                     </h6>
-                    <p id="summary_selection_price">&#8358; <span class="price"></span></p>
+                    <p id="summary_selection_price">Price - <span class="price"></span></p>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-bold">
                         Total
                     </h6>
-                    <p id="summary_total_price" class="font-bold">&#8358; <span class="price"></span></p>
+                    <p id="summary_total_price" class="font-bold">Price - <span class="price"></span></p>
                 </div>
             </div>
             <div class="flex-grow rounded mx-5">
@@ -773,13 +790,13 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <h6 class="font-medium">
                         Selection
                     </h6>
-                    <p>&#8358; <span class="price"></span></p>
+                    <p>Price - <span class="price"></span></p>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-bold">
                         Total
                     </h6>
-                    <p class="font-bold">&#8358; <span class="price"></span></p>
+                    <p class="font-bold">Price - <span class="price"></span></p>
                 </div>
             </div>
         </div>
@@ -805,7 +822,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
             <input type="hidden" name="orderID" value="345">
             <input type="hidden" name="amount" value="800"> {{-- required in kobo --}}
             <input type="hidden" name="quantity" value="3">
-            <input type="hidden" name="currency" value="&#8358;">
+            <input type="hidden" name="currency" value="Price -">
             <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
             {{-- <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">  required --}}
 
