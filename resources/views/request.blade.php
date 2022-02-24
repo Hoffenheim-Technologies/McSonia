@@ -443,13 +443,13 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <h6 class="font-medium">
                         Selection
                     </h6>
-                    <p id="summary_selection_price">NGN <span class="price"></span></p>
+                    <p id="summary_selection_price">&#8358; <span class="price"></span></p>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-bold">
                         Total
                     </h6>
-                    <p id="summary_total_price" class="font-bold">NGN <span class="price"></span></p>
+                    <p id="summary_total_price" class="font-bold">&#8358; <span class="price"></span></p>
                 </div>
             </div>
             <div class="flex-grow rounded mx-5">
@@ -773,13 +773,13 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <h6 class="font-medium">
                         Selection
                     </h6>
-                    <p>NGN <span class="price"></span></p>
+                    <p>&#8358; <span class="price"></span></p>
                 </div>
                 <div class="flex flex-row mx-3 my-5 pb-4 bg-white border-b justify-between">
                     <h6 class="font-bold">
                         Total
                     </h6>
-                    <p class="font-bold">NGN <span class="price"></span></p>
+                    <p class="font-bold">&#8358; <span class="price"></span></p>
                 </div>
             </div>
         </div>
@@ -805,7 +805,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
             <input type="hidden" name="orderID" value="345">
             <input type="hidden" name="amount" value="800"> {{-- required in kobo --}}
             <input type="hidden" name="quantity" value="3">
-            <input type="hidden" name="currency" value="NGN">
+            <input type="hidden" name="currency" value="&#8358;">
             <input type="hidden" name="metadata" value="{{ json_encode($array = ['key_name' => 'value',]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
             {{-- <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}">  required --}}
 

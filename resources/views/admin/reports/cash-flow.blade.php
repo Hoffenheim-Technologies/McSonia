@@ -357,7 +357,7 @@
                                                           <h4> Cash On Hand </h4>
                                                         </div>
                                                         <div class="float-right">
-                                                          <h4>NGN 0.00 </h4>
+                                                          <h4>&#8358; 0.00 </h4>
                                                         </div>
                                                       </div>
                                                     </div>
@@ -367,7 +367,7 @@
                                                         <h4> <strong> Total Starting Balance </strong> </h4>
                                                       </div>
                                                       <div class="float-right">
-                                                        <h4>NGN 0.00 </h4>
+                                                        <h4>&#8358; 0.00 </h4>
                                                       </div>
                                                     </div>
                                                   </div>
