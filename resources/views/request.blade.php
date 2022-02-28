@@ -35,15 +35,17 @@ ul.list::-webkit-scrollbar-thumb {
 @endsection
 
 @section('extraScripts')
-
+@isset($message, $reference)
+@else
 <script>
 $(window).on('load', () => {
     getPickupLocales($('#pstate').val())
     
-    
-    
     var pstate_set = @isset($input) <?php echo($input->pstate) ?> @else '' @endisset;
-    getLocation(pstate_set)
+    if (pstate_set){
+        getLocation(pstate_set)
+    }
+    
 
 
     $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(
@@ -236,6 +238,7 @@ $('.email').val('{{ Auth::user()->email }}')
 $('.phone').val('{{ Auth::user()->phone }}')
 </script>
 @endguest
+@endisset
 @endsection
 
 @section('content')
