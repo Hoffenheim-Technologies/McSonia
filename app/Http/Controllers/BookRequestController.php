@@ -131,6 +131,7 @@ class BookRequestController extends Controller
         }catch(Exception $e){
             dd($e);
             error_log($e);
+            return view('request')->with('message', 'Order Booking Unsuccesful');
         }
     }
 
