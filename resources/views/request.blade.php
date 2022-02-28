@@ -421,7 +421,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
         <div class="flex flex-row justify-end">
             <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg"
                 type="submit" onclick="event.preventDefault();">
-                Enter Contact Details
+                Next
                 <i class="fa fa-arrow-right text-white"></i>
             </button>
         </div>
@@ -474,16 +474,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
             </div>
             <div class="flex-grow rounded mx-5">
                 @guest
-                <div>
-                    <div class="w-full bg-yellow-100 px-3 py-3">Sign In</div>
-                    <div class="flex flex-row justify-end">
-                        <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit"
-                            onclick="event.preventDefault(); $('.contact-details').slideDown()">Don't have an
-                            Account?</button>
-                        <a class="btn-lg font-semibold block uppercase border rounded-lg" href="/login">Sign In</a>
-                    </div>
-                </div>
-                <div class="mt-6 contact-details" style="display: none;">
+                <div class="mt-6 contact-details">
                     <div class="w-full bg-yellow-100 px-3 py-3 uppercase">Contact Details</div>
                     <div class="flex flex-row w-full bg-white border py-3">
                         <div class="w-1/2 border-r">
@@ -577,6 +568,19 @@ $('.phone').val('{{ Auth::user()->phone }}')
                                 </select>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="text-center w-full mt-3">
+                OR 
+                </div>
+
+                <div>
+                    <div class="flex flex-row justify-center w-full">
+                        <!-- <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit"
+                            onclick="event.preventDefault(); $('.contact-details').slideDown()">Don't have an
+                            Account?</button> -->
+                        <a class="btn-lg font-semibold block uppercase border rounded-lg" href="/login">Sign In / Sign Up</a>
                     </div>
                 </div>
                 @else
@@ -683,12 +687,12 @@ $('.phone').val('{{ Auth::user()->phone }}')
             <button class="underline" id="return_item_details" type="submit"
                 onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">
                 <i class="fa fa-arrow-left text-black"></i>
-                Choose Ride Details
+                Previous
             </button>
             <button class="btn-lg font-semibold block uppercase border rounded-lg" id="button_booking_summary"
                 type="submit"
                 onclick="event.preventDefault(); if(validate(1, {{Auth::check()}})){ console.log(true);$('.content-2').hide(); $('.content-3').show() } else {alert('Please sign in or fill in your contact details');}">
-                Booking Summary
+                View Summary
                 <i class="fa fa-arrow-right text-white"></i>
             </button>
         </div>
@@ -806,7 +810,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
         <div class="flex flex-row justify-between">
             <button class="underline" type="submit"
                 onclick="event.preventDefault(); $('.content-3').hide(); $('.content-2').show()"><i
-                    class="fa fa-arrow-left text-black"></i>Back</button>
+                    class="fa fa-arrow-left text-black"></i>Previous</button>
             <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit">Book Now</button>
         </div>
     </div>
