@@ -130,6 +130,7 @@ class BookRequestController extends Controller
 
         }catch(Exception $e){
             dd($e);
+            error_log($e);
         }
     }
 
