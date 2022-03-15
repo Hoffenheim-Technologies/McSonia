@@ -32,11 +32,63 @@ var errors;
 
 const validate = (index, status) => {
     errors = [];
-    console.log(status);
     if (!status) {
         tabs[index].fields.forEach((field) => {
-            console.log(field)
-            if (!$(`[name=${field}]`).val()) {
+            if(field == 'email'){
+                if (!$(`[name=${field}]`).val()) {
+                    errors.push({
+                        field: field,
+                        message: `${field} is compulsory`,
+                    });
+                    $(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-green-400")
+                        .addClass("ring ring-red-500");
+                }
+                else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($(`[name=${field}]`).val()))) {
+                    errors.push({
+                        field: field,
+                        message: `${field} must be an email address`,
+                    });
+                    $(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-green-400")
+                        .addClass("ring ring-red-500");
+                }
+                else {
+                    $(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-red-500")
+                        .addClass("ring ring-green-400");
+                    setTimeout(()=>{$(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-green-400")}, 500)
+                }
+            }
+            else if(field == 'phone'){
+                if (!$(`[name=${field}]`).val()) {
+                    errors.push({
+                        field: field,
+                        message: `${field} is compulsory`,
+                    });
+                    $(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-green-400")
+                        .addClass("ring ring-red-500");
+                }
+                else if (!(/^[(/+)?\d{3}]|[0][- ]?(\d{3})[- ]?(\d{3})[- ]?(\d{4})$/.test($(`[name=${field}]`).val()))) {
+                    errors.push({
+                        field: field,
+                        message: `${field} must be a valid phone string`,
+                    });
+                    $(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-green-400")
+                        .addClass("ring ring-red-500");
+                }
+                else {
+                    $(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-red-500")
+                        .addClass("ring ring-green-400");
+                    setTimeout(()=>{$(`[name=${field}], .${field}.niceselect`)
+                        .removeClass("ring ring-green-400")}, 500)
+                }
+            }
+            else if (!$(`[name=${field}]`).val()) {
                 errors.push({
                     field: field,
                     message: `${field} is compulsory`,
@@ -48,7 +100,10 @@ const validate = (index, status) => {
                 $(`[name=${field}], .${field}.niceselect`)
                     .removeClass("ring ring-red-500")
                     .addClass("ring ring-green-400");
+                setTimeout(()=>{$(`[name=${field}], .${field}.niceselect`)
+                    .removeClass("ring ring-green-400")}, 500)
             }
+            console.log(errors)
         });
         if (errors.length > 0) {
             return false;

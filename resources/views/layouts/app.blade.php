@@ -115,25 +115,25 @@
             </button> -->
             <div class="mt-3">
                 <ul class="flex flex-row text-xs">
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'about') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('about') }}">About</a></li>
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'order') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('order') }}">Booking</a></li>
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'testimonial') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('testimonial') }}">Testimonials</a></li>
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'contact') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('contact') }}">Contact-Us</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'about') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('about') }}">About</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'order') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('order') }}">Booking</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'testimonial') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('testimonial') }}">Testimonials</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'contact') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('contact') }}">Contact-Us</a></li>
                 </ul>
             </div>
 
             <nav class="flex flex-row justify-end">
-                <ul class="flex flex-row justify-around text-xs text-yellow-500 mt-3 mr-2">
+                <ul class="flex flex-row justify-around text-xs text-yellow-700 mt-3 mr-2">
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
-                            <li class="px-4 py-2">
-                                <a class="uppercase" href="{{ route('login') }}">Log In</a>
+                            <li class="px-4 py-2 text-black hover:text-yellow-700">
+                                <a class="uppercase font-semibold" href="{{ route('login') }}">Log In</a>
                             </li>
                         @endif
 
                         @if (Route::has('register'))
-                            <li class="cursor-pointer px-4 py-2 border rounded border-yellow-500 hover:bg-yellow-500 hover:text-white">
+                            <li class="cursor-pointer px-4 py-2 border rounded border-yellow-500 bg-yellow-500 hover:bg-yellow-700 hover:border-yellow-700 text-white">
                                 <a class="uppercase" href="{{ route('register') }}">Sign Up</a>
                             </li>
                         @endif
@@ -196,8 +196,13 @@
         <footer class="mt-12">
             <div class="text-white mx-8 bg-gray-800">
                 <div class="text-center">
-                    <div class="py-5">
-                        <a href="{{ route('login') }}" class="px-8 text-xs font-bold py-2 uppercase border-2 border-white">Sign in</a>
+                    <div class="flex flex-row justify-center">
+                        <div class="py-5 mr-5">
+                            <a href="{{ route('register') }}" class="px-8 text-xs font-bold py-2 uppercase border-2 border-white">Sign up</a>
+                        </div>
+                        <div class="py-5 ml-5">
+                            <a href="{{ route('login') }}" class="px-8 text-xs font-bold py-2 uppercase border-2 border-white">Log in</a>
+                        </div>
                     </div>
                     <div class="py-5 mx-auto w-max">
                         <div class="flex flex-row items-center justify-around">
@@ -211,13 +216,8 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden w-full bg-yellow-100 text-xl flex justify-around">
-                <span class="flex-grow">Get Connected </span>
-                <div class="flex flex-grow justify-around">
-                    <a href="">Facebook</a>
-                    <a href="">Instagram</a>
-                </div>
-            </div>
+            
+
             <div class="mx-auto w-full text-center">
                 Powered by <a class="text-blue-400 hover:text-yellow-500" href="https://www.hoffenheimtechnologies.com">Hoffenheim Technologies</a>
             </div>

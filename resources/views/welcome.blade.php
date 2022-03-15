@@ -166,7 +166,7 @@ $('.ptime').change(() => {
         <div class="ml-auto self-center w-full">
             <h1 class="font-bold text-3xl lg:text-6xl mb-5 w-full md:w-11/12">All Tools for Delivery Services in One
                 Place</h1>
-            <h3 class="lg:text-lg text-base text-yellow-600 w-full md:w-2/3 my-5">We are one team with you! <br> Our
+            <h3 class="lg:text-lg text-base w-full md:w-2/3 my-5">We are one team with you! <br> Our
                 goal is to provide the best service for your clients.</h3>
             <a href="/request" class="btn-lg font-semibold inline-block uppercase border rounded-lg">Order a
                 Delivery</a>
@@ -207,14 +207,14 @@ $('.ptime').change(() => {
             to our clients while committing to the following cultural values:
         </p>
         <ul>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Act with integrity</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Passion</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Synergy </li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Innovation</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Quality and Efficiency</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Collaboration</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Decisiveness</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Aspiration</li>
+            <li class="text-md">Act with integrity</li>
+            <li class="text-md">Passion</li>
+            <li class="text-md">Synergy </li>
+            <li class="text-md">Innovation</li>
+            <li class="text-md">Quality and Efficiency</li>
+            <li class="text-md">Collaboration</li>
+            <li class="text-md">Decisiveness</li>
+            <li class="text-md">Aspiration</li>
         </ul>
     </div>
 
