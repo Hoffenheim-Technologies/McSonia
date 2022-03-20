@@ -205,10 +205,21 @@
                         </div>
                     </div>
                     <div class="py-5 mx-auto w-max">
-                        <div class="flex flex-row items-center justify-around">
-                            <i class="fa fa-facebook-f border px-3 py-2 text-gray-800 bg-white rounded-full mx-1"></i>
-                            <i class="fa fa-instagram border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i>
-                            <i class="fa fa-twitter border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i>
+                        <div class="sm:flex flex-row items-end">
+                            <div class="mx-3 mb-2 sm:mb-0">
+                                <a href="tel:+2348032616222" class="flex flex-row items-center"><i class="fa fa-phone px-2"></i><span>+234 803 261 6222</span></a>
+                                <a href="mailto:info@mcsonialogistics.com.ng" class="flex flex-row items-center"><i class="fa fa-envelope px-2"></i><span>info@mcsonialogistics.com.ng</span></a>
+                            </div>
+                            <div>
+                                <p class="mb-2">Follow Us</p>
+                                <div class="flex flex-row items-center xs:justify-around mx-3 mt-5 sm:mt-0">
+                                    <a href="https://www.facebook.com/McSonia-Logistic-Services-Limited-103366721943768" target="blank"><i class="fa fa-facebook-f border px-3 py-2 text-gray-800 bg-white rounded-full mx-1"></i></a>
+                                    <a href="https://www.instagram.com/mcsonialogistics/" target="blank"><i class="fa fa-instagram border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i></a>
+                                    <a href="https://twitter.com/McSoniaLogic" target="blank"><i class="fa fa-twitter border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i></a>
+                                    <!-- <span class="px-3 py-2 border-2 ml-3">Follow Us</span> -->
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                     <div class="py-3 mx-auto w-max">

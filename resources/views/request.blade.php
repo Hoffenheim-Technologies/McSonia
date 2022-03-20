@@ -306,7 +306,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
         </ul>
     </div>
     <div class="content-1">
-        <div class="sm:grid grid-cols-2 mt-12">
+        <div class="sm:w-2/3 mx-auto mt-12">
             <div class="border rounded bg-yellow-100 mx-3">
                 <div class="font-semibold py-3 px-3">
                     Ride Details
@@ -400,7 +400,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                         type="text" placeholder="Describe your item"></textarea>
                 </div>
             </div>
-            <div class="border relative rounded bg-yellow-100 mx-3 my-3 sm:my-0 sm:mx-5">
+            <!-- <div class="border relative rounded bg-yellow-100 mx-3 my-3 sm:my-0 sm:mx-5">
                 <div class="h-full">
                     <div class="flex flex-col h-full justify-evenly">
                         <div class="flex flex-col items-start text-3xl font-bold px-4">
@@ -416,7 +416,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="flex flex-row justify-end">
             <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg"

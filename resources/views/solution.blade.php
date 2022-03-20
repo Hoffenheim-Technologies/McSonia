@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container mx-auto">
+    <h6 class="text-lg uppercase text-yellow-500 w-max mx-auto mt-12 font-semibold mb-5">Contact Us</h6>
     <div class="flex flex-col md:grid md:grid-cols-2">
         <div class="ml-auto self-center">
             <form class="border shadow-md rounded w-5/6 mx-auto px-7 py-12">
