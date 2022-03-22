@@ -686,7 +686,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
             <button class="btn-lg font-semibold block uppercase border rounded-lg" id="button_booking_summary"
                 type="submit"
                 onclick="event.preventDefault(); if(validate(1, {{Auth::check()}})){ console.log(true);$('.content-2').hide(); $('.content-3').show() } else {alert('Please sign in or fill in your contact details');}">
-                View Summary
+                View Booking
                 <i class="fa fa-arrow-right text-white"></i>
             </button>
         </div>
