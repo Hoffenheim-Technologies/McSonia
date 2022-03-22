@@ -400,7 +400,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                         type="text" placeholder="Describe your item"></textarea>
                 </div>
             </div>
-            <div class="mx-3 hidden justify-center grid grid-cols-2">
+            <div class="mx-3 hidden">
                 <input readonly name="subtotal" class="">
                 <input readonly name="total" class="">
             </div>
