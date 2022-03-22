@@ -400,6 +400,10 @@ $('.phone').val('{{ Auth::user()->phone }}')
                         type="text" placeholder="Describe your item"></textarea>
                 </div>
             </div>
+            <div class="mx-3 hidden justify-center grid grid-cols-2">
+                <input readonly name="subtotal" class="">
+                <input readonly name="total" class="">
+            </div>
             <!-- <div class="border relative rounded bg-yellow-100 mx-3 my-3 sm:my-0 sm:mx-5">
                 <div class="h-full">
                     <div class="flex flex-col h-full justify-evenly">
@@ -410,10 +414,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                             <div class="flex flex-row items-center">To <span
                                     class="mx-3 text-green-400 text-5xl end">End</span></div>
                         </div>
-                        <div class="mx-3 hidden justify-center grid grid-cols-2">
-                            <input readonly name="subtotal" class="">
-                            <input readonly name="total" class="">
-                        </div>
+                        
                     </div>
                 </div>
             </div> -->
