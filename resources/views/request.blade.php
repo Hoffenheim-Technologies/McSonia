@@ -40,13 +40,18 @@ ul.list::-webkit-scrollbar-thumb {
 <script>
 $(window).on('load', () => {
     getPickupLocales($('#pstate').val())
-    
+
     var pstate_set = @isset($input) <?php echo($input->pstate) ?> @else '' @endisset;
     if (pstate_set){
         getLocation(pstate_set)
     }
-    
 
+
+    var pstate_set = @isset($input) <?php echo($input->pstate) ?> @else '' @endisset;
+
+    if (pstate_set){
+        getLocation(pstate_set)
+    }
 
     $('.journey').val($('[name=plocation]').find(":selected").text() + ' - ' + $('[name=dlocation]').find(
         ":selected").text())
@@ -55,15 +60,17 @@ $(window).on('load', () => {
     var price = ((val1 = $('[name=dlocation]').find(":selected").attr('price')) ? +val1 : 0) + ((sval = $(
         '[name=item]').find(":selected").attr('price')) ? +sval : 0)
     $('.price').text('Price - ' + price.toString())
-    
+
     $('[name=subtotal]').val(price)
     $('[name=total]').val(price)
 })
 
 function getName(id) {
+
     var locations = <?php
         echo(json_encode($locations));
     ?>;
+
     for (const location of locations) {
         if (location.id == id) {
             return location.location
@@ -74,7 +81,7 @@ function getName(id) {
 function getPickupLocales(id) {
     $("#plocation").html(`<option selected disabled>Select a State</option>`)
     $('#plocation').niceSelect('update')
-    
+
 
     $.ajax({
         type: 'GET',
@@ -83,7 +90,7 @@ function getPickupLocales(id) {
         success: (response) => {
             var plocation_set = @isset($input)<?php echo(($input->plocation)) ?>@else null @endisset;
             $('[name=plocation]').val(plocation_set)
-            
+
             if (!response.locations.length > 0) {
                 $("#plocation").html(`<option selected disabled>No selections available</option>`)
                 $('#plocation').niceSelect('update')
@@ -97,7 +104,7 @@ function getPickupLocales(id) {
                         $('#plocation').niceSelect('update')
                     }
                 } else {
-                   
+
                     $("#plocation").html(`<option selected disabled>Select a location</option>`)
                     for (const destination of response.locations) {
                         $("#plocation").append(
@@ -107,8 +114,8 @@ function getPickupLocales(id) {
                     }
                 }
             }
-            
-            
+
+
 
         },
         error: (e) => {
@@ -124,8 +131,8 @@ function getLocation(id) {
     $('#dstate').html(`<option selected disabled>Loading...</option>`)
     $('#dlocation').niceSelect('update')
     $('#dstate').niceSelect('update')
-    
-    
+
+
     $.ajax({
         type: 'GET',
         url: `/location/${id}`,
@@ -166,7 +173,7 @@ const setLocations = (id) => {
     $("#dlocation").html(`<option selected disabled>Choose a Location</option>`)
     var dlocation_set = @isset($input) <?php echo(($input->dlocation)); ?> @else '' @endisset;
     for (const destination of locales[id]) {
-       
+
         $("#dlocation").append(
             `<option price="${destination.price}" value="${destination.dropoff_id}" ${(dlocation_set == destination.id) ? 'selected' : '' }>${getName(destination.dropoff_id)}</option>`
         )
@@ -288,7 +295,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
 </div>
 @else
 <form class="mx-auto" method="POST" action="/request">
-    @csrf @method('PUT')
+    @csrf @method('POST')
     <div class="mx-auto w-3/4 mb-12">
         <ul class="relative flex flex-row mx-auto w-full justify-center items-center">
             <li class="flex flex-col justify-center"> <span
@@ -414,7 +421,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                             <div class="flex flex-row items-center">To <span
                                     class="mx-3 text-green-400 text-5xl end">End</span></div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div> -->
@@ -567,7 +574,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                 </div>
 
                 <div class="text-center w-full mt-3">
-                OR 
+                OR
                 </div>
 
                 <div>

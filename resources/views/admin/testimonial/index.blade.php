@@ -52,7 +52,7 @@
                                                         @if ($i <= $item->rating)
                                                             <span class="fa fa-star text-warning"></span>
                                                         @else
-                                                            <span class="fa fa-star"></span>
+                                                            <span class="fa fa-star text-secondary"></span>
                                                         @endif
                                                     @endfor
                                                 </td>

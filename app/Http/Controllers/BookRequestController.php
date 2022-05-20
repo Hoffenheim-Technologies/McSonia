@@ -36,6 +36,8 @@ class BookRequestController extends Controller
      */
     public function storeOrder(Request $request)
     {
+        //dd($request);
+
         try{
 
         $order = new Order();
@@ -46,6 +48,7 @@ class BookRequestController extends Controller
         $order->paddress = $request->paddress;
         $order->dlocation = $request->dlocation;
         $order->daddress = $request->daddress;
+
         if(Auth::check()){
             $order->user_id = Auth::id();
             $order->firstname = Auth::user()->firstname;
@@ -58,6 +61,7 @@ class BookRequestController extends Controller
             $order->email = $request->email;
             $order->phone = $request->phone;
         }
+
         if($request->billing == 1){
             $order->company = $request->company;
             $order->tax = $request->tax;
@@ -68,6 +72,7 @@ class BookRequestController extends Controller
             $order->postal = $request->postal;
             $order->country = $request->country;
         }
+
         if($request->discount){
             $order->discount = $request->discount;
         }
@@ -129,7 +134,7 @@ class BookRequestController extends Controller
         return view('request')->with('message', 'Success')->with('reference', $order->reference)->with('order',$order);
 
         }catch(Exception $e){
-            dd($e);
+            //dd($e);
             error_log($e);
             return view('request')->with('message', 'Order Booking Unsuccesful');
         }
