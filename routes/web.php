@@ -205,7 +205,7 @@ Route::get('/location/{id}', [AjaxController::class, 'location']);
 Route::get('/pstate/{id}', [AjaxController::class, 'state']);
 Route::get('/dstate/{id}', [AjaxController::class, 'state']);
 Route::get('/request', [BookRequestController::class, 'order'])->name('order');
-Route::put('/request', [BookRequestController::class, 'storeOrder'])->name('request');
+Route::post('/request', [BookRequestController::class, 'storeOrder'])->name('request');
 
 // Laravel 8
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');

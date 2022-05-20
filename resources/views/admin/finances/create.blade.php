@@ -308,7 +308,7 @@
                         url:url,
                         type:'POST',
                         processData:false,
-                        contentType:'json',
+                        contentType:'application/json',
                         data: data,
                         success: (response) => {
                             $('#table_body').empty();

@@ -15,7 +15,7 @@
     <script src="{{ $admin_source }}/plugins/raphael/raphael.min.js"></script>
     <script src="{{ $admin_source }}/plugins/morris/morris.min.js"></script>
     <!-- Pignose Calender -->
-    <script src="{{ $admin_source }}/plugins/moment/moment.min.js"></script>
+    <script src="{{ $admin_source }}/plugins/moment/moment.min.js"></script>    
     <script src="{{ $admin_source }}/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
     <!-- ChartistJS -->
     <script src="{{ $admin_source }}/plugins/chartist/js/chartist.min.js"></script>
