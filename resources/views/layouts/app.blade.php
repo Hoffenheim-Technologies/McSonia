@@ -115,25 +115,25 @@
             </button> -->
             <div class="mt-3">
                 <ul class="flex flex-row text-xs">
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'about') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('about') }}">About</a></li>
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'order') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('order') }}">Booking</a></li>
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'testimonial') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('testimonial') }}">Testimonials</a></li>
-                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'contact') === 0) ? 'text-yellow-500' : 'hover:text-yellow-400' }}"><a href="{{ route('contact') }}">Contact-Us</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'about') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('about') }}">About</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'order') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('order') }}">Booking</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'testimonial') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('testimonial') }}">Testimonials</a></li>
+                    <li class="px-4 uppercase {{ (strpos(Route::currentRouteName(), 'contact') === 0) ? 'text-yellow-500' : 'hover:text-yellow-700' }}"><a href="{{ route('contact') }}">Contact-Us</a></li>
                 </ul>
             </div>
 
             <nav class="flex flex-row justify-end">
-                <ul class="flex flex-row justify-around text-xs text-yellow-500 mt-3 mr-2">
+                <ul class="flex flex-row justify-around text-xs text-yellow-700 mt-3 mr-2">
                     <!-- Authentication Links -->
                     @guest
                         @if (Route::has('login'))
-                            <li class="px-4 py-2">
-                                <a class="uppercase" href="{{ route('login') }}">Log In</a>
+                            <li class="px-4 py-2 text-black hover:text-yellow-700">
+                                <a class="uppercase font-semibold" href="{{ route('login') }}">Log In</a>
                             </li>
                         @endif
 
                         @if (Route::has('register'))
-                            <li class="cursor-pointer px-4 py-2 border rounded border-yellow-500 hover:bg-yellow-500 hover:text-white">
+                            <li class="cursor-pointer px-4 py-2 border rounded border-yellow-500 bg-yellow-500 hover:bg-yellow-700 hover:border-yellow-700 text-white">
                                 <a class="uppercase" href="{{ route('register') }}">Sign Up</a>
                             </li>
                         @endif
@@ -196,14 +196,30 @@
         <footer class="mt-12">
             <div class="text-white mx-8 bg-gray-800">
                 <div class="text-center">
-                    <div class="py-5">
-                        <a href="{{ route('login') }}" class="px-8 text-xs font-bold py-2 uppercase border-2 border-white">Sign in</a>
+                    <div class="flex flex-row justify-center">
+                        <div class="py-5 mr-5">
+                            <a href="{{ route('register') }}" class="px-8 text-xs font-bold py-2 uppercase border-2 border-white">Sign up</a>
+                        </div>
+                        <div class="py-5 ml-5">
+                            <a href="{{ route('login') }}" class="px-8 text-xs font-bold py-2 uppercase border-2 border-white">Log in</a>
+                        </div>
                     </div>
                     <div class="py-5 mx-auto w-max">
-                        <div class="flex flex-row items-center justify-around">
-                            <i class="fa fa-facebook-f border px-3 py-2 text-gray-800 bg-white rounded-full mx-1"></i>
-                            <i class="fa fa-instagram border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i>
-                            <i class="fa fa-twitter border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i>
+                        <div class="sm:flex flex-row items-end">
+                            <div class="mx-3 mb-2 sm:mb-0">
+                                <a href="tel:+2348032616222" class="flex flex-row items-center"><i class="fa fa-phone px-2"></i><span>+234 803 261 6222</span></a>
+                                <a href="mailto:info@mcsonialogistics.com.ng" class="flex flex-row items-center"><i class="fa fa-envelope px-2"></i><span>info@mcsonialogistics.com.ng</span></a>
+                            </div>
+                            <div>
+                                <p class="mb-2">Follow Us</p>
+                                <div class="flex flex-row items-center xs:justify-around mx-3 mt-5 sm:mt-0">
+                                    <a href="https://www.facebook.com/McSonia-Logistic-Services-Limited-103366721943768" target="blank"><i class="fa fa-facebook-f border px-3 py-2 text-gray-800 bg-white rounded-full mx-1"></i></a>
+                                    <a href="https://www.instagram.com/mcsonialogistics/" target="blank"><i class="fa fa-instagram border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i></a>
+                                    <a href="https://twitter.com/McSoniaLogic" target="blank"><i class="fa fa-twitter border px-2 py-2 text-gray-800 bg-white rounded-full mx-1"></i></a>
+                                    <!-- <span class="px-3 py-2 border-2 ml-3">Follow Us</span> -->
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                     <div class="py-3 mx-auto w-max">
@@ -211,13 +227,8 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden w-full bg-yellow-100 text-xl flex justify-around">
-                <span class="flex-grow">Get Connected </span>
-                <div class="flex flex-grow justify-around">
-                    <a href="">Facebook</a>
-                    <a href="">Instagram</a>
-                </div>
-            </div>
+            
+
             <div class="mx-auto w-full text-center">
                 Powered by <a class="text-blue-400 hover:text-yellow-500" href="https://www.hoffenheimtechnologies.com">Hoffenheim Technologies</a>
             </div>

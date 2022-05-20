@@ -35,10 +35,17 @@ ul.list::-webkit-scrollbar-thumb {
 @endsection
 
 @section('extraScripts')
-
+@isset($message, $reference)
+@else
 <script>
 $(window).on('load', () => {
     getPickupLocales($('#pstate').val())
+
+    var pstate_set = @isset($input) <?php echo($input->pstate) ?> @else '' @endisset;
+    if (pstate_set){
+        getLocation(pstate_set)
+    }
+
 
     var pstate_set = @isset($input) <?php echo($input->pstate) ?> @else '' @endisset;
 
@@ -238,6 +245,7 @@ $('.email').val('{{ Auth::user()->email }}')
 $('.phone').val('{{ Auth::user()->phone }}')
 </script>
 @endguest
+@endisset
 @endsection
 
 @section('content')
@@ -305,7 +313,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
         </ul>
     </div>
     <div class="content-1">
-        <div class="sm:grid grid-cols-2 mt-12">
+        <div class="sm:w-2/3 mx-auto mt-12">
             <div class="border rounded bg-yellow-100 mx-3">
                 <div class="font-semibold py-3 px-3">
                     Ride Details
@@ -313,19 +321,19 @@ $('.phone').val('{{ Auth::user()->phone }}')
                 <div class="sm:flex flex-row w-full bg-white border-b py-3">
                     <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-r">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Date *</label>
-                        <input id="pdate" name="pdate" @isset($input->pdate) value="{{$input->pdate}}" @endisset
+                        <input required id="pdate" name="pdate" @isset($input->pdate) value="{{$input->pdate}}" @endisset
                         class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="date"
                         >
                     </div>
                     <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-x">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Time *</label>
-                        <input id="ptime" name="ptime" @isset($input->ptime) value="{{$input->ptime}}" @endisset
+                        <input required id="ptime" name="ptime" @isset($input->ptime) value="{{$input->ptime}}" @endisset
                         class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0" type="time"
                         >
                     </div>
                     <div class="sm:w-1/3 border-b sm:border-b-0 sm:border-l">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Item *</label>
-                        <select class="niceselect item border-0 border-b sm:border-0 w-full" name="item" id="">
+                        <select required class="niceselect item border-0 border-b sm:border-0 w-full" name="item" id="">
                             <option selected disabled>Choose</option>
                             @foreach ($items as $item)
                             <option value="{{$item->id}}" price="{{$item->price}}" @isset($input->item) @if($input->item == $item->id) selected @endif @endisset>{{$item->item}}</option>
@@ -337,7 +345,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Location *</label>
                     <div class="sm:flex flex-row">
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">
-                            <select @isset($input->pstate) value="{{$input->pstate}}" @endisset
+                            <select required @isset($input->pstate) value="{{$input->pstate}}" @endisset
                                 onchange="getPickupLocales($(this).val())" name="pstate" id="pstate" class="niceselect
                                 pstate border-0 w-full">
                                 <option @isset($input->state) @else selected @endisset disabled>Choose a State
@@ -348,7 +356,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
                             </select>
                         </div>
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">
-                            <select @isset($input->plocation) value="{{$input->plocation}}" @endisset
+                            <select required @isset($input->plocation) value="{{$input->plocation}}" @endisset
                                 onchange="getLocation($(this).val())" name="plocation" id="plocation" class="niceselect
                                 plocation border-0 w-full">
                                 <option @isset($input->plocation) @else selected @endisset disabled>Choose a Location
@@ -357,11 +365,11 @@ $('.phone').val('{{ Auth::user()->phone }}')
                         </div>
                     </div>
                 </div>
-                <div class="w-full bg-white border-y py-3">
+                <div class="w-full bg-white border-y py-3 border-t">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Pickup Address *</label>
-                        <input id="paddress" name="paddress"
-                            class="w-full bg-yellow-100 focus:bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
+                        <input required id="paddress" name="paddress"
+                            class="w-full bg-white border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
                             type="text" />
                     </div>
                 </div>
@@ -370,14 +378,14 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Location *</label>
                     <div class="sm:flex flex-row">
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-r">
-                            <select name="dstate" id="dstate" class="niceselect dstate border-0 w-full"
+                            <select required name="dstate" id="dstate" class="niceselect dstate border-0 w-full"
                                 onchange="setLocations($(this).val())">
                                 <option @isset($input->dlocation) @else selected @endisset value="" selected
                                     disabled>Choose your State</option>
                             </select>
                         </div>
                         <div class="sm:w-1/2 border-b sm:border-b-0 sm:border-l">
-                            <select name="dlocation" id="dlocation" class="niceselect dlocation border-0 w-full">
+                            <select required name="dlocation" id="dlocation" class="niceselect dlocation border-0 w-full">
                                 <option @isset($input->dlocation) @else selected @endisset value="" selected
                                     disabled>Choose your location</option>
                             </select>
@@ -387,8 +395,8 @@ $('.phone').val('{{ Auth::user()->phone }}')
                 <div class="w-full bg-white border-t py-3">
                     <div class="w-full">
                         <label for="" class="uppercase text-xs px-2 text-gray-500">Dropoff Address *</label>
-                        <input id="daddress" name="daddress"
-                            class="w-full bg-yellow-100 focus:bg-white border-0 focus:outline-none focus:border-none focus:ring-0"
+                        <input required id="daddress" name="daddress"
+                            class="w-full bg-white border-0 focus:outline-none focus:border-none focus:ring-0"
                             type="text">
                     </div>
                 </div>
@@ -399,7 +407,11 @@ $('.phone').val('{{ Auth::user()->phone }}')
                         type="text" placeholder="Describe your item"></textarea>
                 </div>
             </div>
-            <div class="border relative rounded bg-yellow-100 mx-3 my-3 sm:my-0 sm:mx-5">
+            <div class="mx-3 hidden">
+                <input readonly name="subtotal" class="">
+                <input readonly name="total" class="">
+            </div>
+            <!-- <div class="border relative rounded bg-yellow-100 mx-3 my-3 sm:my-0 sm:mx-5">
                 <div class="h-full">
                     <div class="flex flex-col h-full justify-evenly">
                         <div class="flex flex-col items-start text-3xl font-bold px-4">
@@ -409,18 +421,15 @@ $('.phone').val('{{ Auth::user()->phone }}')
                             <div class="flex flex-row items-center">To <span
                                     class="mx-3 text-green-400 text-5xl end">End</span></div>
                         </div>
-                        <div class="mx-3 hidden justify-center grid grid-cols-2">
-                            <input readonly name="subtotal" class="">
-                            <input readonly name="total" class="">
-                        </div>
+
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="flex flex-row justify-end">
             <button id="btn_contact_details" class="btn-lg font-semibold block uppercase border rounded-lg"
                 type="submit" onclick="event.preventDefault();">
-                Enter Contact Details
+                Next
                 <i class="fa fa-arrow-right text-white"></i>
             </button>
         </div>
@@ -428,33 +437,33 @@ $('.phone').val('{{ Auth::user()->phone }}')
     <div class="content-2" style="display: none;">
         <div class="md:flex flex-row">
             <div class="lg:w-64 rounded mx-5 bg-white">
-                <div class="bg-yellow-100 rounded mb-3 pt-6">
+                <div class="shadow rounded mb-3 pt-6">
                     <h3 class="font-semibold mt-4 mb-2 px-3">
                         Summary
                     </h3>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">Service Type</label>
                         <input value="Distance"
-                            class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
+                            class="w-full py-3 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
                             type="text" disabled>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">from - to</label>
                         <input id="summary_from_to" value=""
-                            class="journey w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
+                            class="journey w-full py-3 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
                             type="text" disabled>
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">pickup date, time</label>
                         <input id="summary_pickup_details" value=""
-                            class="timing w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
+                            class="timing w-full py-3 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
                             type="text" disabled>
 
                     </div>
                     <div class="mx-3 border-b">
                         <label for="" class="uppercase text-xs px-2 text-gray-500 py-2">vehicle</label>
                         <input id="summary_vehicle" value="Truck"
-                            class="w-full py-3 bg-yellow-100 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
+                            class="w-full py-3 border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
                             type="text" disabled>
                     </div>
                 </div>
@@ -473,21 +482,12 @@ $('.phone').val('{{ Auth::user()->phone }}')
             </div>
             <div class="flex-grow rounded mx-5">
                 @guest
-                <div>
-                    <div class="w-full bg-yellow-100 px-3 py-3">Sign In</div>
-                    <div class="flex flex-row justify-end">
-                        <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit"
-                            onclick="event.preventDefault(); $('.contact-details').slideDown()">Don't have an
-                            Account?</button>
-                        <a class="btn-lg font-semibold block uppercase border rounded-lg" href="/login">Sign In</a>
-                    </div>
-                </div>
-                <div class="mt-6 contact-details" style="display: none;">
+                <div class="mt-6 contact-details shadow">
                     <div class="w-full bg-yellow-100 px-3 py-3 uppercase">Contact Details</div>
                     <div class="flex flex-row w-full bg-white border py-3">
                         <div class="w-1/2 border-r">
                             <label for="" class="uppercase text-xs px-2 text-gray-500">first name *</label>
-                            <input name="firstname"
+                            <input required name="firstname"
                                 class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
                                 type="text">
                         </div>
@@ -522,16 +522,10 @@ $('.phone').val('{{ Auth::user()->phone }}')
                     </div>
                     <div class="billing-address" style="display: none;">
                         <div class="flex flex-row w-full bg-white border py-3">
-                            <div class="w-1/2 border-r">
+                            <div class="w-full border-r">
                                 <label for="" class="uppercase text-xs px-2 text-gray-500">company registered
                                     name</label>
                                 <input name="company"
-                                    class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
-                                    type="text">
-                            </div>
-                            <div class="w-1/2 border-l">
-                                <label for="" class="uppercase text-xs px-2 text-gray-500">tax number </label>
-                                <input name="tax"
                                     class="w-full border-0 outline-0 focus:outline-none focus:border-none focus:ring-0"
                                     type="text">
                             </div>
@@ -576,6 +570,19 @@ $('.phone').val('{{ Auth::user()->phone }}')
                                 </select>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="text-center w-full mt-3">
+                OR
+                </div>
+
+                <div>
+                    <div class="flex flex-row justify-center w-full">
+                        <!-- <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit"
+                            onclick="event.preventDefault(); $('.contact-details').slideDown()">Don't have an
+                            Account?</button> -->
+                        <a class="btn-lg font-semibold block uppercase border rounded-lg" href="/login">Sign In / Sign Up</a>
                     </div>
                 </div>
                 @else
@@ -682,12 +689,12 @@ $('.phone').val('{{ Auth::user()->phone }}')
             <button class="underline" id="return_item_details" type="submit"
                 onclick="event.preventDefault(); $('.content-2').hide(); $('.content-1').show()">
                 <i class="fa fa-arrow-left text-black"></i>
-                Choose Ride Details
+                Previous
             </button>
             <button class="btn-lg font-semibold block uppercase border rounded-lg" id="button_booking_summary"
                 type="submit"
                 onclick="event.preventDefault(); if(validate(1, {{Auth::check()}})){ console.log(true);$('.content-2').hide(); $('.content-3').show() } else {alert('Please sign in or fill in your contact details');}">
-                Booking Summary
+                View Booking
                 <i class="fa fa-arrow-right text-white"></i>
             </button>
         </div>
@@ -805,7 +812,7 @@ $('.phone').val('{{ Auth::user()->phone }}')
         <div class="flex flex-row justify-between">
             <button class="underline" type="submit"
                 onclick="event.preventDefault(); $('.content-3').hide(); $('.content-2').show()"><i
-                    class="fa fa-arrow-left text-black"></i>Back</button>
+                    class="fa fa-arrow-left text-black"></i>Previous</button>
             <button class="btn-lg font-semibold block uppercase border rounded-lg" type="submit">Book Now</button>
         </div>
     </div>

@@ -5,6 +5,7 @@ module.exports = {
     './resources/**/*.blade.php',
     './resources/**/*.js',
     './resources/**/*.vue',
+    './public/js/request.js'
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

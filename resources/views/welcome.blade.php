@@ -49,6 +49,11 @@ $('body').click((event) => {
 })
 $('.fa-minus').click((event) => {
     $('.modal').slideUp()
+    $('.open-modal').show()
+})
+$('.open-modal').click((event) => {
+    $('.modal').slideDown()
+    $('.open-modal').hide()
 })
 </script>
 <script>
@@ -166,7 +171,7 @@ $('.ptime').change(() => {
         <div class="ml-auto self-center w-full">
             <h1 class="font-bold text-3xl lg:text-6xl mb-5 w-full md:w-11/12">All Tools for Delivery Services in One
                 Place</h1>
-            <h3 class="lg:text-lg text-base text-yellow-600 w-full md:w-2/3 my-5">We are one team with you! <br> Our
+            <h3 class="lg:text-lg text-base w-full md:w-2/3 my-5">We are one team with you! <br> Our
                 goal is to provide the best service for your clients.</h3>
             <a href="/request" class="btn-lg font-semibold inline-block uppercase border rounded-lg">Order a
                 Delivery</a>
@@ -202,20 +207,27 @@ $('.ptime').change(() => {
         <div class="w-2/3 uppercase text-yellow-500 mx-auto my-8 text-xl font-bold">
             why choose us
         </div>
-        <p class="text-gray-600 italic mb-5">
-            At McSonia Logistics, we pride ourselves in efficient service delivery
-            to our clients while committing to the following cultural values:
-        </p>
-        <ul>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Act with integrity</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Passion</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Synergy </li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Innovation</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Quality and Efficiency</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Collaboration</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Decisiveness</li>
-            <li class="text-md hover:text-lg hover:text-yellow-500">Aspiration</li>
-        </ul>
+        <div class="grid grid-cols-2 items-center">
+           <div>
+                <p class="text-gray-600 italic mb-5">
+                    At McSonia Logistics, we pride ourselves in efficient service delivery
+                    to our clients while committing to the following cultural values:
+                </p>
+                <ul class="text-left">
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-flash pr-2 text-yellow-500"></i><span>Act with integrity</span></li>
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-fire pr-2 text-yellow-500"></i><span>Passion</span></li>
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-handshake-o pr-2 text-yellow-500"></i><span>Synergy</span></li>
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-lightbulb-o pr-2 text-yellow-500"></i><span>Innovation</span></li>
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-thumbs-o-up pr-2 text-yellow-500"></i><span>Quality and Efficiency</span></li>
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-users pr-2 text-yellow-500"></i><span>Collaboration</span></li>
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-wrench pr-2 text-yellow-500"></i><span>Decisiveness</span></li>
+                    <li class="flex flex-row items-center text-md"><i class="fa fa-line-chart pr-2 text-yellow-500"></i><span>Aspiration</span></li>
+                </ul>
+           </div>
+           <div>
+               <img src="images/hopme.svg" alt="">
+           </div>
+        </div>
     </div>
 
     <div class="text-center w-full my-8 py-4">
@@ -348,5 +360,8 @@ $('.ptime').change(() => {
                 type="submit">Book Now</button>
         </div>
     </form>
+</div>
+<div class="open-modal fixed rounded-full bottom-5 right-5 bg-yellow-500 py-4 px-5 shadow-xl cursor-pointer text-white" style="display: none">
+    <i class="fa fa-sign-in"></i>
 </div>
 @endsection
