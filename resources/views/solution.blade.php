@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container mx-auto">
+    <h6 class="text-lg uppercase text-yellow-500 w-max mx-auto mt-12 font-semibold mb-5">Contact Us</h6>
     <div class="flex flex-col md:grid md:grid-cols-2">
         <div class="ml-auto self-center">
             <form class="border shadow-md rounded w-5/6 mx-auto px-7 py-12">
@@ -12,11 +13,11 @@
                     <input class="w-full mx-auto px-4 md:px-5 py-2 my-3 border-gray-200 rounded-md bg-yellow-100 focus:outline-none focus:border-gray-300 focus:ring-0 focus:bg-yellow-50" type="tel" name="" id="" placeholder="Phone">
                     <input class="w-full mx-auto px-4 md:px-5 py-2 my-3 border-gray-200 rounded-md bg-yellow-100 focus:outline-none focus:border-gray-300 focus:ring-0 focus:bg-yellow-50" type="email" name="" id="" placeholder="Email">
                     <button class="w-full btn-lg font-semibold block uppercase border rounded-lg">Leave a request</button>
-                </div>                
+                </div>
             </form>
         </div>
         <div class="mx-auto self-center order-first lg:order-last">
-            <img src="images/contact.svg" alt="contact">
+            <img src="{{ $web_source }}/images/contact.svg" alt="contact">
         </div>
     </div>
 </div>

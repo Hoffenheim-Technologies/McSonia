@@ -19,6 +19,8 @@
     },
     "dependencies": {
         "@tailwindcss/forms": "^0.3.4",
-        "jquery": "^3.6.0"
+        "jquery": "^3.6.0",
+        "laravel-echo": "^1.11.3",
+        "pusher-js": "^7.0.3"
     }
 }

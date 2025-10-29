@@ -1379,7 +1379,7 @@ button:focus {
 }
 .formify_signup_fullwidth_two .form_tab_two .form_tab {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border: 0px;
   max-width: 650px;
   margin-bottom: 45px;
